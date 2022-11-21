@@ -1,0 +1,95 @@
+@startuml
+
+skinparam style strictuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+hide enum methods
+
+
+class App{
+
+}
+
+class Board{
+- board: Square[][]
+}
+
+class Square{
+-row: Integer
+-column: Integer
+}
+
+abstract Model.Piece{
+- color: Boolean
+}
+
+class Model.PieceFactory{
++ createPawn(): Pawn
++ createKing(): King
++ createRook(); Rook
++ createBishop(): Bishop
++ createQueen(): Queen
++ createKnight(): Knight
+}
+
+interface Model.MovementStrategy{
++ move()
+}
+
+'class Model.Forward extends MovementStrategy{'
+'+ move()'
+'}'
+
+class Model.Pawn{
+- color: Boolean
++ move()
+}
+
+class Model.King{
+- color: Boolean
++ move()
+}
+
+class Model.Rook{
+- color: Boolean
++ move()
+}
+
+class Model.Bishop{
+- color: Boolean
++ move()
+}
+
+class Model.Queen{
+- color: Boolean
++ move()
+}
+
+class Model.Knight{
+- color: Boolean
++ move()
+}
+
+App ..> Model.PieceFactory : <<use>>
+Model.Pawn ..|> Model.MovementStrategy
+Model.King ..|> Model.MovementStrategy
+Model.Rook ..|> Model.MovementStrategy
+Model.Bishop ..|> Model.MovementStrategy
+Model.Queen ..|> Model.MovementStrategy
+Model.Knight ..|> Model.MovementStrategy
+Model.PieceFactory ...> Model.Piece : <<use>>
+Model.Pawn -u-|> Model.Piece
+Model.King -u-|> Model.Piece
+Model.Rook -u-|> Model.Piece
+Model.Bishop -u-|> Model.Piece
+Model.Queen -u-|> Model.Piece
+Model.Knight -u-|> Model.Piece
+Model.PieceFactory -u..> Model.Pawn : <<use>>
+Model.PieceFactory -u..> Model.King : <<use>>
+Model.PieceFactory -u..> Model.Rook : <<use>>
+Model.PieceFactory -u..> Model.Bishop : <<use>>
+Model.PieceFactory -u..> Model.Queen : <<use>>
+Model.PieceFactory -u..> Model.Knight : <<use>>
+
+
+@enduml
