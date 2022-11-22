@@ -10,64 +10,74 @@ class App{
 
 }
 
-class Board{
-- board: Square[][]
-}
 
-class Square{
--row: Integer
--column: Integer
-}
+package Model{
+    class Board{
+    - board: Square[][]
 
-abstract Model.Piece{
-- color: Boolean
-}
+    }
 
-class Model.PieceFactory{
-+ createPawn(): Pawn
-+ createKing(): King
-+ createRook(); Rook
-+ createBishop(): Bishop
-+ createQueen(): Queen
-+ createKnight(): Knight
-}
+    class Square{
+    - row: Integer
+    - column: Integer
+    - piece: Piece
+    + Square(row: Integer, column: Integer, piece: Piece)
+    + getRow(): Integer
+    + getColumn(): Integer
+    + setSquare(piece Piece)
+    + getSquare() Piece
+    }
 
-interface Model.MovementStrategy{
-+ move()
-}
+    abstract Piece{
+    - color: Boolean
+    }
 
-'class Model.Forward extends MovementStrategy{'
-'+ move()'
-'}'
+    class PieceFactory{
+    + createPawn(): Pawn
+    + createKing(): King
+    + createRook(); Rook
+    + createBishop(): Bishop
+    + createQueen(): Queen
+    + createKnight(): Knight
+    }
 
-class Model.Pawn{
-- color: Boolean
-+ move()
-}
+    interface MovementStrategy{
+    + move()
+    }
 
-class Model.King{
-- color: Boolean
-+ move()
-}
+    'class Model.Forward extends MovementStrategy{'
+    '+ move()'
+    '}'
 
-class Model.Rook{
-- color: Boolean
-+ move()
-}
+    class Pawn{
+    - color: Boolean
+    + move()
+    }
 
-class Model.Bishop{
-- color: Boolean
-+ move()
-}
+    class King{
+    - color: Boolean
+    + move()
+    }
 
-class Model.Queen{
-- color: Boolean
-+ move()
-}
+    class .Rook{
+    - color: Boolean
+    + move()
+    }
 
-class Model.Knight{
-- color: Boolean
-+ move()
+    class Bishop{
+    - color: Boolean
+    + move()
+    }
+
+    class Queen{
+    - color: Boolean
+    + move()
+    }
+
+    class Knight{
+    - color: Boolean
+    + move()
+    }
 }
 
 App ..> Model.PieceFactory : <<use>>
