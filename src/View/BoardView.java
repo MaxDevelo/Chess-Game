@@ -39,9 +39,9 @@ public class BoardView extends JFrame{
                 }
 
                 panel.setLocation(posX, posY);
-                panel.setVisible(true);
                 posX += 100;
                 add(panel);
+                panel.setVisible(true);
             }
             posY += 100;
             posX = 0;

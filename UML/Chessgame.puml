@@ -13,7 +13,7 @@ class App{
 
 package Model{
     class Board{
-    - _board: Square[][]
+    - _board: Square[]
     + setSquare(square: Square, row: Integer, column: Integer)
     + getSquare(row: Integer, column: Integer)
     }
@@ -24,12 +24,12 @@ package Model{
     + Square(row: Integer, column: Integer, piece: Piece)
     + getRow(): Integer
     + getColumn(): Integer
-    + setSquare(piece Piece)
-    + getSquare() Piece
+    + setPiece(piece Piece)
+    + getPiece() Piece
     }
 
     abstract Piece{
-    - color: Boolean
+    - _color: Boolean
     }
 
     class PieceFactory{
@@ -50,32 +50,26 @@ package Model{
     '}'
 
     class Pawn{
-    - color: Boolean
     + move()
     }
 
     class King{
-    - color: Boolean
     + move()
     }
 
     class .Rook{
-    - color: Boolean
     + move()
     }
 
     class Bishop{
-    - color: Boolean
     + move()
     }
 
     class Queen{
-    - color: Boolean
     + move()
     }
 
     class Knight{
-    - color: Boolean
     + move()
     }
 }
