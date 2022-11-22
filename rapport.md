@@ -1,3 +1,3 @@
 - Utilisation d'une Factory pour les types de pions (une classe Piece puis sous-classe Roi, Reine, Cavalier...)
 - Utilisation d'une Strategy pour définir le mouvement d'une pièce (le mouvement dépend du type de pièce : Cavalier en L, Pion tout droit...)
-- Pour le plateau : tableau d'entiers 
+- Pour le plateau : class Square avec un attribut ligne colonne et Piece.
