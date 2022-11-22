@@ -13,14 +13,14 @@ class App{
 
 package Model{
     class Board{
-    - board: Square[][]
-
+    - _board: Square[][]
+    + setSquare(square: Square, row: Integer, column: Integer)
+    + getSquare(row: Integer, column: Integer)
     }
 
     class Square{
-    - row: Integer
-    - column: Integer
-    - piece: Piece
+    - _row: Integer
+    - _column: Integer
     + Square(row: Integer, column: Integer, piece: Piece)
     + getRow(): Integer
     + getColumn(): Integer
@@ -80,26 +80,27 @@ package Model{
     }
 }
 
-App ..> Model.PieceFactory : <<use>>
-Model.Pawn ..|> Model.MovementStrategy
-Model.King ..|> Model.MovementStrategy
-Model.Rook ..|> Model.MovementStrategy
-Model.Bishop ..|> Model.MovementStrategy
-Model.Queen ..|> Model.MovementStrategy
-Model.Knight ..|> Model.MovementStrategy
-Model.PieceFactory ...> Model.Piece : <<use>>
-Model.Pawn -u-|> Model.Piece
-Model.King -u-|> Model.Piece
-Model.Rook -u-|> Model.Piece
-Model.Bishop -u-|> Model.Piece
-Model.Queen -u-|> Model.Piece
-Model.Knight -u-|> Model.Piece
-Model.PieceFactory -u..> Model.Pawn : <<use>>
-Model.PieceFactory -u..> Model.King : <<use>>
-Model.PieceFactory -u..> Model.Rook : <<use>>
-Model.PieceFactory -u..> Model.Bishop : <<use>>
-Model.PieceFactory -u..> Model.Queen : <<use>>
-Model.PieceFactory -u..> Model.Knight : <<use>>
-
+Square o--> "1 \n -_piece" Piece
+App ..> PieceFactory : <<create>>
+App ..> Board : <<create>>
+Pawn ..|> MovementStrategy
+King ..|> .MovementStrategy
+Rook ..|> MovementStrategy
+Bishop ..|> MovementStrategy
+Queen ..|> MovementStrategy
+Knight ..|> MovementStrategy
+PieceFactory ...> Piece : <<use>>
+Pawn -u-|> Piece
+King -u-|> Piece
+Rook -u-|> Piece
+Bishop -u-|> Piece
+Queen -u-|> Piece
+Knight -u-|> Piece
+PieceFactory -u..> Pawn : <<use>>
+PieceFactory -u..> King : <<use>>
+PieceFactory -u..> Rook : <<use>>
+PieceFactory -u..> Bishop : <<use>>
+PieceFactory -u..> Queen : <<use>>
+PieceFactory -u..> Knight : <<use>>
 
 @enduml
