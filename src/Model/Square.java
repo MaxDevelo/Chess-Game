@@ -25,11 +25,11 @@ public class Square {
         return this._column;
     }
 
-    public void setSquare(Piece piece){
+    public void setPiece(Piece piece){
         this._piece = piece;
     }
 
-    public Piece getSquare(){
+    public Piece getPiece(){
         return this._piece;
     }
 }

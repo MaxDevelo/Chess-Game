@@ -2,17 +2,21 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
+
+import Controler.Facade;
 import Model.Square;
 import Model.*;
 
 public class BoardView extends JFrame{
-
+    private Board _board;
+    private Panel[][] panels;
     public BoardView(){
-        Board board = new Board();
+        this.panels = new Panel[8][8];
+        this._board = Board.getInstance();
         setTitle("Jeu d'échec");
         setSize(800, 800);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setVisible(true);
         GridLayout chessLayout = new GridLayout(8,8);
         setLayout(chessLayout);
         int posX = 0;
@@ -22,8 +26,9 @@ public class BoardView extends JFrame{
                // Square square = new Square();
                 Panel panel = new Panel();
                 Square square = new Square(l, c, null);
-                board.setSquare(square, l, c);
+                _board.setSquare(square, l, c);
                 panel.setSize(100, 100);
+                panels[c][l] = panel;
                 if(c%2 == 0){
                     if(l%2 == 0){
                         panel.setBackground(Color.white);
@@ -46,11 +51,21 @@ public class BoardView extends JFrame{
             posY += 100;
             posX = 0;
         }
+        generatedPiece();
+        setVisible(true);
+    }
+
+    public void generatedPiece(){
+        Facade facade = new Facade();
+        facade.generatePiece(_board.getBoard());
         for(int c = 0; c<8; c++) {
             for (int l = 0; l < 8; l++) {
-                System.out.print(board.getSquare(l, c).getRow() + "," + board.getSquare(l, c).getColumn()  + " ");
+                if(_board.getBoard()[c][l].getPiece() != null){
+                    JButton btnPiece = new JButton(_board.getBoard()[c][l].getPiece().getName());
+                    btnPiece.setSize(100, 100);
+                    panels[c][l].add(btnPiece);
+                }
             }
-            System.out.print("\n");
         }
 
     }

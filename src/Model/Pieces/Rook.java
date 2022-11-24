@@ -1,4 +1,19 @@
 package Model.Pieces;
 
-public class Rook {
+import Model.Piece;
+
+public class Rook extends Piece {
+
+    public Rook(Boolean isWhite) {
+        super(isWhite);
+    }
+
+    @Override
+    public void moveAt() {
+
+    }
+    @Override
+    public String getName() {
+        return "R";
+    }
 }
