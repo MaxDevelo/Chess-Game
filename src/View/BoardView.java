@@ -10,9 +10,9 @@ import Model.*;
 
 public class BoardView extends JFrame{
     private Board _board;
-    private Panel[][] panels;
+    private Panel[][] _panels;
     public BoardView(){
-        this.panels = new Panel[8][8];
+        this._panels = new Panel[8][8];
         this._board = Board.getInstance();
         setTitle("Jeu d'échec");
         setSize(800, 800);
@@ -28,7 +28,7 @@ public class BoardView extends JFrame{
                 Square square = new Square(l, c, null);
                 _board.setSquare(square, l, c);
                 panel.setSize(100, 100);
-                panels[c][l] = panel;
+                _panels[c][l] = panel;
                 if(c%2 == 0){
                     if(l%2 == 0){
                         panel.setBackground(Color.white);
@@ -63,7 +63,7 @@ public class BoardView extends JFrame{
                 if(_board.getBoard()[c][l].getPiece() != null){
                     JButton btnPiece = new JButton(_board.getBoard()[c][l].getPiece().getName());
                     btnPiece.setSize(100, 100);
-                    panels[c][l].add(btnPiece);
+                    _panels[c][l].add(btnPiece);
                 }
             }
         }

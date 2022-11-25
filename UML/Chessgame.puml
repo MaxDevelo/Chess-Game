@@ -13,8 +13,11 @@ class App{
 
 package Model{
     class Board{
+    - _instance: Board {static}
+    + getInstance(): Board
     + setSquare(square: Square, row: Integer, column: Integer)
     + getSquare(row: Integer, column: Integer): Square
+    + getBoard: Square[]
     }
 
     class Square{
@@ -23,51 +26,48 @@ package Model{
     + Square(row: Integer, column: Integer, piece: Piece)
     + getRow(): Integer
     + getColumn(): Integer
-    + setPiece(piece Piece)
+    + setPiece(piece: Piece)
     + getPiece() Piece
     }
 
     class PieceFactory{
-    + createPawn(): Pawn
-    + createKing(): King
-    + createRook(); Rook
-    + createBishop(): Bishop
-    + createQueen(): Queen
-    + createKnight(): Knight
+    + createPawn(isWhite: Boolean): Pawn
+    + createKing(isWhite: Boolean): King
+    + createRook(isWhite: Boolean); Rook
+    + createBishop(isWhite: Boolean): Bishop
+    + createQueen(isWhite: Boolean): Queen
+    + createKnight(isWhite: Boolean): Knight
     }
 
     abstract Piece{
     - _isWhite: Boolean
     - _canMove: Boolean
-    }
-
-
-    interface MovementStrategy{
-    + moveAt()
+    + moveAt() 
+    + getName(): String
     }
 
     class Pawn{
-    + moveAt()
+    +  Pawn(isWhite: Boolean)
     }
 
     class King{
-    + moveAt()
+     + King(isWhite: Boolean)
     }
 
     class Rook{
-    + moveAt()
+    + Rook(isWhite: Boolean)
     }
 
     class Bishop{
-    + moveAt()
+    + Bishop(isWhite: Boolean)
     }
 
     class Queen{
-    + moveAt()
+    + Queen(isWhite: Boolean)
     }
 
     class Knight{
-    + moveAt()
+    + Knight(isWhite: Boolean)
     }
 
 }
@@ -77,7 +77,9 @@ class StartGameView extends JFrame{
 
 }
 class  BoardView extends JFrame{
-
+    - panels: Board[]
+    + BoardView()
+    + generatedPiece()
 }
 class EndGameView extends JFrame{
 
@@ -88,12 +90,6 @@ Square o--> "1 \n -_piece" Piece
 Board o--> "* \n -_board" Square
 App ..> PieceFactory : <<create>>
 App ..> Board : <<create>>
-Pawn ..|> MovementStrategy
-King ..|> MovementStrategy
-Rook ..|> MovementStrategy
-Bishop ..|> MovementStrategy
-Queen ..|> MovementStrategy
-Knight ..|> MovementStrategy
 PieceFactory ...> Piece : <<use>>
 Pawn -u-|> Piece
 King -u-|> Piece
