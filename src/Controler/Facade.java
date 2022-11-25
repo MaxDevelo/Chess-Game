@@ -6,19 +6,18 @@ import Model.Square;
 
 public class Facade {
 
-    public void generatePiece(Square[][] board){
-        Boolean isWhite = true;
+    public Square[][]  generatePiece(Square[][] board){
+        Boolean isWhite = false;
         int l = 0;
         int c = 0;
         PieceFactory createPiece = new PieceFactory();
         for(int i = 0; i<2; i++){
             if(i == 1){
-                isWhite = false;
+                isWhite = true;
                 l = 7;
                 c = 0;
             }
-            board[l][c].setPiece(createPiece.createRook(isWhite));
-            board[l][c++].setPiece(createPiece.createBishop(isWhite));
+            board[l][c++].setPiece(createPiece.createRook(isWhite));
             board[l][c++].setPiece(createPiece.createKnight(isWhite));
             board[l][c++].setPiece(createPiece.createBishop(isWhite));
             board[l][c++].setPiece(createPiece.createKing(isWhite));
@@ -37,5 +36,6 @@ public class Facade {
                 c++;
             }
         }
+        return board;
     }
 }

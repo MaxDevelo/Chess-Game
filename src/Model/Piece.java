@@ -10,7 +10,7 @@ public abstract class Piece {
         return _isWhite;
     }
 
-    public abstract void moveAt();
+    public abstract void moveAt(Square square, Board board, int row, int column);
     public abstract String getName();
 
 }

@@ -1,6 +1,8 @@
 package Model.Pieces;
 
+import Model.Board;
 import Model.Piece;
+import Model.Square;
 
 public class King  extends Piece {
 
@@ -9,9 +11,10 @@ public class King  extends Piece {
     }
 
     @Override
-    public void moveAt() {
+    public void moveAt(Square square, Board board, int row, int column) {
 
     }
+
     @Override
     public String getName() {
         return "K";
