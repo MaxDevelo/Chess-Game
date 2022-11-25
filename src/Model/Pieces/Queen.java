@@ -15,7 +15,7 @@ public class Queen  extends Piece {
     }
 
     @Override
-    public void moveAt(Square square, Board board, int row, int column) {
+    public void moveAt(Square square, Board board) {
 
     }
 

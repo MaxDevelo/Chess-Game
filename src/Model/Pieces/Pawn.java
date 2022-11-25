@@ -11,31 +11,52 @@ public class Pawn  extends Piece {
     }
 
     @Override
-    public void moveAt(Square square, Board board, int row, int column) {
+    public void moveAt(Square square, Board board) {
+        this.clearValidSquares();
+
+        int row = square.getRow();
+        int column = square.getColumn();
+
         if(this.getColor()){
-            int posX = square.getRow();
-            int posY = square.getColumn();
-            if(posY - 1 == row && column == posX){
-                if(board.getSquare(posY - 1, posX).getPiece() != null){
-                    System.out.println("Peut bouger");
+            if(row - 1 >= 0 && row - 1 <=7 ){
+                if(board.getSquare(row - 1, column).getPiece() == null){
+                    this.setValidSquare(board.getSquare(row - 1, column));
                 }else{
-                    System.out.println("ENNEMI sur cette case");
+
                 }
             }
-            else if(posY - 1 == row && posX-1 == column){
-                if(board.getSquare(posY - 1, posX-1).getPiece() != null){
-                    System.out.println("Peut pas bouger");
+            if(row - 1 >= 0 && row - 1 <=7 && column-1 >=0 && column-1 <= 7){
+                if(board.getSquare(row - 1, column-1).getPiece() == null || board.getSquare(row - 1, column-1).getPiece().getColor() == this.getColor()){
                 }else{
-                    System.out.println("Piece sur cette case");
+                    this.setValidSquare(board.getSquare(row - 1, column-1));
                 }
-            }else if(posY - 1 == row && posX+1 == column){
-                if(board.getSquare(posY - 1, posX+1).getPiece() != null){
-                    System.out.println("Peut pas bouger");
+            }
+
+            if(row - 1 >= 0 && row - 1 <= 7 && column + 1 <=7 && column + 1 >= 0){
+                if(board.getSquare(row - 1, column + 1).getPiece() == null ||  board.getSquare(row - 1, column + 1).getPiece().getColor() == this.getColor()){
                 }else{
-                    System.out.println("Piece sur cette case");
+                    this.setValidSquare(board.getSquare(row - 1, column + 1));
                 }
-            }else {
-                System.out.println("Peut pas bouger sur cette case");
+            }
+        }else{
+            if(row + 1 >= 0 && row + 1 <= 7){
+                if(board.getSquare(row + 1, column).getPiece() == null){
+                    this.setValidSquare(board.getSquare(row + 1, column));
+                }else{
+
+                }
+            }
+            if(row + 1 >= 0 && row + 1 <= 7 && column + 1 <=7 && column + 1 >= 0){
+                if(board.getSquare(row + 1, column + 1).getPiece() == null || board.getSquare(row + 1, column + 1).getPiece().getColor() == this.getColor()){
+                }else{
+                    this.setValidSquare(board.getSquare(row + 1, column + 1));
+                }
+            }
+            if(row + 1 >= 0 && row + 1 <= 7 && column - 1 <=7 && column - 1 >= 0){
+                if(board.getSquare(row + 1, column - 1).getPiece() == null || board.getSquare(row + 1, column - 1).getPiece().getColor() == this.getColor()){
+                }else{
+                    this.setValidSquare(board.getSquare(row + 1, column - 1));
+                }
             }
         }
     }

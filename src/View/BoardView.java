@@ -17,10 +17,15 @@ public class BoardView extends JFrame{
     private Board _instanceBoard;
     private JPanel[][] _panels;
     private JPanel pnl_board;
+    private List<Square> validSquares;
+    private JButton _currentButtonPiece;
+
     public BoardView(){
-        setSize(898,895);
+
+        setSize(1364,995);
+        // Barre d'outil
         pnl_board = new JPanel();
-        /*JToolBar tools = new JToolBar();
+        JToolBar tools = new JToolBar();
         tools.setFloatable(false);
         add(tools, BorderLayout.PAGE_START);
         Action newGameAction = new AbstractAction("Nouvelle Partie") {
@@ -40,15 +45,29 @@ public class BoardView extends JFrame{
             }
         };
         tools.add(newGameAction);
-        tools.addSeparator();*/
+        tools.addSeparator();
 
+        JPanel chessApp = new JPanel();
+
+        JPanel pnlPieceCaptured = new JPanel();
+        JLabel lbl_title = new JLabel();
+        lbl_title.setText("Pions capturés:");
+        lbl_title.setLocation(pnlPieceCaptured.getLocation());
+        lbl_title.setFont(new Font("Serif", Font.BOLD, 40));
+        pnlPieceCaptured.add(lbl_title);
+        pnlPieceCaptured.setBackground(Color.GRAY);
+        pnlPieceCaptured.setPreferredSize(new Dimension(398, 895));
+        chessApp.add(pnlPieceCaptured, BorderLayout.LINE_START);
+
+        
+        // Plateau de jeux
         this._panels = new JPanel[8][8];
         _instanceBoard = Board.getInstance();
         setTitle("Jeu d'échec");
        // pnl_board.setSize(800, 800);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         GridLayout chessLayout = new GridLayout(8,8);
-        setLayout(chessLayout);
+        pnl_board.setLayout(chessLayout);
         int posX = 0;
         int posY = 0;
         for(int l = 0; l<8; l++){
@@ -71,19 +90,28 @@ public class BoardView extends JFrame{
                 }
                 panel.setSize(100, 100);
                 panel.setLocation(posX, posY);
+                panel.addMouseListener(new MouseAdapter() {
+                    public void mousePressed(MouseEvent e) {
+                        super.mouseClicked(e);
+                        movePiece(panel);
+                    }
+                });
                 _panels[l][c] = panel;
                 posX += 100;
-                add(panel);
+                pnl_board.add(panel);
                 panel.setVisible(true);
             }
             posY += 100;
             posX = 0;
         }
         generatedPiece(); // Générer les pièces
-       // add(pnl_board);
-       // pnl_board.setVisible(true);
-        this.setResizable(false);
+        pnl_board.setPreferredSize(new Dimension(898, 895));
+        chessApp.add(pnl_board, BorderLayout.CENTER);
+
+
+        add(chessApp);
         setVisible(true);
+        setResizable(false);
     }
 
     public void generatedPiece(){
@@ -99,7 +127,7 @@ public class BoardView extends JFrame{
                     btnPiece.addMouseListener(new MouseAdapter() {
                         public void mousePressed(MouseEvent e) {
                             super.mouseClicked(e);
-                            movePiece(btnPiece);
+                            validMove(btnPiece);
                         }
                     });
                     _panels[l][c].add(btnPiece);
@@ -108,33 +136,53 @@ public class BoardView extends JFrame{
         }
 
     }
-    
-    public void movePiece(JButton btnPiece) {
-        if(_panels[btnPiece.getParent().getLocation().y / 98][btnPiece.getParent().getLocation().x/ 95].getComponents().length == 1) {
-             if (_panels[btnPiece.getParent().getLocation().y / 98 ][btnPiece.getParent().getLocation().x/ 95].getComponent(0) == btnPiece) {
-                 Piece piece = _board[btnPiece.getParent().getLocation().y / 98][btnPiece.getParent().getLocation().x / 95].getPiece();
-                 //System.out.println(piece.getName());
-                 if (piece.getColor()) {
-                     if (_board[(btnPiece.getParent().getLocation().y / 98 ) - 1][btnPiece.getParent().getLocation().x / 95].getPiece() == null) {
-                         _board[(btnPiece.getParent().getLocation().y / 98 )- 1][btnPiece.getParent().getLocation().x / 95].setPiece(piece);
-                         _panels[(btnPiece.getParent().getLocation().y / 98 )- 1][btnPiece.getParent().getLocation().x / 95].add(btnPiece);
-                         //Supprimer la pièce de la case
-                         _panels[(btnPiece.getParent().getLocation().y / 98)+1][btnPiece.getParent().getLocation().x / 95].remove(btnPiece);
-                         _panels[(btnPiece.getParent().getLocation().y / 98)+1][btnPiece.getParent().getLocation().x / 95].repaint();
-                     }
-                 }else {
-                    if (_board[(btnPiece.getParent().getLocation().y / 98 )+1][btnPiece.getParent().getLocation().x / 95].getPiece() == null) {
-                        _board[(btnPiece.getParent().getLocation().y / 98 )][btnPiece.getParent().getLocation().x / 95].setPiece(null);
-                        _board[(btnPiece.getParent().getLocation().y / 98 ) + 1][btnPiece.getParent().getLocation().x / 95].setPiece(piece);
-                        _panels[(btnPiece.getParent().getLocation().y / 98 ) + 1][btnPiece.getParent().getLocation().x / 95].add(btnPiece);
-                        //Supprimer la pièce de la case
-                        _panels[(btnPiece.getParent().getLocation().y / 98 )-1][btnPiece.getParent().getLocation().x / 95].remove(btnPiece);
-                        _panels[(btnPiece.getParent().getLocation().y / 98 )-1][btnPiece.getParent().getLocation().x / 95].repaint();
 
+    public void reloadSquareColor(){
+        int posX = 0;
+        int posY = 0;
+        for(int l = 0; l<8; l++){
+            for(int c=0; c<8; c++){
+                if(l%2 == 0){
+                    if(c%2 == 0){
+                        _panels[l][c].setBackground(Color.white);
+                    }else{
+                        _panels[l][c].setBackground(Color.black);
+                    }
+                }else{
+                    if(c%2 != 0){
+                        _panels[l][c].setBackground(Color.white);
+                    }else{
+                        _panels[l][c].setBackground(Color.black);
                     }
                 }
-             }
+                _panels[l][c].repaint();
+            }
+        }
+    }
+    public void validMove(JButton btnPiece) {
+        reloadSquareColor();
+        this._currentButtonPiece = btnPiece;
+        if(btnPiece.getName().equals("P")){
+            _instanceBoard.setCurrentPiece(_board[btnPiece.getParent().getLocation().y / 100][btnPiece.getParent().getLocation().x / 100].getPiece());
+            _instanceBoard.getCurrentPiece().moveAt(_board[btnPiece.getParent().getLocation().y / 100][btnPiece.getParent().getLocation().x / 100], _instanceBoard);
+            this.validSquares = _instanceBoard.getCurrentPiece().getValidSquares();
+            for(Square square : validSquares){
+                _panels[square.getRow()][square.getColumn()].setBackground(Color.GREEN);
+                _panels[square.getRow()][square.getColumn()].repaint();
+            }
+        }
+    }
+    
+    public void movePiece(JPanel panel){
+        reloadSquareColor();
+        System.out.println(panel.getLocation());
+        for(Square square : validSquares){
+            if(_panels[square.getRow()][square.getColumn()] == panel){
+                _board[_currentButtonPiece.getLocation().y/100][_currentButtonPiece.getLocation().x/100].setPiece(null);
+                _panels[square.getRow()][square.getColumn()].add(_currentButtonPiece);
+                _board[square.getRow()][square.getColumn()].setPiece(_instanceBoard.getCurrentPiece());
 
+            }
         }
     }
 

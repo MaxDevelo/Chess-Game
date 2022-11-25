@@ -3,6 +3,7 @@ package Model;
 public class Board {
     private Square[][] _board;
     private static Board _instance;
+    private Piece _currentPiece;
     public Board(){
         _board = new Square[8][8];
     }
@@ -21,5 +22,11 @@ public class Board {
     }
     public Square[][] getBoard(){
         return this._board;
+    }
+    public void setCurrentPiece(Piece piece){
+        this._currentPiece = piece;
+    }
+    public Piece getCurrentPiece(){
+        return this._currentPiece;
     }
 }
