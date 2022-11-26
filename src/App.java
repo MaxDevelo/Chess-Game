@@ -9,6 +9,6 @@ import java.awt.event.ActionListener;
 
 public class App {
     public static void main(String[] args) {
-        BoardView board = new BoardView();
+        new BoardView();
     }
 }

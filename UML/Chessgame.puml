@@ -10,8 +10,20 @@ class App{
 
 }
 
-
 package Model{
+    class Player{
+    - _name: String
+    - _canPlay: Boolean
+    - _piecesCaptured: Piece[]
+    - _pieceIsWhite: Boolean
+    + setName(String name)
+    + getName(): String
+    + getColor(): Boolean
+    + addPieceCaptured(piece: Piece);
+    + isTurn(canPlay: Boolean)
+    + getCanPlay(): Boolean
+    }
+
     class Board{
     - _instance: Board {static}
     + getInstance(): Board
@@ -41,20 +53,25 @@ package Model{
 
     abstract Piece{
     - _isWhite: Boolean
+    - _canMove: Boolean
     + Piece(isWhite: Boolean)
     + getColor(): Boolean
     + moveAt(Square square, Board board)
     + getName(): String
     + getValidSquares(): Square[*]
     + setValidSquare(square: Square)
-    + clearValidSquares()
     + attackTo()
     }
 
     class Pawn{
+    - _isPromoted: Boolean
+    + isPromoted()
     }
 
     class King{
+    - _isCaptured: Boolean
+    + isCaptured(isCaptured: Boolean)
+    + isCaptured(): Boolean
     }
 
     class Rook{
@@ -88,12 +105,31 @@ class EndGameView extends JFrame{
 
 }
 }
+
+package Controler{
+    class Facade{
+    + generatePiece(board: Square[]): Square[]
+    }
+
+    class Game{
+    - _players: Player[]
+    - _endGame: Boolean
+
+    + setPlayer(Player player);
+    + getPlayer(): Player
+    + setEndGame(endGame: Boolean)
+    + getEndGame(): Boolean
+    }
+
+}
+App ..> BoardView : <<create>>
 BoardView o--> "* \n -_validSquares" Square
+Facade ..> PieceFactory : <<use>>
+Facade ..> Square : <<use>>
 Square o--> "* \n -_board" Piece
 Board o--> "* \n -_board" Square
 Piece o--> "* \n -_validSquares" Square
-App ..> PieceFactory : <<create>>
-App ..> Board : <<create>>
+BoardView ..> Board : <<create>>
 PieceFactory ...> Piece : <<use>>
 Pawn -u-|> Piece
 King -u-|> Piece
@@ -107,5 +143,7 @@ PieceFactory ..> Rook : <<use>>
 PieceFactory ..> Bishop : <<use>>
 PieceFactory ..> Queen : <<use>>
 PieceFactory ..> Knight : <<use>>
+Game ..> Player : <<use>>
+Player o---> "0..16 \n -_piecesCaptured\n" Piece
 
 @enduml
