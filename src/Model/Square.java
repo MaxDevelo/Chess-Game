@@ -1,10 +1,12 @@
 package Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Square {
     private int _row;
     private int _column;
     private Piece _piece;
-
     public Square(int row, int column, Piece piece){
         this._row = row;
         this._column = column;
@@ -25,11 +27,11 @@ public class Square {
         return this._column;
     }
 
-    public void setSquare(Piece piece){
+    public void setPiece(Piece piece){
         this._piece = piece;
     }
 
-    public Piece getSquare(){
+    public Piece getPiece(){
         return this._piece;
     }
 }
