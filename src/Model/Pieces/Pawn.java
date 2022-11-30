@@ -19,43 +19,35 @@ public class Pawn  extends Piece {
 
         if(this.getColor()){
             if(row - 1 >= 0 && row - 1 <=7 ){
-                if(board.getSquare(row - 1, column).getPiece() == null){
+                if(this.North(1, square).getPiece() == null){
                     this.setValidSquare(board.getSquare(row - 1, column));
-                }else{
-
                 }
             }
             if(row - 1 >= 0 && row - 1 <=7 && column-1 >=0 && column-1 <= 7){
-                if(board.getSquare(row - 1, column-1).getPiece() == null || board.getSquare(row - 1, column-1).getPiece().getColor() == this.getColor()){
-                }else{
-                    this.setValidSquare(board.getSquare(row - 1, column-1));
+                if(board.getSquare(this.North(1, square).getRow(), this.West(1, square).getColumn()).getPiece() != null && board.getSquare(this.North(1, square).getRow(), this.West(1, square).getColumn()).getPiece().getColor() != this.getColor()){
+                    this.setValidSquare(board.getSquare(this.North(1, square).getRow(), this.West(1, square).getColumn()));
                 }
             }
 
             if(row - 1 >= 0 && row - 1 <= 7 && column + 1 <=7 && column + 1 >= 0){
-                if(board.getSquare(row - 1, column + 1).getPiece() == null ||  board.getSquare(row - 1, column + 1).getPiece().getColor() == this.getColor()){
-                }else{
-                    this.setValidSquare(board.getSquare(row - 1, column + 1));
+                if(board.getSquare(this.North(1, square).getRow(), this.East(1, square).getColumn()).getPiece() != null &&  board.getSquare(this.North(1, square).getRow(), this.East(1, square).getColumn()).getPiece().getColor() != this.getColor()){
+                    this.setValidSquare(board.getSquare(this.North(1, square).getRow(), this.East(1, square).getColumn()));
                 }
             }
         }else{
             if(row + 1 >= 0 && row + 1 <= 7){
-                if(board.getSquare(row + 1, column).getPiece() == null){
-                    this.setValidSquare(board.getSquare(row + 1, column));
-                }else{
-
+                if(this.South(1, square).getPiece() == null){
+                    this.setValidSquare(board.getSquare(this.South(1, square).getRow(), column));
                 }
             }
             if(row + 1 >= 0 && row + 1 <= 7 && column + 1 <=7 && column + 1 >= 0){
-                if(board.getSquare(row + 1, column + 1).getPiece() == null || board.getSquare(row + 1, column + 1).getPiece().getColor() == this.getColor()){
-                }else{
+                if(board.getSquare(this.South(1, square).getRow(), this.East(1, square).getColumn()).getPiece() != null && board.getSquare(this.South(1, square).getRow(), this.East(1, square).getColumn()).getPiece().getColor() != this.getColor()){
                     this.setValidSquare(board.getSquare(row + 1, column + 1));
                 }
             }
             if(row + 1 >= 0 && row + 1 <= 7 && column - 1 <=7 && column - 1 >= 0){
-                if(board.getSquare(row + 1, column - 1).getPiece() == null || board.getSquare(row + 1, column - 1).getPiece().getColor() == this.getColor()){
-                }else{
-                    this.setValidSquare(board.getSquare(row + 1, column - 1));
+                if(board.getSquare(this.South(1, square).getRow(), this.West(1, square).getColumn()).getPiece() != null && board.getSquare(this.South(1, square).getRow(), this.West(1, square).getColumn()).getPiece().getColor() != this.getColor()){
+                    this.setValidSquare(board.getSquare(this.South(1, square).getRow(), this.West(1, square).getColumn()));
                 }
             }
         }

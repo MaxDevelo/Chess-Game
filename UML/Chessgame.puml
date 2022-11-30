@@ -56,6 +56,10 @@ package Model{
     - _canMove: Boolean
     + Piece(isWhite: Boolean)
     + getColor(): Boolean
+    + North(move: Integer): Square
+    + South(move: Integer): Square
+    + East(move: Integer): Square
+    + West(move: Integer): Square
     + moveAt(Square square, Board board)
     + getName(): String
     + getValidSquares(): Square[*]
@@ -69,9 +73,6 @@ package Model{
     }
 
     class King{
-    - _isCaptured: Boolean
-    + isCaptured(isCaptured: Boolean)
-    + isCaptured(): Boolean
     }
 
     class Rook{
