@@ -15,7 +15,7 @@ public abstract class Piece {
         return _isWhite;
     }
 
-    public abstract void moveAt(Square square, Board board);
+    public abstract Boolean moveAt(Square square, Square currentSquare);
     public abstract String getName();
     public List<Square> getValidSquares(){
         return this._validSquares;

@@ -163,19 +163,19 @@ public class BoardView extends JFrame{
         reloadSquareColor();
         this._currentButtonPiece = btnPiece;
         if(btnPiece.getName().equals("P")){
-            _instanceBoard.setCurrentPiece(_board[btnPiece.getParent().getLocation().y / 100][btnPiece.getParent().getLocation().x / 100].getPiece());
-            _instanceBoard.getCurrentPiece().moveAt(_board[btnPiece.getParent().getLocation().y / 100][btnPiece.getParent().getLocation().x / 100], _instanceBoard);
+            Square square = _instanceBoard.getSquare(btnPiece);
+            _instanceBoard.setCurrentPiece(square.getPiece());
+            _instanceBoard.getCurrentPiece().moveAt(square, _instanceBoard);
             this.validSquares = _instanceBoard.getCurrentPiece().getValidSquares();
-            for(Square square : validSquares){
-                _panels[square.getRow()][square.getColumn()].setBackground(Color.GREEN);
-                _panels[square.getRow()][square.getColumn()].repaint();
+            for(Square s : validSquares){
+                _panels[s.getRow()][s.getColumn()].setBackground(Color.GREEN);
+                _panels[s.getRow()][s.getColumn()].repaint();
             }
         }
     }
     
     public void movePiece(JPanel panel){
         reloadSquareColor();
-        System.out.println(panel.getLocation());
         for(Square square : validSquares){
             if(_panels[square.getRow()][square.getColumn()] == panel){
                 _board[_currentButtonPiece.getLocation().y/100][_currentButtonPiece.getLocation().x/100].setPiece(null);

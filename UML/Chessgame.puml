@@ -14,7 +14,6 @@ package Model{
     class Player{
     - _name: String
     - _canPlay: Boolean
-    - _piecesCaptured: Piece[]
     - _pieceIsWhite: Boolean
     + setName(String name)
     + getName(): String
@@ -27,9 +26,16 @@ package Model{
     class Board{
     - _instance: Board {static}
     + getInstance(): Board
+    + getValidSquares(): Square[*]
+    + setValidSquare(square: Square)
     + setSquare(square: Square, row: Integer, column: Integer)
+    + getSquare(): Square
     + getSquare(row: Integer, column: Integer): Square
-    + getBoard: Square[]
+    + North(move: Integer): Square
+    + South(move: Integer): Square
+    + East(move: Integer): Square
+    + West(move: Integer): Square
+    + moveAt(square: Square)
     }
 
     class Square{
@@ -43,6 +49,7 @@ package Model{
     }
 
     class PieceFactory{
+    + PieceFactory()
     + createPawn(isWhite: Boolean): Pawn
     + createKing(isWhite: Boolean): King
     + createRook(isWhite: Boolean); Rook
@@ -56,53 +63,57 @@ package Model{
     - _canMove: Boolean
     + Piece(isWhite: Boolean)
     + getColor(): Boolean
-    + North(move: Integer): Square
-    + South(move: Integer): Square
-    + East(move: Integer): Square
-    + West(move: Integer): Square
-    + moveAt(Square square, Board board)
     + getName(): String
-    + getValidSquares(): Square[*]
-    + setValidSquare(square: Square)
-    + attackTo()
     }
 
     class Pawn{
+    + Bishop(isWhite: Boolean)
+    + getName(): String
     - _isPromoted: Boolean
     + isPromoted()
     }
 
     class King{
+    + Bishop(isWhite: Boolean)
+    + getName(): String
     }
 
     class Rook{
+    + Bishop(isWhite: Boolean)
+    + getName(): String
     }
 
     class Bishop{
+    + Bishop(isWhite: Boolean)
+    + getName(): String
     }
 
     class Queen{
+    + Bishop(isWhite: Boolean)
+    + getName(): String
     }
 
     class Knight{
+    + Bishop(isWhite: Boolean)
+    + getName(): String
     }
 
 }
 
 package View{
-class StartGameView extends JFrame{
+class StartGameViewe{
 
 }
-class  BoardView extends JFrame{
-    - _panels: JPanel[]
-    - pnl_board: JPanel
+class  BoardView{
+    - _panels
+    - pnl_board
     - _instanceBoard: Board
     + BoardView()
     + generatedPiece()
     + reloadSquareColor()
-    + movePiece(btnPiece: JButton)
+    + movePiece()
 }
-class EndGameView extends JFrame{
+class EndGameView{
 
 }
 }
@@ -113,9 +124,7 @@ package Controler{
     }
 
     class Game{
-    - _players: Player[]
     - _endGame: Boolean
-
     + setPlayer(Player player);
     + getPlayer(): Player
     + setEndGame(endGame: Boolean)
@@ -124,14 +133,9 @@ package Controler{
 
 }
 App ..> BoardView : <<create>>
-BoardView o--> "* \n -_validSquares" Square
 Facade ..> PieceFactory : <<use>>
 Facade ..> Square : <<use>>
-Square o--> "* \n -_board" Piece
-Board o--> "* \n -_board" Square
-Piece o--> "* \n -_validSquares" Square
-BoardView ..> Board : <<create>>
-PieceFactory ...> Piece : <<use>>
+Board o--> "64 \n -_board" Square
 Pawn -u-|> Piece
 King -u-|> Piece
 Rook -u-|> Piece
@@ -141,10 +145,11 @@ Knight -u--|> Piece
 PieceFactory ..> Pawn : <<use>>
 PieceFactory ..> King : <<use>>
 PieceFactory ..> Rook : <<use>>
-PieceFactory ..> Bishop : <<use>>
-PieceFactory ..> Queen : <<use>>
+PieceFactory -u..> Bishop : <<use>>
+PieceFactory -u..> Queen : <<use>>
 PieceFactory ..> Knight : <<use>>
-Game ..> Player : <<use>>
-Player o---> "0..16 \n -_piecesCaptured\n" Piece
+PieceFactory ...> Piece : <<use>>
+Game o---> "2 \n -_players\n" Player
+Player o----> "0..16 \n -_piecesCaptured\n" Piece
 
 @enduml
