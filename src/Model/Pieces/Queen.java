@@ -1,22 +1,22 @@
 package Model.Pieces;
 
 
-import Model.Board;
+import Model.Color;
 import Model.Piece;
 import Model.Square;
 
 public class Queen  extends Piece {
 
-    private final Boolean isWhite;
+    private final Color _color;
 
-    public Queen(Boolean isWhite) {
-        super(isWhite);
-        this.isWhite = isWhite;
+    public Queen(Color color) {
+        super(color);
+        this._color = color;
     }
 
     @Override
-    public void moveAt(Square square, Board board) {
-
+    public Boolean canMove(Square square, Square currentSquare) {
+        return null;
     }
 
 

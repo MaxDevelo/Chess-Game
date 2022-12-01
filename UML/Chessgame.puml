@@ -11,31 +11,24 @@ class App{
 }
 
 package Model{
+    enum Color{
+       BLACK,
+       WHITE
+    }
     class Player{
     - _name: String
     - _canPlay: Boolean
     - _pieceIsWhite: Boolean
+    - _score: int
+    + Player()
+    + getScore(): int
+    + setScore(score: int)
     + setName(String name)
     + getName(): String
     + getColor(): Boolean
     + addPieceCaptured(piece: Piece);
     + isTurn(canPlay: Boolean)
     + getCanPlay(): Boolean
-    }
-
-    class Board{
-    - _instance: Board {static}
-    + getInstance(): Board
-    + getValidSquares(): Square[*]
-    + setValidSquare(square: Square)
-    + setSquare(square: Square, row: Integer, column: Integer)
-    + getSquare(): Square
-    + getSquare(row: Integer, column: Integer): Square
-    + North(move: Integer): Square
-    + South(move: Integer): Square
-    + East(move: Integer): Square
-    + West(move: Integer): Square
-    + moveAt(square: Square)
     }
 
     class Square{
@@ -50,53 +43,81 @@ package Model{
 
     class PieceFactory{
     + PieceFactory()
-    + createPawn(isWhite: Boolean): Pawn
-    + createKing(isWhite: Boolean): King
-    + createRook(isWhite: Boolean); Rook
-    + createBishop(isWhite: Boolean): Bishop
-    + createQueen(isWhite: Boolean): Queen
-    + createKnight(isWhite: Boolean): Knight
+    + createPawn(isWhite: Color): Pawn
+    + createKing(color: Color): King
+    + createRook(color: Color); Rook
+    + createBishop(color: Color): Bishop
+    + createQueen(color: Color): Queen
+    + createKnight(color: Color): Knight
     }
 
     abstract Piece{
-    - _isWhite: Boolean
-    - _canMove: Boolean
     + Piece(isWhite: Boolean)
-    + getColor(): Boolean
-    + getName(): String
+    + getColor(): Color
+    + {abstract}getName(): String
+    + {abstract}canMove(square: Square, currentSquare: Square)
     }
 
     class Pawn{
-    + Bishop(isWhite: Boolean)
+    + Pawn(color: Color)
     + getName(): String
-    - _isPromoted: Boolean
     + isPromoted()
+    + canMove(square: Square, currentSquare: Square)
     }
 
     class King{
-    + Bishop(isWhite: Boolean)
+    + King(color: Color)
     + getName(): String
+    + canMove(square: Square, currentSquare: Square)
     }
 
     class Rook{
-    + Bishop(isWhite: Boolean)
+    + Rook(color: Color)
     + getName(): String
+    + canMove(square: Square, currentSquare: Square)
     }
 
     class Bishop{
-    + Bishop(isWhite: Boolean)
+    + Bishop(color: Color)
     + getName(): String
+    + canMove(square: Square, currentSquare: Square)
     }
 
     class Queen{
-    + Bishop(isWhite: Boolean)
+    + Queen(color: Color)
     + getName(): String
+    + canMove(square: Square, currentSquare: Square)
     }
 
     class Knight{
-    + Bishop(isWhite: Boolean)
+    + Knight(color: Color)
     + getName(): String
+    + canMove(square: Square, currentSquare: Square)
     }
+
+    class Board{
+    + Board()
+    + generatePiece(board: Square[]): Square[]
+    + getValidSquares(): Square[*]
+    + setSquare(square: Square, row: Integer, column: Integer)
+    + getSquare(): Square
+    + getSquare(row: Integer, column: Integer): Square
+    + setValidSquares(square: Square)
+    + moveAt(square: Square)
+    + attack(square: Square)
+    + setBoard(board: Square[*])
+    + promotion(square: Square)
+    }
+
+
+    class Game{
+    - _endGame: Boolean
+    + Game()
+    + setPlayer(Player player);
+    + getPlayer(): Player
+    + setEndGame(endGame: Boolean)
+    + getEndGame(): Boolean
+     }
 
 }
 
@@ -105,9 +126,6 @@ class StartGameViewe{
 
 }
 class  BoardView{
-    - _panels
-    - pnl_board
-    - _instanceBoard: Board
     + BoardView()
     + generatedPiece()
     + reloadSquareColor()
@@ -118,23 +136,16 @@ class EndGameView{
 }
 }
 
-package Controler{
-    class Facade{
-    + generatePiece(board: Square[]): Square[]
-    }
-
-    class Game{
-    - _endGame: Boolean
-    + setPlayer(Player player);
-    + getPlayer(): Player
-    + setEndGame(endGame: Boolean)
-    + getEndGame(): Boolean
-    }
-
-}
 App ..> BoardView : <<create>>
-Facade ..> PieceFactory : <<use>>
-Facade ..> Square : <<use>>
+PieceFactory ..> Pawn : <<use>>
+PieceFactory ..> King : <<use>>
+PieceFactory ..> Rook : <<use>>
+PieceFactory ..> Bishop : <<use>>
+PieceFactory ..> Queen : <<use>>
+PieceFactory ..> Knight : <<use>>
+PieceFactory ...> Piece : <<use>>
+Board ..> PieceFactory : <<use>>
+Board ..> Square : <<use>>
 Board o--> "64 \n -_board" Square
 Pawn -u-|> Piece
 King -u-|> Piece
@@ -142,14 +153,11 @@ Rook -u-|> Piece
 Bishop -u-|> Piece
 Queen -u-|> Piece
 Knight -u--|> Piece
-PieceFactory ..> Pawn : <<use>>
-PieceFactory ..> King : <<use>>
-PieceFactory ..> Rook : <<use>>
-PieceFactory -u..> Bishop : <<use>>
-PieceFactory -u..> Queen : <<use>>
-PieceFactory ..> Knight : <<use>>
-PieceFactory ...> Piece : <<use>>
 Game o---> "2 \n -_players\n" Player
 Player o----> "0..16 \n -_piecesCaptured\n" Piece
-
+Square o----> "0..1 \n -_piece\n" Piece
+Piece o---> "1 \n -_color\n" Color
+BoardView ..> Board : <<use>>
+BoardView o----> "0..1 \n -_board\n" Board
+Game ..> Board: <<use>>
 @enduml

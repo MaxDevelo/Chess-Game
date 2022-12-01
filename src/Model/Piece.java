@@ -4,43 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Piece {
-    private boolean _isWhite;
-    private boolean _canMove;
-    private List<Square> _validSquares;
-    public Piece(Boolean isWhite){
-        this._isWhite = isWhite;
-        this._validSquares = new ArrayList<>();
+    private Color _color;
+    public Piece(Color color){
+        this._color = color;
     }
-    public Boolean getColor() {
-        return _isWhite;
+    public Color getColor() {
+        return _color;
     }
 
-    public abstract Boolean moveAt(Square square, Square currentSquare);
+    public abstract Boolean canMove(Square square, Square currentSquare);
     public abstract String getName();
-    public List<Square> getValidSquares(){
-        return this._validSquares;
-    }
-    public void setValidSquare(Square square){
-        this._validSquares.add(square);
-    }
-    public void clearValidSquares(){
-        this._validSquares.clear();
-    }
-    // Déplacement vers le Nord en fonction du nombre de case: move
-    public Square North(int move, Square square){
-        return Board.getInstance().getSquare(square.getRow() - move, square.getColumn());
-    }
-    // Déplacement vers le Sud en fonction du nombre de case: move
-    public Square South(int move, Square square){
-        return Board.getInstance().getSquare(square.getRow()+move, square.getColumn());
-    }
-    // Déplacement vers le Est en fonction du nombre de case: move
-    public Square East(int move, Square square){
-        return Board.getInstance().getSquare(square.getRow(), square.getColumn()+move);
-    }
-    // Déplacement vers le Ouest en fonction du nombre de case: move
-    public Square West(int move, Square square){
-        return Board.getInstance().getSquare(square.getRow(), square.getColumn()-move);
-    }
+
 
 }

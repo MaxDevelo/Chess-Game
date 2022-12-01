@@ -3,22 +3,22 @@ package Model;
 import Model.Pieces.*;
 
 public class PieceFactory {
-    public Pawn createPawn(Boolean isWhite){
-        return new Pawn(isWhite);
+    public Pawn createPawn(Color color){
+        return new Pawn(color);
     }
-    public King createKing(Boolean isWhite){
-        return new King(isWhite);
+    public King createKing(Color color){
+        return new King(color);
     }
-    public Rook createRook(Boolean isWhite){
-        return new Rook(isWhite);
+    public Rook createRook(Color color){
+        return new Rook(color);
     }
-    public Bishop createBishop(Boolean isWhite){
-        return new Bishop(isWhite);
+    public Bishop createBishop(Color color){
+        return new Bishop(color);
     }
-    public Queen createQueen(Boolean isWhite){
-        return new Queen(isWhite);
+    public Queen createQueen(Color color){
+        return new Queen(color);
     }
-    public Knight createKnight(Boolean isWhite){
-        return new Knight(isWhite);
+    public Knight createKnight(Color color){
+        return new Knight(color);
     }
 }

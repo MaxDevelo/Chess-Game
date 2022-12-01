@@ -1,21 +1,20 @@
 package Model.Pieces;
 
 
-import Model.Board;
+import Model.Color;
 import Model.Piece;
 import Model.Square;
 
 public class Bishop extends Piece {
 
-    public Bishop(Boolean isWhite) {
-        super(isWhite);
+    public Bishop(Color color) {
+        super(color);
     }
 
     @Override
-    public void moveAt(Square square, Board board) {
-
+    public Boolean canMove(Square square, Square currentSquare) {
+        return null;
     }
-
 
 
     @Override

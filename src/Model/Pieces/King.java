@@ -1,18 +1,18 @@
 package Model.Pieces;
 
-import Model.Board;
+import Model.Color;
 import Model.Piece;
 import Model.Square;
 
 public class King  extends Piece {
 
-    public King(Boolean isWhite) {
-        super(isWhite);
+    public King(Color color) {
+        super(color);
     }
 
     @Override
-    public void moveAt(Square square, Board board) {
-
+    public Boolean canMove(Square square, Square currentSquare) {
+        return null;
     }
 
     @Override

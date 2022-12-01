@@ -2,27 +2,23 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.List;
-import java.util.stream.IntStream;
 
-import Controler.Facade;
+import Model.Board;
 import Model.Square;
-import Model.*;
 
 public class BoardView extends JFrame{
-    private Square[][] _board;
-    private Board _instanceBoard;
+    private Board _board;
     private JPanel[][] _panels;
     private JPanel pnl_board;
-    private List<Square> validSquares;
     private JButton _currentButtonPiece;
 
     public BoardView(){
-
-        setSize(1364,995);
+        _board = new Board();
+        setSize(1920, 1080);
         // Barre d'outil
         pnl_board = new JPanel();
         JToolBar tools = new JToolBar();
@@ -62,7 +58,6 @@ public class BoardView extends JFrame{
         
         // Plateau de jeux
         this._panels = new JPanel[8][8];
-        _instanceBoard = Board.getInstance();
         setTitle("Jeu d'échec");
        // pnl_board.setSize(800, 800);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -74,7 +69,7 @@ public class BoardView extends JFrame{
             for(int c=0; c<8; c++){
                 JPanel panel = new JPanel();
                 Square square = new Square(l, c, null);
-                _instanceBoard.setSquare(square, l,  c);
+                _board.setSquare(square, l,  c);
                 if(l%2 == 0){
                     if(c%2 == 0){
                         panel.setBackground(Color.white);
@@ -105,7 +100,7 @@ public class BoardView extends JFrame{
             posX = 0;
         }
         generatedPiece(); // Générer les pièces
-        pnl_board.setPreferredSize(new Dimension(898, 895));
+        pnl_board.setPreferredSize(new Dimension(800, 800));
         chessApp.add(pnl_board, BorderLayout.CENTER);
 
 
@@ -115,13 +110,12 @@ public class BoardView extends JFrame{
     }
 
     public void generatedPiece(){
-        Facade facade = new Facade();
-        this._board = facade.generatePiece(_instanceBoard.getBoard());
+        _board.setBoard(_board.generatePiece(_board.getBoard()));
         for(int l = 0; l<8; l++) {
             for (int c = 0; c < 8; c++) {
-                if(_board[l][c].getPiece() != null){
-                    JButton btnPiece = new JButton(_board[l][c].getPiece().getName());
-                    btnPiece.setName(_board[l][c].getPiece().getName());
+                if(_board.getBoard()[l][c].getPiece() != null){
+                    JButton btnPiece = new JButton(_board.getBoard()[l][c].getPiece().getName());
+                    btnPiece.setName(_board.getBoard()[l][c].getPiece().getName());
                     //btnPiece.setSize( 100, 100);
                     btnPiece.setLocation(_panels[l][c].getLocation());
                     btnPiece.addMouseListener(new MouseAdapter() {
@@ -144,7 +138,7 @@ public class BoardView extends JFrame{
             for(int c=0; c<8; c++){
                 if(l%2 == 0){
                     if(c%2 == 0){
-                        _panels[l][c].setBackground(Color.white);
+                        _panels[l][c].setBackground(Color.WHITE);
                     }else{
                         _panels[l][c].setBackground(Color.black);
                     }
@@ -162,12 +156,18 @@ public class BoardView extends JFrame{
     public void validMove(JButton btnPiece) {
         reloadSquareColor();
         this._currentButtonPiece = btnPiece;
+        Square square = _board.getSquare(this._currentButtonPiece);
         if(btnPiece.getName().equals("P")){
-            Square square = _instanceBoard.getSquare(btnPiece);
-            _instanceBoard.setCurrentPiece(square.getPiece());
-            _instanceBoard.getCurrentPiece().moveAt(square, _instanceBoard);
-            this.validSquares = _instanceBoard.getCurrentPiece().getValidSquares();
-            for(Square s : validSquares){
+            _board.setCurrentPiece(square.getPiece());
+            _board.setValidSquares(square);
+            for(Square s : _board.getValidSquares()){
+                _panels[s.getRow()][s.getColumn()].setBackground(Color.GREEN);
+                _panels[s.getRow()][s.getColumn()].repaint();
+            }
+        }else if(btnPiece.getName().equals("R")){
+            _board.setCurrentPiece(square.getPiece());
+            _board.setValidSquares(square);
+            for(Square s : _board.getValidSquares()){
                 _panels[s.getRow()][s.getColumn()].setBackground(Color.GREEN);
                 _panels[s.getRow()][s.getColumn()].repaint();
             }
@@ -176,14 +176,8 @@ public class BoardView extends JFrame{
     
     public void movePiece(JPanel panel){
         reloadSquareColor();
-        for(Square square : validSquares){
-            if(_panels[square.getRow()][square.getColumn()] == panel){
-                _board[_currentButtonPiece.getLocation().y/100][_currentButtonPiece.getLocation().x/100].setPiece(null);
-                _panels[square.getRow()][square.getColumn()].add(_currentButtonPiece);
-                _board[square.getRow()][square.getColumn()].setPiece(_instanceBoard.getCurrentPiece());
-
-            }
-        }
+        _board.moveAt(_board.getBoard()[_currentButtonPiece.getParent().getLocation().y/100][_currentButtonPiece.getParent().getLocation().x/100] ,panel.getLocation().y/100, panel.getLocation().x/100);
+        _panels[panel.getLocation().y/100][panel.getLocation().x/100].add(_currentButtonPiece);
     }
 
 }
