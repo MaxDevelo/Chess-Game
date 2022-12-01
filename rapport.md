@@ -1,3 +1,12 @@
 - Utilisation d'une Factory pour les types de pions (une classe Piece puis sous-classe Roi, Reine, Cavalier...)
-- Utilisation d'une Strategy pour définir le mouvement d'une pièce (le mouvement dépend du type de pièce : Cavalier en L, Pion tout droit...)
-- Pour le plateau : class Square avec un attribut ligne colonne et Piece.
+- Pour le plateau : class Square avec un attribut ligne colonne et Piece. Ligne et colonne nous permettent de connaitre la position d'une pièce et de déterminer où est ce qu'elle peut se déplacer.
+- Pour les pièces, elles ont une méthode abstraite qui détermine comment elles se déplacent, puis c'est le plateau qui dit où est ce qu'elles peuvent aller en fonction de leur mode de déplacement.
+- Utilisation d'un système de points cardinaux (Nord, Sud, Est, Ouest) pour le déplacement des pions. Est, Ouest pour changement de colonne, Nord, Sud pour changement de ligne.
+- Le plateau est un singleton parce qu'on a un seul échiquier. -> Ne pas le mettre en singleton, passer le Board en paramètre.
+- Création d'une facade pour faire le lien entre les vues et les modèles, notamment générer les pièces sur le plateau. (Pourquoi une facade ?)
+- Changement du bool isWhite des pièces en une ENUM Color dans l'optique d'une variante du jeu à plus de 2 joueurs.
+- La Class Board est une view.
+
+Enlever panel et tab panel
+Relation entre BoardView et Board (changer le instance)
+Rajouter les constructeurs (Board, BoardView, Factory)
