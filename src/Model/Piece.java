@@ -15,7 +15,7 @@ public abstract class Piece {
         return _isWhite;
     }
 
-    public abstract void moveAt(Square square, Board board);
+    public abstract Boolean moveAt(Square square, Square currentSquare);
     public abstract String getName();
     public List<Square> getValidSquares(){
         return this._validSquares;
@@ -25,6 +25,22 @@ public abstract class Piece {
     }
     public void clearValidSquares(){
         this._validSquares.clear();
+    }
+    // Déplacement vers le Nord en fonction du nombre de case: move
+    public Square North(int move, Square square){
+        return Board.getInstance().getSquare(square.getRow() - move, square.getColumn());
+    }
+    // Déplacement vers le Sud en fonction du nombre de case: move
+    public Square South(int move, Square square){
+        return Board.getInstance().getSquare(square.getRow()+move, square.getColumn());
+    }
+    // Déplacement vers le Est en fonction du nombre de case: move
+    public Square East(int move, Square square){
+        return Board.getInstance().getSquare(square.getRow(), square.getColumn()+move);
+    }
+    // Déplacement vers le Ouest en fonction du nombre de case: move
+    public Square West(int move, Square square){
+        return Board.getInstance().getSquare(square.getRow(), square.getColumn()-move);
     }
 
 }

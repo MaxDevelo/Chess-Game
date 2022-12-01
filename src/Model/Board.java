@@ -1,5 +1,7 @@
 package Model;
 
+import javax.swing.*;
+
 public class Board {
     private Square[][] _board;
     private static Board _instance;
@@ -17,6 +19,9 @@ public class Board {
         this._board[row][column] = square;
     }
 
+    public Square getSquare(JButton btnPiece){
+        return  this._board[btnPiece.getParent().getLocation().y / 100][btnPiece.getParent().getLocation().x / 100];
+    }
     public Square getSquare(int row, int column){
         return  this._board[row][column];
     }
