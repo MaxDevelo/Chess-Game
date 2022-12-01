@@ -43,6 +43,7 @@ package Model{
     }
 
     class PieceFactory{
+    + PieceFactory()
     + createPawn(isWhite: Boolean): Pawn
     + createKing(isWhite: Boolean): King
     + createRook(isWhite: Boolean); Rook
