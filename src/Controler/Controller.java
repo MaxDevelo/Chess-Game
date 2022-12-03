@@ -1,16 +1,22 @@
 package Controler;
 
-import Model.Board;
-import Model.Game;
-import Model.Square;
+import Model.*;
 
 public class Controller {
     private Game _game;
     private Board _board;
 
-    public void newGame(){
+    public void newGame(String namePlayer1, String namePlayer2, Color teamJoueur1, Color teamJoueur2){
         _game = new Game();
         _board = new Board();
+        Player player1 = new Player();
+        player1.setName(namePlayer1);
+        player1.setColor(teamJoueur1);
+        _game.setPlayer(player1);
+        Player player2 = new Player();
+        player2.setName(namePlayer2);
+        player2.setColor(teamJoueur2);
+        _game.setPlayer(player2);
         generatedBoard();
     }
 

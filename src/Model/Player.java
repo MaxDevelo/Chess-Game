@@ -40,5 +40,8 @@ public class Player {
     public Boolean getCanPlay(){
         return  this._canPlay;
     }
+    public void setColor(Color color){
+        this._colorTeam = color;
+    }
 
 }

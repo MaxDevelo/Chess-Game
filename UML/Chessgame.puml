@@ -24,6 +24,7 @@ package Model{
     + setScore(score: int)
     + setName(String name)
     + getName(): String
+    + setColor(color: Color)
     + getColor(): Color
     + addPieceCaptured(piece: Piece);
     + isTurn(canPlay: Boolean)
@@ -138,9 +139,8 @@ class Controller{
 
 package View{
 class StartGameView{
-    + StartGameView()
-    + createGame(controller: Controller)
-
+    + StartGameView(controller: Controller)
+    + playGame()
 }
 class  BoardView{
     + BoardView(controller: Controller)

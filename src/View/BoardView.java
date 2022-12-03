@@ -12,14 +12,18 @@ import Model.Board;
 import Model.Game;
 import Model.Square;
 
+import static Model.Color.BLACK;
+import static Model.Color.WHITE;
+
 public class BoardView extends JFrame{
     private Board _board;
     private JPanel[][] _panels;
     private JPanel pnl_board;
     private JButton _currentButtonPiece;
-
+    private Controller _controller;
     public BoardView(Controller controller){
         this._board = controller.getBoard();
+        this._controller = controller;
         setSize(1680,880);
         // Barre d'outil
         pnl_board = new JPanel();
@@ -92,9 +96,14 @@ public class BoardView extends JFrame{
         //Pieces capturé par la team White
         JPanel pnlPieceCapturedWhite = new JPanel();
         JLabel lbl_title = new JLabel();
-        lbl_title.setText("TEAM WHITE");
+        if(this._controller.getGame().getPlayers().get(0).getColor() == WHITE){
+            System.out.println(this._controller.getGame().getPlayers().get(0).getColor());
+            lbl_title.setText("TEAM WHITE: \n" + this._controller.getGame().getPlayers().get(0).getName());
+        }else{
+            lbl_title.setText("TEAM WHITE: \n" + this._controller.getGame().getPlayers().get(1).getName());
+        }
         lbl_title.setLocation(pnlPieceCapturedWhite.getLocation());
-        lbl_title.setFont(new Font("Serif", Font.BOLD, 40));
+        lbl_title.setFont(new Font("Serif", Font.BOLD, 30));
         pnlPieceCapturedWhite.add(lbl_title);
         pnlPieceCapturedWhite.setBackground(Color.GRAY);
         pnlPieceCapturedWhite.setPreferredSize(new Dimension(400, 800));
@@ -106,9 +115,13 @@ public class BoardView extends JFrame{
         //Pieces capturé par la team Black
         JPanel pnlPieceCapturedBlack = new JPanel();
         lbl_title = new JLabel();
-        lbl_title.setText("TEAM BLACK");
+        if(this._controller.getGame().getPlayers().get(0).getColor() == BLACK){
+            lbl_title.setText("TEAM BLACK: \n" + this._controller.getGame().getPlayers().get(0).getName());
+        }else{
+            lbl_title.setText("TEAM BLACK: \n" + this._controller.getGame().getPlayers().get(1).getName());
+        }
         lbl_title.setLocation(pnlPieceCapturedBlack.getLocation());
-        lbl_title.setFont(new Font("Serif", Font.BOLD, 40));
+        lbl_title.setFont(new Font("Serif", Font.BOLD, 30));
         pnlPieceCapturedBlack.add(lbl_title);
         pnlPieceCapturedBlack.setBackground(Color.GRAY);
         pnlPieceCapturedBlack.setPreferredSize(new Dimension(400, 800));
