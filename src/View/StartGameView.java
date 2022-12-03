@@ -1,4 +1,9 @@
 package View;
 
-public class StartGameView {
+import javax.swing.*;
+
+public class StartGameView extends JFrame {
+    public StartGameView(){
+        setSize(1680,880);
+    }
 }

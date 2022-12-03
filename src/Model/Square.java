@@ -1,7 +1,6 @@
 package Model;
 
-import java.util.ArrayList;
-import java.util.List;
+import Model.Pieces.Piece;
 
 public class Square {
     private int _row;

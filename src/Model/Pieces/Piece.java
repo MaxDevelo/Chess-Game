@@ -1,4 +1,7 @@
-package Model;
+package Model.Pieces;
+
+import Model.Color;
+import Model.Square;
 
 import java.util.ArrayList;
 import java.util.List;

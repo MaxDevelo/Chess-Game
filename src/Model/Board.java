@@ -1,5 +1,7 @@
 package Model;
 
+import Model.Pieces.Piece;
+
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,7 @@ public class Board {
         _board = new Square[8][8];
         this._validSquares = new ArrayList<>();
     }
+
     public Square[][]  generatePiece(Square[][] board){
 
         PieceFactory createPiece = new PieceFactory();
@@ -89,10 +92,16 @@ public class Board {
 
     }
     public void moveAt(Square square, int pnlRow, int pnlColumn){
+        if(_board[square.getRow()][square.getColumn()].getPiece() != null && _board[square.getRow()][square.getColumn()].getPiece().getColor() != square.getPiece().getColor()){
+            attack(_board[square.getRow()][square.getColumn()]);
+        }
         _board[square.getRow()][square.getColumn()].setPiece(null);
         _board[pnlRow][pnlColumn].setPiece(this.getCurrentPiece());
     }
     public void setBoard(Square[][] board){
         this._board = board;
+    }
+    public void attack(Square square){
+        square.setPiece(null); // Pièce supprimé
     }
 }

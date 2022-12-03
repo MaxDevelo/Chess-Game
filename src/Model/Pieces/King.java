@@ -1,7 +1,6 @@
 package Model.Pieces;
 
 import Model.Color;
-import Model.Piece;
 import Model.Square;
 
 public class King  extends Piece {
