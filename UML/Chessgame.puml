@@ -175,8 +175,8 @@ EndGameView o---> "1 \n -_controller\n" Controller: Own >
 App ..> Controller : <<create>>
 App ..> StartGameView : <<create>>
 
-Controller *--> "0..1 \n -_game\n" Game: > compose
-Controller *--> "0..1 \n -_board\n" Board: > compose
+Controller o--> "0..1 \n -_game\n" Game: > Own
+Controller o--> "0..1 \n -_board\n" Board: > Own
 
 PieceFactory ..> Pawn : <<use>>
 PieceFactory ..> King : <<use>>
@@ -188,7 +188,6 @@ PieceFactory ..> Piece : <<use>>
 Board ..> PieceFactory : <<use>>
 
 Board o--> "64 \n -_boardSquare" Square: > Owns
-Board ..> Square : <<use>>
 
 Pawn --|> Piece
 King --|> Piece
@@ -197,12 +196,10 @@ Bishop --|> Piece
 Queen --|> Piece
 Knight --|> Piece
 
-Game o--> "2 \n -_currentPlayerPlay\n" Player: > Own
-Game o--> "2 \n -_players\n" Player: > Owns
+Game *--> "2 \n -_players\n" Player:  Compose <
 Player o--> "0..16 \n -_piecesCaptured\n" Piece: > show
 Square o--> "0..1 \n -_piece\n" Piece: > Owns
 Piece o--> "1 \n -_color\n" Color: Own
-BoardView ..> Board : <<use>>
 BoardView o--> "0..1 \n -_board\n" Board: show >
 Game ..> Board: <<use>>
 @enduml
