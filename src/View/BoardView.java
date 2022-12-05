@@ -212,7 +212,6 @@ public class BoardView extends JFrame{
 
     public void validMove(JButton btnPiece) {
         if(_attack){
-            System.out.println("attack=FALSE");
             movePiece((JPanel)btnPiece.getParent());
             this._attack = false;
         }
@@ -252,7 +251,6 @@ public class BoardView extends JFrame{
                 }
             }
         }
-        this._attack = false;
 
     }
 
