@@ -20,5 +20,9 @@ public class Bishop extends Piece {
     public String getName() {
         return "B";
     }
+    @Override
+    public String getImage(){
+        return  "img/Pieces/Bishop";
+    }
 
 }

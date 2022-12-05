@@ -15,12 +15,12 @@ public class Square {
             this._piece = null;
         }
     }
-
+    // on récupère la ligne de la case (axe des ordonnées)
     public int getRow(){
 
         return this._row;
     }
-    
+    // on récupère la colonne de la case (axe des abscisses)
     public int getColumn(){
         
         return this._column;

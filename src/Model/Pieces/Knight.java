@@ -20,4 +20,8 @@ public class Knight  extends Piece  {
     public String getName() {
         return "Kn";
     }
+    @Override
+    public String getImage(){
+        return  "img/Pieces/Knight";
+    }
 }

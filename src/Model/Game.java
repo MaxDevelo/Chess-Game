@@ -6,9 +6,13 @@ import java.util.List;
 public class Game {
     private boolean _endGame;
     private List<Player> _players;
+    private Player _currentPlayerPlay;
     public Game(){
         this._players = new ArrayList<>();
     }
+    /*
+        stocker le joueur
+    */
     public void setPlayer(Player player){
         this._players.add(player);
     }
@@ -21,10 +25,13 @@ public class Game {
     public boolean getEndGame(){
         return this._endGame;
     }
-    public void displayScores(){
-
+    /*
+    Stocker le joueur qui est entrain de joueur
+    */
+    public void setPlayerPlay(Player currentPlayerPlay){
+        this._currentPlayerPlay = currentPlayerPlay;
     }
-    public void playGame(){
-
+    public Player getPlayerPlay(){
+        return _currentPlayerPlay;
     }
 }

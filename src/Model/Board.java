@@ -15,6 +15,10 @@ public class Board {
         this._validSquares = new ArrayList<>();
     }
 
+    /*
+        Génération des pièces
+    */
+
     public Square[][]  generatePiece(Square[][] board){
 
         PieceFactory createPiece = new PieceFactory();
@@ -61,16 +65,24 @@ public class Board {
         return board;
     }
 
+    /*
+        stocker une case
+    */
     public void setSquare(Square square, int row, int column){
         this._board[row][column] = square;
     }
 
+    /*
+    récupérer une case
+    */
     public Square getSquare(JButton btnPiece){
         return  this._board[btnPiece.getParent().getLocation().y / 100][btnPiece.getParent().getLocation().x / 100];
     }
     public Square[][] getBoard(){
         return this._board;
     }
+
+
     public void setCurrentPiece(Piece piece){
         this._currentPiece = piece;
     }
@@ -80,6 +92,9 @@ public class Board {
     public List<Square> getValidSquares(){
         return this._validSquares;
     }
+    /*
+        Vérifier sur quelles cases la pièce peut aller.
+    */
     public void setValidSquares(Square square){
         this._validSquares.clear();
         for(int l = 0; l<8; l++) {
@@ -91,13 +106,7 @@ public class Board {
         }
 
     }
-    public void moveAt(Square square, int pnlRow, int pnlColumn){
-        if(_board[square.getRow()][square.getColumn()].getPiece() != null && _board[square.getRow()][square.getColumn()].getPiece().getColor() != square.getPiece().getColor()){
-            attack(_board[square.getRow()][square.getColumn()]);
-        }
-        _board[square.getRow()][square.getColumn()].setPiece(null);
-        _board[pnlRow][pnlColumn].setPiece(this.getCurrentPiece());
-    }
+
     public void setBoard(Square[][] board){
         this._board = board;
     }

@@ -18,4 +18,8 @@ public class King  extends Piece {
     public String getName() {
         return "K";
     }
+    @Override
+    public String getImage(){
+        return  "img/Pieces/King";
+    }
 }

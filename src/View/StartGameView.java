@@ -21,7 +21,8 @@ public class StartGameView extends JFrame {
 
         JPanel panel = new JPanel();
         panel.setPreferredSize(new Dimension(200, 50));;
-        // Créer automatiquement des espaces vide
+
+        // Mise en place de "l'inscription"
 
         JLabel lblJoueur1 = new JLabel("Nom joueur 1: ", JLabel.TRAILING);
         JLabel lblJoueur2 = new JLabel("Nom joueur 2: ", JLabel.TRAILING);
@@ -39,7 +40,7 @@ public class StartGameView extends JFrame {
         lblJoueur2.setFont(new Font("Verdana", Font.PLAIN, 18));
         _txtFieldJoueur2.setFont(new Font("Verdana", Font.PLAIN, 18));
 
-
+        // Mise en place du bouton pour jouer
         JButton btnPlay = new JButton("Commencer la partie");
         btnPlay.setSize(20, 100);
 
@@ -49,7 +50,6 @@ public class StartGameView extends JFrame {
                 playGame();
             }
         });
-
 
 
         String[] optionsToChoose = {"BLACK", "WHITE"};
@@ -65,18 +65,18 @@ public class StartGameView extends JFrame {
         constraints.anchor = GridBagConstraints.WEST;
         constraints.insets = new Insets(100, 100, 100, 100);
 
-         constraints.gridx = 0;
-         constraints.gridy = 0;
-         newPanel.add(lblJoueur1, constraints);
-         constraints.gridx = 1;
-         newPanel.add(_txtFieldJoueur1, constraints);
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        newPanel.add(lblJoueur1, constraints);
+        constraints.gridx = 1;
+        newPanel.add(_txtFieldJoueur1, constraints);
 
-         constraints.gridx = 1;
-         constraints.gridy = 1;
-         newPanel.add(lblJoueur2, constraints);
-         constraints.gridx = 2;
-         newPanel.add(_txtFieldJoueur2, constraints);
-         constraints.gridwidth = 8;
+        constraints.gridx = 1;
+        constraints.gridy = 1;
+        newPanel.add(lblJoueur2, constraints);
+        constraints.gridx = 2;
+        newPanel.add(_txtFieldJoueur2, constraints);
+        constraints.gridwidth = 8;
 
         constraints.gridx = 3;
         newPanel.add(jComboBox, constraints);
@@ -86,15 +86,8 @@ public class StartGameView extends JFrame {
 
         constraints.gridx = 0;
         constraints.gridy = 3;
-
-
         constraints.anchor = GridBagConstraints.CENTER;
         newPanel.add(btnPlay, constraints);
-
-
-
-
-
 
         newPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Jouer"));
 
@@ -114,15 +107,21 @@ public class StartGameView extends JFrame {
         this._controller = controller;
     }
 
+    /*
+    * Lancement de la aprtie
+    * */
     public void playGame(){
-        if(_txtFieldJoueur1.getText() .length() >= 4 && _txtFieldJoueur2.getText() .length() >= 4){
-            System.out.println(_txtFieldJoueur1.getText() + " " + jComboBox.getItemAt(jComboBox.getSelectedIndex()) + "\n"
-                    + _txtFieldJoueur2.getText() + " " + jComboBox2.getItemAt(jComboBox2.getSelectedIndex()));
+        // On vérifie si les nom sont au dessus de 4 caractères et en dessous de 14 caractères
+        if(_txtFieldJoueur1.getText().length() >= 4 && _txtFieldJoueur1.getText().length() <= 20 && _txtFieldJoueur2.getText().length() <= 20 && _txtFieldJoueur2.getText() .length() >= 4){
+            // On vérifie que les 2 joueurs n'ont pas la meme couleur
             if(!jComboBox.getItemAt(jComboBox.getSelectedIndex()).equals(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()))){
                 Color colorTeam1 = (jComboBox.getItemAt(jComboBox.getSelectedIndex()).equals("BLACK")) ? Color.BLACK : Color.WHITE;
                 Color colorTeam2 = (jComboBox2.getItemAt(jComboBox2.getSelectedIndex()).equals("BLACK")) ? Color.BLACK : Color.WHITE;
+                // On met en place la partie
                 this._controller.newGame(_txtFieldJoueur1.getText(), _txtFieldJoueur2.getText(), colorTeam1, colorTeam2);
+                // On génère le plateau
                 this._controller.generatedBoard();
+                // lancement de la vue du plateau
                 new BoardView(this._controller);
             }
         }

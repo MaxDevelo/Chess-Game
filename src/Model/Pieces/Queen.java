@@ -6,6 +6,7 @@ import Model.Square;
 
 public class Queen  extends Piece {
 
+
     private final Color _color;
 
     public Queen(Color color) {
@@ -22,5 +23,9 @@ public class Queen  extends Piece {
     @Override
     public String getName() {
         return "Q";
+    }
+    @Override
+    public String getImage(){
+        return  "img/Pieces/Queen";
     }
 }

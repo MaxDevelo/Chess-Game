@@ -17,6 +17,7 @@ public abstract class Piece {
 
     public abstract Boolean canMove(Square square, Square currentSquare);
     public abstract String getName();
+    public abstract String getImage();
 
 
 }

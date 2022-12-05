@@ -36,4 +36,8 @@ public class Pawn  extends Piece {
     public String getName() {
         return "P";
     }
+    @Override
+    public String getImage(){
+        return  "img/Pieces/Pawn";
+    }
 }

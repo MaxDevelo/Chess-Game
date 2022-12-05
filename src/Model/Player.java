@@ -19,21 +19,27 @@ public class Player {
     public int getScore(){
         return _score;
     }
+    // Défini son score
     public void setScore(int score){
-        this._score = score;
+        this._score += score;
     }
+    // Initialise le nom du joueur
     public void setName(String name){
         this._name = name;
     }
+    // Récupération du nom du joueur
     public String getName(){
         return this._name;
     }
+    // Récupération de la couleur (de sa TEAM)
     public Color getColor(){
         return this._colorTeam;
     }
+    // Stocke les pièces capturé
     public void addPieceCaptured(Piece piece){
         this._piecesCaptured.add(piece);
     }
+    // Permet de savoir qui doit joueur
     public void isTurn(Boolean canplay){
         this._canPlay = canplay;
     }
