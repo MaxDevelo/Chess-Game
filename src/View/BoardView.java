@@ -252,6 +252,7 @@ public class BoardView extends JFrame{
                 }
             }
         }
+        this._attack = false;
 
     }
 

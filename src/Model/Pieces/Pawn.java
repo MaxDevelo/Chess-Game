@@ -12,22 +12,8 @@ public class Pawn  extends Piece {
     @Override
     public Boolean canMove(Square square, Square currentSquare) {
 
-        int currentRow = currentSquare.getRow();
-        int currentColumn = currentSquare.getColumn();
-        int row = square.getRow();
-        int column = square.getColumn();
-        if(this.getColor() == Model.Color.WHITE) {
-            if((row == currentRow-1 && currentColumn == column) && square.getPiece() == null ||
-                    ((row == currentRow-1) && (currentColumn-1 == column))  && square.getPiece() != null && square.getPiece().getColor() != this.getColor() ||
-                    ((row == currentRow-1) && (currentColumn+1 == column))  && square.getPiece() != null  && square.getPiece().getColor() != this.getColor()){
-                return true;
-            }
-        }else{
-            if((row == currentRow+1 && currentColumn == column)&& square.getPiece() == null ||
-                    ((row == currentRow+1) && (currentColumn-1 == column))  && square.getPiece() != null   && square.getPiece().getColor() != this.getColor()||
-                    ((row == currentRow+1) && (currentColumn+1 == column))  && square.getPiece() != null  && square.getPiece().getColor() != this.getColor()){
-                return true;
-            }
+        if(up(square, currentSquare) || left(square, currentSquare) || right(square, currentSquare)){
+            return true;
         }
         return false;
     }
@@ -39,5 +25,53 @@ public class Pawn  extends Piece {
     @Override
     public String getImage(){
         return  "img/Pieces/Pawn";
+    }
+
+    @Override
+    public Boolean up(Square square, Square currentSquare) {
+        if(this.getColor() == Model.Color.BLACK) {
+          return  (square.getRow() == currentSquare.getRow() + 1
+                  && currentSquare.getColumn() == square.getColumn())
+                  && square.getPiece() == null;
+        }else {
+            return (square.getRow() == currentSquare.getRow() - 1
+                    && currentSquare.getColumn() == square.getColumn())
+                    && square.getPiece() == null;
+        }
+    }
+
+    @Override
+    public Boolean down(Square square, Square currentSquare) {
+        return  false;
+    }
+
+    @Override
+    public Boolean left(Square square, Square currentSquare) {
+        if(this.getColor() == Model.Color.BLACK) {
+            return   ((square.getRow() == currentSquare.getRow()+1)
+                    && (currentSquare.getColumn()-1 == square.getColumn()))
+                    && square.getPiece() != null
+                    && square.getPiece().getColor() != this.getColor();
+        }else {
+            return ((square.getRow() == currentSquare.getRow()-1)
+                    && (currentSquare.getColumn()-1 == square.getColumn()))
+                    && square.getPiece() != null
+                    && square.getPiece().getColor() != this.getColor();
+        }
+    }
+
+    @Override
+    public Boolean right(Square square, Square currentSquare) {
+        if(this.getColor() == Model.Color.BLACK) {
+            return   ((square.getRow() == currentSquare.getRow()+1)
+                    && (currentSquare.getColumn()+1 == square.getColumn()))
+                    && square.getPiece() != null
+                    && square.getPiece().getColor() != this.getColor();
+        }else {
+            return ((square.getRow() == currentSquare.getRow()-1)
+                    && (currentSquare.getColumn()+1 == square.getColumn()))
+                    && square.getPiece() != null
+                    && square.getPiece().getColor() != this.getColor();
+        }
     }
 }
