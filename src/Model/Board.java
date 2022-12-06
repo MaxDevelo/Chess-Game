@@ -96,7 +96,6 @@ public class Board {
         Vérifier sur quelles cases la pièce peut aller.
     */
     public void setValidSquares(Square square){
-        this._validSquares.clear();
         for(int l = 0; l<8; l++) {
             for (int c = 0; c < 8; c++) {
                 if(square.getPiece().canMove(_board[l][c], square)){ // == true
@@ -104,20 +103,66 @@ public class Board {
                 }
             }
         }
-
     }
-
+    public void clearValidSquare(){ // On rénitialise la liste des cases validés
+        this._validSquares.clear();
+    }
+    /*
+    * On vérifie si il y a promotion de la pièce
+    * */
+    public Boolean isPromoted(Square square){
+        if(square.getPiece() != null){
+            if(square.getPiece().getName().equals("P")){
+                if(square.getPiece().getColor() == Color.BLACK){
+                    if(square.getRow() == 7){
+                        return true;
+                    }
+                }else{
+                    if(square.getRow() == 0){
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        return false;
+    }
+    /*
+    * Changement de pièce (Attention, cela est harcodé)
+    * */
+    public void promotion(Square square){
+        Square[][] board = _board;
+        PieceFactory changePiece = new PieceFactory();
+        if(square.getPiece().getColor() == Color.BLACK){
+            board[square.getRow()][square.getColumn()].setPiece(changePiece.createKnight(Model.Color.BLACK)); // CREATION CAVALIER
+        }else{
+            board[square.getRow()][square.getColumn()].setPiece(changePiece.createKnight(Model.Color.WHITE)); // CREATION CAVALIER
+        }
+        setBoard(board);
+    }
     public void setBoard(Square[][] board){
         this._board = board;
     }
+    /*
+        On attaque la pièce en la mettant à null
+     */
     public void attack(Square square){
         square.setPiece(null); // Pièce supprimé
+        /*
+        * METTRE LA PEICE CAPTURE DANS LA LISTE DES PEICES CAPTURE PAR LE JOUEUR
+        * */
     }
     public Boolean isCHeck(){
 
         return false;
     }
     public Boolean isCheckMate(){
+        return false;
+    }
+    public Boolean verifCanMove(Square square){
+        if((square.getColumn() >=0 && square.getRow() <=7 )|| (square.getRow() >=0 && square.getColumn() <=7)){
+            return true;
+        }
         return false;
     }
 }

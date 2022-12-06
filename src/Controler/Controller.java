@@ -72,9 +72,13 @@ public class Controller {
             cursor++;
         }
     }
+    /*
+    * Fonction qui met à jour le tableau 2d de cases suite au mouvement de la pièce
+    * */
     public void moveAt(Square square, int pnlRow, int pnlColumn){
         Square[][] board = _board.getBoard();
         if(board[pnlRow][pnlColumn].getPiece() != null && board[pnlRow][pnlColumn].getPiece().getColor() != square.getPiece().getColor()){
+            _board.attack(board[square.getRow()][square.getColumn()]);
             // On donne des points.
             if(board[pnlRow][pnlColumn].getPiece().getName().equals("P")){
                 updateScore(1); // 1 POINT
@@ -89,13 +93,15 @@ public class Controller {
             }else{
                 // ROI CAPTURE.
             }
-            _board.attack(board[square.getRow()][square.getColumn()]);
         }
         board[square.getRow()][square.getColumn()].setPiece(null);
         board[pnlRow][pnlColumn].setPiece(_board.getCurrentPiece());
         _board.setBoard(board);
     }
 
+    /*
+    * Fonction qui met à jour le score du joueur
+    * */
 
     public void updateScore(int score){
         int cursor = 0;

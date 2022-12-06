@@ -34,6 +34,7 @@ package Model{
     + attack(square: Square)
     + setBoard(board: Square[*])
     + promotion(square: Square)
+    + isPromoted(square: Square): Boolean
     + isCheck(): Boolean
     + isCheckMate(): Boolean
     }
@@ -180,11 +181,14 @@ class StartGameView{
     + playGame()
 }
 class  BoardView{
+    - _attack: Boolean
     + BoardView(controller: Controller)
-    + generatedPiece()
+    + generatedPieceUI()
     + reloadSquareColor()
     + piecesCapturedUI()
+    + createPieceUI(l: Integer, c: Integer)
     + generatedBoardUI()
+    + selectPiecesPromotion()
     + movePiece()
 }
 class EndGameView{

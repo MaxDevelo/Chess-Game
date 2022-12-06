@@ -47,10 +47,10 @@ public class BoardView extends JFrame{
         // Génération du plateau de jeux
         generatedBoardUI(chessApp);
 
-        // Génération des colones où on pourra voir le score et les pièces capturées
+        // Génération des colonnes où on pourra voir le score et les pièces capturées
         piecesCapturedUI(chessApp);
 
-        generatedPiece(); // Générer les pièces
+        generatedPieceUI(); // Générer les pièces
         add(chessApp);
         setVisible(true);
         setResizable(false);
@@ -162,33 +162,36 @@ public class BoardView extends JFrame{
         pnl_board.setPreferredSize(new Dimension(800, 800));
         chessApp.add(pnl_board, BorderLayout.CENTER);
     }
-    public void generatedPiece(){
+    public void generatedPieceUI(){
         for(int l = 0; l<8; l++) {
             for (int c = 0; c < 8; c++) {
                 if(_board.getBoard()[l][c].getPiece() != null){
-                    ImageIcon imageIcon;
-                    imageIcon = new ImageIcon(new ImageIcon(_board.getBoard()[l][c].getPiece().getImage()
-                            + ((_board.getBoard()[l][c].getPiece().getColor() == BLACK) ? "_Black.png" : "_White.png")
-                            ).getImage().getScaledInstance(60, 80, Image.SCALE_DEFAULT));
-                    JButton btnPiece = new JButton();
-                    btnPiece.setOpaque(false);
-                    btnPiece.setContentAreaFilled(false);
-                    btnPiece.setBorderPainted(false);
-                    btnPiece.setIcon(imageIcon);
-                    btnPiece.setName(_board.getBoard()[l][c].getPiece().getName());
-                    btnPiece.setSize( 100, 100);
-                    _panels[l][c].add(btnPiece);
-                    btnPiece.addMouseListener(new MouseAdapter() {
-                        public void mousePressed(MouseEvent e) {
-                            validMove(btnPiece);
-
-                        }
-                    });
-                    _panels[l][c].add(btnPiece);
+                    createPieceUI(l, c);
                 }
             }
         }
 
+    }
+
+    public void createPieceUI(int l, int c){
+        ImageIcon imageIcon;
+        imageIcon = new ImageIcon(new ImageIcon(_board.getBoard()[l][c].getPiece().getImage()
+                + ((_board.getBoard()[l][c].getPiece().getColor() == BLACK) ? "_Black.png" : "_White.png")
+        ).getImage().getScaledInstance(60, 80, Image.SCALE_DEFAULT));
+        JButton btnPiece = new JButton();
+        btnPiece.setOpaque(false);
+        btnPiece.setContentAreaFilled(false);
+        btnPiece.setBorderPainted(false);
+        btnPiece.setIcon(imageIcon);
+        btnPiece.setName(_board.getBoard()[l][c].getPiece().getName());
+        btnPiece.setSize( 100, 100);
+        btnPiece.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                validMove(btnPiece);
+
+            }
+        });
+        _panels[l][c].add(btnPiece);
     }
     /*
         Restart les couleurs
@@ -211,49 +214,39 @@ public class BoardView extends JFrame{
     }
 
     public void validMove(JButton btnPiece) {
-        if(_attack){
-            movePiece((JPanel)btnPiece.getParent());
-        }
-        this._attack = false;
-        Player player;
-        if(_controller.getGame().getPlayers().get(0).getCanPlay()){
-            player = _controller.getGame().getPlayers().get(0);
-        }else{
-            player = _controller.getGame().getPlayers().get(1);
-        }
-        this._currentButtonPiece = btnPiece;
-        Square square;
-        if(btnPiece.getParent() != null){
-            if(player.getColor() == _controller.getBoard().getBoard()[btnPiece.getParent().getLocation().y/100][btnPiece.getParent().getLocation().x/100].getPiece().getColor()){
-
-                Boolean btnMove = false; // POUR EVITER QUE LES PIECES NON IMPLEMENTES PEUVENT BOUGER
-
-                if(btnPiece.getName().equals("P")){
-                    square = _board.getSquare(this._currentButtonPiece);
-                    _controller.validMove(square);
-                    btnMove = true; // A ENLEVER
-                }else if(btnPiece.getName().equals("R")) {
-                    square = _board.getSquare(this._currentButtonPiece);
-                    _controller.validMove(square);
-                    btnMove = true; // A ENLEVER
-                }else if(btnPiece.getName().equals("Kn")) {
-                    square = _board.getSquare(this._currentButtonPiece);
-                    _controller.validMove(square);
-                    btnMove = true; // A ENLEVER
-                }else if(btnPiece.getName().equals("Q")) {
-                    square = _board.getSquare(this._currentButtonPiece);
-                    _controller.validMove(square);
-                    btnMove = true; // A ENLEVER
-                }else if(btnPiece.getName().equals("K")) {
-                    square = _board.getSquare(this._currentButtonPiece);
-                    _controller.validMove(square);
-                    btnMove = true; // A ENLEVER
-                }else if(btnPiece.getName().equals("B")) {
-                    square = _board.getSquare(this._currentButtonPiece);
-                    _controller.validMove(square);
-                    btnMove = true; // A ENLEVER
-                }
-                if(btnMove){ // A ENLEVER
+            if(_attack){
+                movePiece((JPanel)btnPiece.getParent());
+            }
+            this._attack = false;
+            Player player;
+            if(_controller.getGame().getPlayers().get(0).getCanPlay()){
+                player = _controller.getGame().getPlayers().get(0);
+            }else{
+                player = _controller.getGame().getPlayers().get(1);
+            }
+            this._currentButtonPiece = btnPiece;
+            Square square;
+            if(btnPiece.getParent() != null){
+                if(player.getColor() == _controller.getBoard().getBoard()[btnPiece.getParent().getLocation().y/100][btnPiece.getParent().getLocation().x/100].getPiece().getColor()){
+                    if(btnPiece.getName().equals("P")){
+                        square = _board.getSquare(this._currentButtonPiece);
+                        _controller.validMove(square);
+                    }else if(btnPiece.getName().equals("R")) {
+                        square = _board.getSquare(this._currentButtonPiece);
+                        _controller.validMove(square);
+                    }else if(btnPiece.getName().equals("Kn")) {
+                        square = _board.getSquare(this._currentButtonPiece);
+                        _controller.validMove(square);
+                    }else if(btnPiece.getName().equals("Q")) {
+                        square = _board.getSquare(this._currentButtonPiece);
+                        _controller.validMove(square);
+                    }else if(btnPiece.getName().equals("K")) {
+                        square = _board.getSquare(this._currentButtonPiece);
+                        _controller.validMove(square);
+                    }else if(btnPiece.getName().equals("B")) {
+                        square = _board.getSquare(this._currentButtonPiece);
+                        _controller.validMove(square);
+                    }
                     for(Square s : _board.getValidSquares()){
                         if(_board.getBoard()[s.getRow()][s.getColumn()].getPiece() != null){
                             _panels[s.getRow()][s.getColumn()].setBackground(Color.RED);
@@ -266,20 +259,33 @@ public class BoardView extends JFrame{
                     }
                 }
             }
-        }
+    }
 
+    /*
+    * Déclanche le choix de selection de 4 peices lors de la promotion
+    * du pion.
+    * */
+    public void selectPiecesPromotion(int row, int column){
+        _panels[row][column].remove(0); // On supprime la pièce pour promevoir
+        createPieceUI(row, column);
     }
 
     public void movePiece(JPanel panel){
         reloadSquareColor();
         for(Square s : _board.getValidSquares()) {
             if(s.getRow() == panel.getLocation().y/100 && s.getColumn() == panel.getLocation().x/100 ){
-               if(_panels[panel.getLocation().y / 100][panel.getLocation().x / 100].getComponents().length == 1){
+                if(_panels[panel.getLocation().y / 100][panel.getLocation().x / 100].getComponents().length == 1){
                     _panels[panel.getLocation().y / 100][panel.getLocation().x / 100].remove(_panels[panel.getLocation().y / 100][panel.getLocation().x / 100].getComponent(0));
                 }
                if(_currentButtonPiece.getParent() != null){
                    _controller.moveAt(_board.getBoard()[_currentButtonPiece.getParent().getLocation().y / 100][_currentButtonPiece.getParent().getLocation().x / 100], panel.getLocation().y / 100, panel.getLocation().x / 100);
                    _panels[panel.getLocation().y / 100][panel.getLocation().x / 100].add(_currentButtonPiece);
+                   // PROMOTION DE LA PIECE (TEST)
+                   if(_board.isPromoted(_board.getBoard()[panel.getLocation().y / 100][panel.getLocation().x / 100])){
+                       System.out.println("PROMOTION DE LA PIECE");
+                       _board.promotion(_board.getBoard()[panel.getLocation().y / 100][panel.getLocation().x / 100]);
+                       selectPiecesPromotion(panel.getLocation().y/100, panel.getLocation().x/100);
+                   }
                }
 
                 if(_controller.getGame().getPlayerPlay().getColor() == BLACK){
@@ -296,9 +302,9 @@ public class BoardView extends JFrame{
 
             }
         }
+        _board.clearValidSquare();
 
     }
-
 
 
 }

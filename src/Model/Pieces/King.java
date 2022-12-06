@@ -53,24 +53,28 @@ public class King  extends Piece {
 
     @Override
     public Boolean left(Square square, Square currentSquare) {
-        if(square.getRow() == currentSquare.getRow() && square.getColumn() == currentSquare.getColumn()-1){ // LEFT
-            return true;
-        }else if(square.getRow() == currentSquare.getRow()+1 && square.getColumn() == currentSquare.getColumn()-1){
-            return true;
-        }else if(square.getRow() == currentSquare.getRow()-1 && square.getColumn() == currentSquare.getColumn()-1){
-            return true;
+        if(square.getColumn() == currentSquare.getColumn()-1){
+            if(square.getRow() == currentSquare.getRow()){ // LEFT
+                return true;
+            }else if(square.getRow() == currentSquare.getRow()+1){
+                return true;
+            }else if(square.getRow() == currentSquare.getRow()-1){
+                return true;
+            }
         }
         return false;
     }
 
     @Override
     public Boolean right(Square square, Square currentSquare) {
-        if(square.getRow() == currentSquare.getRow() && square.getColumn() == currentSquare.getColumn()+1){ // RIGHT
-            return true;
-        }else if(square.getRow() == currentSquare.getRow()-1 && square.getColumn() == currentSquare.getColumn()+1){
-            return true;
-        }else if(square.getRow() == currentSquare.getRow()+1 && square.getColumn() == currentSquare.getColumn()+1){
-            return true;
+        if(square.getColumn() == currentSquare.getColumn()+1){
+            if(square.getRow() == currentSquare.getRow()){ // RIGHT
+                return true;
+            }else if(square.getRow() == currentSquare.getRow()-1){
+                return true;
+            }else if(square.getRow() == currentSquare.getRow()+1){
+                return true;
+            }
         }
         return false;
     }
