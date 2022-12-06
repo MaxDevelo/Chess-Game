@@ -34,7 +34,7 @@ public class BoardView extends JFrame{
         this._controller = controller;
         this._attack = false;
         setSize(1680,880);
-        // Barre d'outil
+
         pnl_board = new JPanel();
 
         // Création de l'interface de jeu
@@ -213,8 +213,8 @@ public class BoardView extends JFrame{
     public void validMove(JButton btnPiece) {
         if(_attack){
             movePiece((JPanel)btnPiece.getParent());
-            this._attack = false;
         }
+        this._attack = false;
         Player player;
         if(_controller.getGame().getPlayers().get(0).getCanPlay()){
             player = _controller.getGame().getPlayers().get(0);
@@ -233,6 +233,10 @@ public class BoardView extends JFrame{
                     _controller.validMove(square);
                     btnMove = true; // A ENLEVER
                 }else if(btnPiece.getName().equals("R")) {
+                    square = _board.getSquare(this._currentButtonPiece);
+                    _controller.validMove(square);
+                    btnMove = true; // A ENLEVER
+                }else if(btnPiece.getName().equals("Kn")) {
                     square = _board.getSquare(this._currentButtonPiece);
                     _controller.validMove(square);
                     btnMove = true; // A ENLEVER

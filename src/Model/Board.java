@@ -113,4 +113,11 @@ public class Board {
     public void attack(Square square){
         square.setPiece(null); // Pièce supprimé
     }
+    public Boolean isCHeck(){
+
+        return false;
+    }
+    public Boolean isCheckMate(){
+        return false;
+    }
 }

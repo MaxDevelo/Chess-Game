@@ -3,6 +3,8 @@ package Model.Pieces;
 import Model.Color;
 import Model.Square;
 
+import static javax.swing.text.SimpleAttributeSet.EMPTY;
+
 public class Rook extends Piece {
     private Square lastSquareColumnUp, lastSquareColumnDown, lastSquareRowRight , lastSquareRowLeft;
 
@@ -16,7 +18,7 @@ public class Rook extends Piece {
 
     @Override
     public Boolean canMove(Square square, Square currentSquare) {
-        if (currentSquare.getRow() == square.getRow()) { // Bouger Horizontalement
+       if (currentSquare.getRow() == square.getRow()) { // Bouger Horizontalement
                 if (currentSquare.getColumn() <  square.getColumn()) { // Vers la DROITE
                     return right(square, currentSquare);
               }else{ // Vers la GAUCHE
@@ -29,7 +31,8 @@ public class Rook extends Piece {
                     return up(square, currentSquare);
                 }
         }
-        return false;
+
+        return true;
     }
 
     @Override
