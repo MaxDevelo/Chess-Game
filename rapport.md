@@ -1,3 +1,4 @@
+**RAPPORT DU RENDU 1**
 
 - Utilisation d'une Factory pour les types de pions (une classe Piece puis sous-classe Roi, Reine, Cavalier...)
 - Pour le plateau : class Square avec un attribut ligne colonne et Piece. Ligne et colonne nous permettent de connaitre la position d'une pièce et de déterminer où est ce qu'elle peut se déplacer.
@@ -35,5 +36,15 @@ Implémentation du mouvement des pièces pour:
 Les mouvements des pièces non implémentées:
 - Bishop (Fou)
 - Rook (Tour)
+
+Mise à par de la création des pièces graphique dans createPieceUI afin
+de pouvoir gérer le changement de pièces lors de la promotion?
+Implémentation de la promotion du pion. _**On l'a fais en mode teste en changeant directement en cavalier**_.
+Codage de la:
+- Fonction idPromoted pour vérifier si on peut promovoir le Pion et que la pièce est un Pion.
+- Fonction promotion afin de changer de type la pièce dans le tableau 2D de case.
+- Dans la Vue, mise en place de selectPiecesPromotion pour choisir sa pièce.
+
+Il faudra faire un petit ùenud éroulant pour choisir entre Cavalier, Reine, Fou et Tour.
 
 
