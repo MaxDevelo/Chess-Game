@@ -30,12 +30,12 @@ Séparer le code en petite fonction (haut, bas, gauche, droite).
 Implémentation du mouvement des pièces pour:
 - Pawn (Pion)
 - King (Roi)
-- Queen (Reine)
 - Knight (Cavalier)
 
 Les mouvements des pièces non implémentées:
 - Bishop (Fou)
 - Rook (Tour)
+- Queen (Reine)
 
 Mise à par de la création des pièces graphique dans createPieceUI afin
 de pouvoir gérer le changement de pièces lors de la promotion?
