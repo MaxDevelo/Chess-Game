@@ -18,6 +18,10 @@ public abstract class Piece {
     public abstract Boolean canMove(Square square, Square currentSquare);
     public abstract String getName();
     public abstract String getImage();
+    public abstract Boolean up(Square square, Square currentSquare);
+    public abstract Boolean down(Square square, Square currentSquare);
+    public abstract Boolean left(Square square, Square currentSquare);
+    public abstract Boolean right(Square square, Square currentSquare);
 
 
 }

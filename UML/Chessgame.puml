@@ -25,15 +25,17 @@ package Model{
     class Board{
     + Board()
     + generatePiece(board: Square[]): Square[]
-    + getValidSquares(): Square[*]
+    + getValidSquares(): Square[]
     + setSquare(square: Square, row: Integer, column: Integer)
     + getSquare(): Square
     + getSquare(row: Integer, column: Integer): Square
     + setValidSquares(square: Square)
-    + getValidSquares(): Square[*]
+    + getValidSquares(): Square[]
     + attack(square: Square)
     + setBoard(board: Square[*])
     + promotion(square: Square)
+    + isCheck(): Boolean
+    + isCheckMate(): Boolean
     }
 
 
@@ -42,7 +44,7 @@ package Model{
     - _endGame: Boolean
     + Game()
     + setPlayer(Player player);
-    + getPlayers(): Player[*]
+    + getPlayers(): Player[]
     + setEndGame(endGame: Boolean)
     + getEndGame(): Boolean
     + setPlayerPlay(currentPlayerPlay: Player)
@@ -86,10 +88,14 @@ package Model{
     }
 
     abstract Piece{
-    + Piece(isWhite: Boolean)
+    + Piece(isWhite: Color)
     + getColor(): Color
     + {abstract}getName(): String
     + {abstract}canMove(square: Square, currentSquare: Square): Boolean
+    + {abstract}up(square: Square, currentSquare: Square): boolean
+    + {abstract}down(square: Square, currentSquare: Square): boolean
+    + {abstract}left(square: Square, currentSquare: Square): boolean
+    + {abstract}right(square: Square, currentSquare: Square): boolean
     }
 
     class Pawn{
@@ -97,36 +103,60 @@ package Model{
     + getName(): String
     + isPromoted()
     + canMove(square: Square, currentSquare: Square): Boolean
+    + {abstract}up(square: Square, currentSquare: Square): boolean
+    + {abstract}down(square: Square, currentSquare: Square): boolean
+    + {abstract}left(square: Square, currentSquare: Square): boolean
+    + {abstract}right(square: Square, currentSquare: Square): boolean
     }
 
     class King{
     + King(color: Color)
     + getName(): String
     + canMove(square: Square, currentSquare: Square): Boolean
+    + {abstract}up(square: Square, currentSquare: Square): boolean
+    + {abstract}down(square: Square, currentSquare: Square): boolean
+    + {abstract}left(square: Square, currentSquare: Square): boolean
+    + {abstract}right(square: Square, currentSquare: Square): boolean
     }
 
     class Rook{
     + Rook(color: Color)
     + getName(): String
     + canMove(square: Square, currentSquare: Square): Boolean
+    + {abstract}up(square: Square, currentSquare: Square): boolean
+    + {abstract}down(square: Square, currentSquare: Square): boolean
+    + {abstract}left(square: Square, currentSquare: Square): boolean
+    + {abstract}right(square: Square, currentSquare: Square): boolean
     }
 
     class Bishop{
     + Bishop(color: Color)
     + getName(): String
     + canMove(square: Square, currentSquare: Square): Boolean
+    + {abstract}up(square: Square, currentSquare: Square): boolean
+    + {abstract}down(square: Square, currentSquare: Square): boolean
+    + {abstract}left(square: Square, currentSquare: Square): boolean
+    + {abstract}right(square: Square, currentSquare: Square): boolean
     }
 
     class Queen{
     + Queen(color: Color)
     + getName(): String
     + canMove(square: Square, currentSquare: Square): Boolean
+    + {abstract}up(square: Square, currentSquare: Square): boolean
+    + {abstract}down(square: Square, currentSquare: Square): boolean
+    + {abstract}left(square: Square, currentSquare: Square): boolean
+    + {abstract}right(square: Square, currentSquare: Square): boolean
     }
 
     class Knight{
     + Knight(color: Color)
     + getName(): String
     + canMove(square: Square, currentSquare: Square): Boolean
+    + {abstract}up(square: Square, currentSquare: Square): boolean
+    + {abstract}down(square: Square, currentSquare: Square): boolean
+    + {abstract}left(square: Square, currentSquare: Square): boolean
+    + {abstract}right(square: Square, currentSquare: Square): boolean
     }
 
 }
@@ -137,11 +167,9 @@ class Controller{
     + Controller()
     + newGame()
     + generatedBoard()
-    + getBoard(): Board
-    + getGame(): Game
     + moveAt(square: Square, pnlRow: Integer, pnlColumn: Integer)
     + turnGame(player1: Player, player2: Player)
-    + displayScore(score: Integer)
+    + updateScore(score: Integer)
 }
 
 }
@@ -175,8 +203,9 @@ EndGameView o---> "1 \n -_controller\n" Controller: Own >
 App ..> Controller : <<create>>
 App ..> StartGameView : <<create>>
 
-Controller *--> "0..1 \n -_game\n" Game: > compose
-Controller *--> "0..1 \n -_board\n" Board: > compose
+Controller  "0..1 \n -_game\n" o---> Game: > Own
+Controller "0..1 \n -_board\n" o-->  Board: > Own
+
 
 PieceFactory ..> Pawn : <<use>>
 PieceFactory ..> King : <<use>>
@@ -187,8 +216,7 @@ PieceFactory ..> Knight : <<use>>
 PieceFactory ..> Piece : <<use>>
 Board ..> PieceFactory : <<use>>
 
-Board o--> "64 \n -_boardSquare" Square: > Owns
-Board ..> Square : <<use>>
+Board *--> "64 \n -_boardSquare" Square: < Compose
 
 Pawn --|> Piece
 King --|> Piece
@@ -197,12 +225,12 @@ Bishop --|> Piece
 Queen --|> Piece
 Knight --|> Piece
 
-Game o--> "2 \n -_currentPlayerPlay\n" Player: > Own
-Game o--> "2 \n -_players\n" Player: > Owns
-Player o--> "0..16 \n -_piecesCaptured\n" Piece: > show
-Square o--> "0..1 \n -_piece\n" Piece: > Owns
 Piece o--> "1 \n -_color\n" Color: Own
-BoardView ..> Board : <<use>>
+Player o-u-> "0..1 \n -_colorPiece\n" Color: > Own
+
+Game "2 \n -_players\n"  *--> Player:  Compose <
+Player  "0..16 \n -_piecesCaptured\n" o--> Piece: > show
+Square o--> "1 \n -_piece\n" Piece: > Owns
 BoardView o--> "0..1 \n -_board\n" Board: show >
 Game ..> Board: <<use>>
 @enduml

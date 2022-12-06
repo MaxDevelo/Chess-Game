@@ -77,15 +77,15 @@ public class Controller {
         if(board[pnlRow][pnlColumn].getPiece() != null && board[pnlRow][pnlColumn].getPiece().getColor() != square.getPiece().getColor()){
             // On donne des points.
             if(board[pnlRow][pnlColumn].getPiece().getName().equals("P")){
-                displayScore(1); // 1 POINT
+                updateScore(1); // 1 POINT
             }else if(board[pnlRow][pnlColumn].getPiece().getName().equals("B")){
-                displayScore(3); // 3 POINTS
+                updateScore(3); // 3 POINTS
             }else if(board[pnlRow][pnlColumn].getPiece().getName().equals("R")){
-                displayScore(5); // 5 POINTS
+                updateScore(5); // 5 POINTS
             }else if(board[pnlRow][pnlColumn].getPiece().getName().equals("kn")){
-                displayScore(3); // 3 POINTS
+                updateScore(3); // 3 POINTS
             }else if(board[pnlRow][pnlColumn].getPiece().getName().equals("Q")){
-                displayScore(9); // 9 POINTS
+                updateScore(9); // 9 POINTS
             }else{
                 // ROI CAPTURE.
             }
@@ -97,7 +97,7 @@ public class Controller {
     }
 
 
-    public void displayScore(int score){
+    public void updateScore(int score){
         int cursor = 0;
         _game.getPlayerPlay().setScore(score);
         for (Player p :  _game.getPlayers()) {

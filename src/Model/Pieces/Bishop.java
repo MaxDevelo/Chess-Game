@@ -25,4 +25,24 @@ public class Bishop extends Piece {
         return  "img/Pieces/Bishop";
     }
 
+    @Override
+    public Boolean up(Square square, Square currentSquare) {
+        return false;
+    }
+
+    @Override
+    public Boolean down(Square square, Square currentSquare) {
+        return false;
+    }
+
+    @Override
+    public Boolean left(Square square, Square currentSquare) {
+        return false;
+    }
+
+    @Override
+    public Boolean right(Square square, Square currentSquare) {
+        return false;
+    }
+
 }

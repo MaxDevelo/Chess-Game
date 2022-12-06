@@ -24,4 +24,23 @@ public class Knight  extends Piece  {
     public String getImage(){
         return  "img/Pieces/Knight";
     }
+    @Override
+    public Boolean up(Square square, Square currentSquare) {
+        return false;
+    }
+
+    @Override
+    public Boolean down(Square square, Square currentSquare) {
+        return false;
+    }
+
+    @Override
+    public Boolean left(Square square, Square currentSquare) {
+        return false;
+    }
+
+    @Override
+    public Boolean right(Square square, Square currentSquare) {
+        return false;
+    }
 }
