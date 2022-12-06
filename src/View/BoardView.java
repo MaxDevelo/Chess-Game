@@ -248,6 +248,10 @@ public class BoardView extends JFrame{
                     square = _board.getSquare(this._currentButtonPiece);
                     _controller.validMove(square);
                     btnMove = true; // A ENLEVER
+                }else if(btnPiece.getName().equals("B")) {
+                    square = _board.getSquare(this._currentButtonPiece);
+                    _controller.validMove(square);
+                    btnMove = true; // A ENLEVER
                 }
                 if(btnMove){ // A ENLEVER
                     for(Square s : _board.getValidSquares()){

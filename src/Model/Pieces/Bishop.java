@@ -6,13 +6,16 @@ import Model.Square;
 
 public class Bishop extends Piece {
 
+    private Square friendPieceScare;
     public Bishop(Color color) {
         super(color);
+        this.friendPieceScare = null;
     }
+
 
     @Override
     public Boolean canMove(Square square, Square currentSquare) {
-        return null;
+        return false;
     }
 
 
