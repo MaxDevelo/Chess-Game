@@ -10,11 +10,13 @@ public class Player {
     private boolean _canPlay;
     private Color _colorTeam;
     private int _score;
+    private Boolean _isWin;
     private List<Piece> _piecesCaptured;
 
     public Player(){
         this._piecesCaptured = new ArrayList<>();
         this._score = 0;
+        this._isWin = false;
     }
     public int getScore(){
         return _score;
@@ -35,13 +37,21 @@ public class Player {
     public Color getColor(){
         return this._colorTeam;
     }
-    // Stocke les pièces capturé
+
+    /**
+     *  Stocker les pièces capturés
+     * @param piece pièce qui est capturée
+     */
     public void addPieceCaptured(Piece piece){
         this._piecesCaptured.add(piece);
     }
-    // Permet de savoir qui doit joueur
-    public void isTurn(Boolean canplay){
-        this._canPlay = canplay;
+
+    /**
+     *  Permet de tourner la partie
+     * @param canPlay changement d ejoueur
+     */
+    public void isTurn(Boolean canPlay){
+        this._canPlay = canPlay;
     }
     public Boolean getCanPlay(){
         return  this._canPlay;
@@ -51,6 +61,12 @@ public class Player {
     }
     public  List<Piece> getPieceCaptured(){
         return _piecesCaptured;
+    }
+    public void setWin(Boolean isWin){
+        this._isWin = isWin;
+    }
+    public Boolean getWin(){
+        return this._isWin;
     }
 
 }

@@ -111,7 +111,7 @@ package Model{
     class Pawn{
     + Pawn(color: Color)
     + getName(): String
-    + {abstract}getName(): TYpe
+    + {abstract}getName(): Type
     + {abstract}canMove(square: Square, currentSquare: Square): Boolean
     + {abstract}up(square: Square, currentSquare: Square): boolean
     + {abstract}down(square: Square, currentSquare: Square): boolean
@@ -122,7 +122,7 @@ package Model{
 
     class King{
     + King(color: Color)
-    + {abstract}getName(): TYpe
+    + {abstract}getName(): Type
     + {abstract}canMove(square: Square, currentSquare: Square): Boolean
     + {abstract}up(square: Square, currentSquare: Square): boolean
     + {abstract}down(square: Square, currentSquare: Square): boolean
@@ -133,7 +133,7 @@ package Model{
 
     class Rook{
     + Rook(color: Color)
-    + {abstract}getName(): TYpe
+    + {abstract}getName(): Type
     + {abstract}canMove(square: Square, currentSquare: Square): Boolean
     + {abstract}up(square: Square, currentSquare: Square): boolean
     + {abstract}down(square: Square, currentSquare: Square): boolean
@@ -144,7 +144,7 @@ package Model{
 
     class Bishop{
     + Bishop(color: Color)
-    + {abstract}getName(): TYpe
+    + {abstract}getName(): Type
     + {abstract}canMove(square: Square, currentSquare: Square): Boolean
     + {abstract}up(square: Square, currentSquare: Square): boolean
     + {abstract}down(square: Square, currentSquare: Square): boolean
@@ -155,7 +155,7 @@ package Model{
 
     class Queen{
     + Queen(color: Color)
-    + {abstract}getName(): TYpe
+    + {abstract}getName(): Type
     + {abstract}canMove(square: Square, currentSquare: Square): Boolean
     + {abstract}up(square: Square, currentSquare: Square): boolean
     + {abstract}down(square: Square, currentSquare: Square): boolean
@@ -166,7 +166,7 @@ package Model{
 
     class Knight{
     + Knight(color: Color)
-    + {abstract}getName(): TYpe
+    + {abstract}getName(): Type
     + {abstract}canMove(square: Square, currentSquare: Square): Boolean
     + {abstract}up(square: Square, currentSquare: Square): boolean
     + {abstract}down(square: Square, currentSquare: Square): boolean
@@ -233,6 +233,9 @@ PieceFactory ..> Bishop : <<use>>
 PieceFactory ..> Queen : <<use>>
 PieceFactory ..> Knight : <<use>>
 PieceFactory ..> Piece : <<use>>
+
+PieceFactory ..> Pawn : <<use>>
+
 Board ..> PieceFactory : <<use>>
 
 Board *--> "64 \n -_boardSquare" Square: < Compose

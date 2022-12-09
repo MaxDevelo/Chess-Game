@@ -33,13 +33,12 @@ public class BoardView extends JFrame{
         this._facade = controller;
         this._attack = false;
         setSize(1680,840);
-        setBackground(new Color(245, 245, 245));
         pnl_board = new JPanel();
 
         // Création de l'interface de jeu
         JPanel chessApp = new JPanel();
         chessApp.setSize(800,1200);
-        
+        chessApp.setBackground(new Color(48, 66, 36));
         setTitle("Jeu d'échec");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -62,7 +61,6 @@ public class BoardView extends JFrame{
     public void chessPlayersGUI(JPanel chessApp){
         //Pieces capturé par la team White
         JPanel pnlPieceCapturedWhite = new JPanel();
-
         JLabel lbl_title = new JLabel(); // TITRE
         // On récupère le nom du joueur
         if(this._facade.getGame().getPlayers().get(0).getColor() == WHITE){
@@ -222,8 +220,6 @@ public class BoardView extends JFrame{
                     _panels[l][c].getComponent(0).setBackground(new Color(238, 238, 238));
                     _panels[l][c].getComponent(0).repaint();
                 }
-                Border border = BorderFactory.createLineBorder(new Color(245, 245, 245, 1) ,0);
-                _panels[l][c].setBorder(border);
                 _panels[l][c].repaint();
             }
         }
@@ -248,7 +244,7 @@ public class BoardView extends JFrame{
                 if (player.getColor() == _facade.getBoard().getBoard()[btnPiece.getParent().getLocation().y / 100][btnPiece.getParent().getLocation().x / 100].getPiece().getColor()) {
 
                     if (btnPiece.getName().equals("PAWN") || btnPiece.getName().equals("ROOK") || btnPiece.getName().equals("KNIGHT") || btnPiece.getName().equals("QUEEN") || btnPiece.getName().equals("KING") || btnPiece.getName().equals("BISHOP")) {
-                        square = _board.getSquare(this._currentButtonPiece);
+                        square = _board.getSquare(this._currentButtonPiece.getParent().getLocation().y / 100, this._currentButtonPiece.getParent().getLocation().x / 100);
                         _facade.validMove(square);
                     }
                     // BOucle qui permetd e récupérer et afficher les caes où le joueur
@@ -304,18 +300,20 @@ public class BoardView extends JFrame{
         turnGameGUI();
     }
     /*
-     * Génération des bordure afin de savoir quel joueur doit jouer
+     * Changement couleur des cases où sont le pièces afin  de savoir quel joueur doit jouer
      * */
     public void turnGameGUI(){
        for(Player player : _facade.getGame().getPlayers()){
            if(player.getCanPlay()) {
               for(int l=0; l<8; l++){
                   for(int c=0; c<8; c++){
-                      Border border = BorderFactory.createLineBorder(Color.ORANGE, 4);
                       // On vérifie que la pièce n'est pas nul et que les pièces appartiennent au joueur
                       if(_board.getBoard()[l][c].getPiece() != null && player.getColor() == _board.getBoard()[l][c].getPiece().getColor()){
-                          JPanel panel = _panels[l][c];
-                          panel.setBorder(border);
+                          if(_panels[l][c].getBackground() == Color.BLACK){
+                              _panels[l][c].setBackground(Color.DARK_GRAY);
+                          }else{
+                              _panels[l][c].setBackground(Color.GRAY);
+                          }
                       }
                   }
               }
@@ -329,6 +327,7 @@ public class BoardView extends JFrame{
         // Vérificatione échec du roi
         if(_facade.verifyIfCheckKing()){
             new EndGameView(_facade);
+            dispose();
         }
         if(_facade.getGame().getPlayerPlay().getColor() == Model.Color.BLACK){
             _lbl_score_black.setText("Score: " + _facade.getScorePlayer(_facade.getGame().getPlayerPlay()));

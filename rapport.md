@@ -41,11 +41,15 @@ Mise à par de la création des pièces graphique dans createPieceUI afin
 de pouvoir gérer le changement de pièces lors de la promotion?
 Implémentation de la promotion du pion. _**On l'a fais en mode teste en changeant directement en cavalier**_.
 Codage de la:
-- Fonction idPromoted pour vérifier si on peut promovoir le Pion et que la pièce est un Pion.
+- Fonction isPromoted pour vérifier si on peut promovoir le Pion et que la pièce est un Pion.
 - Fonction promotion afin de changer de type la pièce dans le tableau 2D de case.
 - Dans la Vue, mise en place de selectPiecesPromotion pour choisir sa pièce.
 
-Il faudra faire un petit ùenud éroulant pour choisir entre Cavalier, Reine, Fou et Tour.
+Il faudra faire un petit menu déroulant pour choisir entre Cavalier, Reine, Fou et Tour.
 
-Mise en place d'une enumeration des types de pièces et ajout de getScore comme méthode abstraite dans
+Mise en place d'une énumération des types de pièces et ajout de getScore comme méthode abstraite dans
 la classe Piece.
+
+On a eu du mal avec implémentation de la Tour. En effet, celui-ci doit connaitre les obstacles (C'est-à-dire, les pièces qui
+l'entourent.
+Pour l'instant, on a pas eu d'idée, à par récupérer le tableau de case dans celui-ci

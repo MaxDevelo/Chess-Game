@@ -3,6 +3,10 @@ package Model;
 import Model.Pieces.*;
 
 public class PieceFactory {
+    private Square[][] _board;
+    public PieceFactory(Square[][] board){
+        this._board = board;
+    }
     public Pawn createPawn(Color color){
         return new Pawn(color);
     }
@@ -10,7 +14,7 @@ public class PieceFactory {
         return new King(color);
     }
     public Rook createRook(Color color){
-        return new Rook(color);
+        return new Rook(color, _board);
     }
     public Bishop createBishop(Color color){
         return new Bishop(color);

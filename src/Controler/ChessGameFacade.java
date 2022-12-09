@@ -108,17 +108,26 @@ public class ChessGameFacade {
         _board.setBoard(board);
     }
     /*
-    * On vérifie si le Roi est en échec.
+    * On vérifie si le Roi est en échec ou si il est en échec et mate
     * */
     public Boolean verifyIfCheckKing(){
         for(int l = 0; l<8; l++){
             for(int c=0; c<8; c++) {
                     if(_board.getBoard()[l][c].getPiece() != null && _board.getBoard()[l][c].getPiece().getColor() ==  _game.getPlayerPlay().getColor()){
                         _board.setValidSquares(_board.getBoard()[l][c]);
-                        if(_board.isCheck()){
-                            System.out.println("ECHEC DU ROI !");
+                        if(_board.isCheck() || _board.isCheckMate()){
+                            System.out.println("ADIEUX LE ROI !");
                             _game.setEndGame(true);
                             _board.clearValidSquare();
+                            int n=0;
+                            for(Player player: _game.getPlayers()){
+                                if(player == _game.getPlayerPlay()){
+                                    Player updatePlayer = _game.getPlayers().get(n);
+                                    updatePlayer.setWin(true);
+                                    _game.getPlayers().set(n, updatePlayer);
+                                }
+                                n++;
+                            }
                             return true;
                         }
                     }

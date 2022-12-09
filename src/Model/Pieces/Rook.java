@@ -1,74 +1,58 @@
 package Model.Pieces;
 
+import Model.Board;
 import Model.Color;
 import Model.Square;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static javax.swing.text.SimpleAttributeSet.EMPTY;
 
 public class Rook extends Piece {
-    public Rook(Color color) {
+    private Square[][]  _boards;
+    public Rook(Color color, Square[][]  boards) {
         super(color);
+        _boards = boards;
     }
 
     @Override
     public Boolean canMove(Square square, Square currentSquare) {
-        int fromRow = currentSquare.getRow();
-        int fromCol = currentSquare.getColumn();
-        int toRow = square.getRow();
-        int toCol = square.getColumn();
-        int i;
 
-        if (fromRow == toRow && fromCol == toCol)
+        int i;
+        // Si il est sur la meme case alors on renvoie faux
+        if (currentSquare.getRow() == square.getRow() && currentSquare.getColumn() == square.getColumn())
             return false;
 
-        if (fromRow == toRow) {
-            // Horizontal move
-            if (fromCol < toCol) {
-                // Move right
-                for (i = fromCol + 1; i <= toCol; ++i){
-                    if(square.getPiece() != null){
-                        if (currentSquare.getRow() == square.getRow() &&  currentSquare.getColumn() == square.getColumn()+i && square.getPiece().getColor() == currentSquare.getPiece().getColor()){
-                            return false;
-                        }
-                    }
+        // Bouger horizontalement
+        if (currentSquare.getRow() == square.getRow()) {
+            if(currentSquare.getColumn() < square.getColumn()){
+                if(!right(square, currentSquare)){
+                    return false;
                 }
-            } else {
-                // Move left
-                for (i = fromCol - 1; i >= toCol; --i){
-                    if(square.getPiece() != null){
-                        if (currentSquare.getRow() == square.getRow() &&  currentSquare.getColumn() == square.getColumn()+i && square.getPiece().getColor() == currentSquare.getPiece().getColor()){
-                            return false;
-                        }
-                    }
+            }else{
+                if(!left(square, currentSquare)){
+                    return false;
                 }
             }
-        } else if (fromCol == toCol) {
-            // Vertical move
-            if (fromRow < toRow) {
-                // Move down
-                for (i = fromRow + 1; i <= toRow; ++i){
-                    if(square.getPiece() != null) {
-                        if (currentSquare.getRow() == square.getRow()+i &&  currentSquare.getColumn() == square.getColumn() && square.getPiece().getColor() == currentSquare.getPiece().getColor())
-                            return false;
-                    }
+        } else if (currentSquare.getColumn() == square.getColumn()) { // Bouger verticalement
+            if(currentSquare.getRow() < square.getRow()){
+                if(!down(square, currentSquare)){
+                    return false;
                 }
-            } else {
-                // Move up
-                for (i = fromRow - 1; i >= toRow; --i){
-                    if(square.getPiece() != null) {
-                        if (currentSquare.getRow() == square.getRow()+i &&  currentSquare.getColumn() == square.getColumn() && square.getPiece().getColor() == currentSquare.getPiece().getColor())
-                            return false;
-                    }
+            }else{
+                if(!up(square, currentSquare)){
+                    return false;
                 }
             }
         } else {
             return false;
         }
-        if(square.getPiece() != null){
-            if(square.getPiece().getColor() == currentSquare.getPiece().getColor()){
-                return false;
-            }
+        // On vérifie que la pièce n'est pas de la meme couleur que la pièce qu'on vérifie
+        if(square.getPiece() != null && square.getPiece().getColor() == currentSquare.getPiece().getColor()){
+            return false;
         }
+
         return true;
 
     }
@@ -84,22 +68,56 @@ public class Rook extends Piece {
 
     @Override
     public Boolean up(Square square, Square currentSquare) {
-        return false;
+        int i=0;
+        int dy = -1;
+
+        for (i = currentSquare.getRow() + dy; i != square.getRow(); i += dy){
+            if (_boards[i][currentSquare.getColumn()].getPiece() != null){
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Override
     public Boolean down(Square square, Square currentSquare) {
-        return false;
+        int i=0;
+        int dy = 1;
+
+        for (i = currentSquare.getRow() + dy; i != square.getRow(); i += dy){
+            if (_boards[i][currentSquare.getColumn()].getPiece() != null){
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Override
     public Boolean left(Square square, Square currentSquare) {
-        return false;
+        int i = 0;
+        int dx = -1;
+
+        for (i = currentSquare.getColumn() + dx; i != square.getColumn(); i += dx){
+            if (_boards[currentSquare.getRow()][i].getPiece() != null){
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
     public Boolean right(Square square, Square currentSquare) {
-        return false;
+        int i = 0;
+        int dx = 1;
+
+        for (i = currentSquare.getColumn() + dx; i != square.getColumn(); i += dx){
+            if (_boards[currentSquare.getRow()][i].getPiece() != null){
+                return false;
+            }
+        }
+        return true;
     }
     @Override
     public int getScore() {

@@ -16,13 +16,15 @@ public class Board {
         this._validSquares = new ArrayList<>();
     }
 
-    /*
-        Génération des pièces
-    */
-
+    /**
+     *  Génération des pièces dans le tableau de case
+     * @param board tableau de case
+     * @return le tableau de case avec els pièces
+     *  et dont le fils droit et le fils gauche sont vides.
+     */
     public Square[][]  generatePiece(Square[][] board){
 
-        PieceFactory createPiece = new PieceFactory();
+        PieceFactory createPiece = new PieceFactory(_board);
 
         // NOIR
         board[0][0].setPiece(createPiece.createRook(Model.Color.BLACK));
@@ -66,24 +68,41 @@ public class Board {
         return board;
     }
 
-    /*
-        stocker une case
-    */
+
+    /**
+     *  Mettre la case dans le tableau de case
+     * @param square Il s'agit de la case à initialiser
+     * @param row correspond à la ligne de la case
+     * @param column correspond à la colonne de la case
+     */
     public void setSquare(Square square, int row, int column){
         this._board[row][column] = square;
     }
 
-    /*
-    récupérer une case
-    */
-    public Square getSquare(JButton btnPiece){
-        return  this._board[btnPiece.getParent().getLocation().y / 100][btnPiece.getParent().getLocation().x / 100];
+
+    /**
+     *  Récupère la case
+     * @param row correspond à la ligne de la case
+     * @param column correspond à la colonne de la case
+     * @return retourne la case
+     */
+    public Square getSquare(int row, int column){
+        return  this._board[row][column];
     }
+
+    /**
+     *  Retourner le tableau de case
+     * @return retourne le tableau
+     */
     public Square[][] getBoard(){
         return this._board;
     }
 
 
+    /**
+     *  La pièces où l'on joue actuellement
+     * @param piece pièce actuel
+     */
     public void setCurrentPiece(Piece piece){
         this._currentPiece = piece;
     }
@@ -93,9 +112,11 @@ public class Board {
     public List<Square> getValidSquares(){
         return this._validSquares;
     }
-    /*
-        Vérifier sur quelles cases la pièce peut aller.
-    */
+
+    /**
+     *  Vérifier sur quelles cases on peut aller et il le met dans une liste de case
+     * @param square case à vérifier
+     */
     public void setValidSquares(Square square){
         clearValidSquare();
         for(int l = 0; l<8; l++) {
@@ -106,12 +127,19 @@ public class Board {
             }
         }
     }
+
+    /**
+     *  Clear la liste
+     */
     public void clearValidSquare(){ // On rénitialise la liste des cases validés
         this._validSquares.clear();
     }
-    /*
-    * On vérifie si il y a promotion de la pièce
-    * */
+
+    /**
+     *  Gestion de la promotion du Pion
+     * @param square case à vérifier
+     * @return retourne vrai si il y a promotion
+     */
     public Boolean isPromoted(Square square){
         if(square.getPiece() != null){
             if(square.getPiece().getName() == Type.PAWN){
@@ -129,12 +157,14 @@ public class Board {
         }
         return false;
     }
-    /*
-    * Changement de pièce (Attention, cela est harcodé)
-    * */
+
+    /**
+     *  Changement de la pièce (Attention, c'est un test. NON TERMINE
+     * @param square case où l'on a la promotion
+     */
     public void promotion(Square square){
         Square[][] board = _board;
-        PieceFactory changePiece = new PieceFactory();
+        PieceFactory changePiece = new PieceFactory(_board);
         if(square.getPiece().getColor() == Color.BLACK){
             board[square.getRow()][square.getColumn()].setPiece(changePiece.createKnight(Model.Color.BLACK)); // CREATION CAVALIER
         }else{
@@ -145,15 +175,19 @@ public class Board {
     public void setBoard(Square[][] board){
         this._board = board;
     }
-    /*
-        On attaque la pièce en la mettant à null
+
+    /**
+     *  On supprime la pièce de la case attaqué
+     * @param square case où l'on supprime la pièce
      */
     public void attack(Square square){
         square.setPiece(null); // Pièce supprimé
     }
-    /*
-    * Fonction qui vérifie si le roi est en échec
-    * */
+
+    /**
+     *  Vérification si le Roi est en échec
+     * @return retourne vrai s il y a échec
+     */
     public Boolean isCheck(){
         for(int l = 0; l<8; l++) {
             for (int c = 0; c < 8; c++) {
@@ -166,13 +200,17 @@ public class Board {
         }
         return false;
     }
-    /*
-     * Fonction qui vérifie si il y a échec et mate
-     * */
+
+    /**
+     *  Vérification si il y a échec et mate
+     * @return retourne vrai si c'est le cas
+     */
     public Boolean isCheckMate(){
         for(int l = 0; l<8; l++) {
             for (int c = 0; c < 8; c++) {
-                // A COMPLETER
+                for(Square square : this._validSquares){
+                    // A COMPLETER
+                }
             }
         }
         return false;

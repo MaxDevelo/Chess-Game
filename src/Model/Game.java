@@ -10,27 +10,31 @@ public class Game {
     public Game(){
         this._players = new ArrayList<>();
     }
-    /*
-        stocker le joueur
-    */
     public void setPlayer(Player player){
         this._players.add(player);
     }
     public List<Player> getPlayers(){
         return this._players;
     }
+
+    /**
+     *  On update à vrai si le jeu est fini
+     * @param enGame Boolean
+     */
     public void setEndGame(boolean endGame){
         this._endGame = endGame;
     }
     public boolean getEndGame(){
         return this._endGame;
     }
-    /*
-    Stocker le joueur qui est entrain de joueur
-    */
     public void setPlayerPlay(Player currentPlayerPlay){
         this._currentPlayerPlay = currentPlayerPlay;
     }
+
+    /**
+     *  Retourne le joueur qui est entrain de jouer
+     * @return retourne le joueur entrain de jouer
+     */
     public Player getPlayerPlay(){
         return _currentPlayerPlay;
     }
