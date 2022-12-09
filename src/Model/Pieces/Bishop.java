@@ -6,22 +6,34 @@ import Model.Square;
 
 public class Bishop extends Piece {
 
-    private Square friendPieceScare;
     public Bishop(Color color) {
         super(color);
-        this.friendPieceScare = null;
+
     }
 
 
     @Override
     public Boolean canMove(Square square, Square currentSquare) {
+        if(square.getPiece() == null || square.getPiece().getColor() != currentSquare.getPiece().getColor()){
+            for(int i=0; i<8; i++){
+                if(currentSquare.getRow()-i == square.getRow() && currentSquare.getColumn()+i == square.getColumn() ){
+                    return true;
+                }else if(currentSquare.getRow()-i == square.getRow() && currentSquare.getColumn()-i == square.getColumn()){
+                    return true;
+                }else if(currentSquare.getRow()+i == square.getRow() && currentSquare.getColumn()-i == square.getColumn()){
+                    return true;
+                }else  if(currentSquare.getRow()+i == square.getRow() && currentSquare.getColumn()+i == square.getColumn()){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
 
     @Override
-    public String getName() {
-        return "B";
+    public Type getName() {
+        return Type.BISHOP;
     }
     @Override
     public String getImage(){
@@ -46,6 +58,11 @@ public class Bishop extends Piece {
     @Override
     public Boolean right(Square square, Square currentSquare) {
         return false;
+    }
+
+    @Override
+    public int getScore() {
+        return 3;
     }
 
 }

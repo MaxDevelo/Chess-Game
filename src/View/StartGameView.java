@@ -1,20 +1,17 @@
 package View;
 
-import Controler.Controller;
-import Model.Game;
+import Controler.ChessGameFacade;
 import Model.Color;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import static javax.swing.GroupLayout.Alignment.LEADING;
-
 public class StartGameView extends JFrame {
     private JTextField _txtFieldJoueur1, _txtFieldJoueur2;
     private JComboBox<String> jComboBox, jComboBox2;
-    private Controller _controller;
-    public StartGameView(Controller controller){
+    private ChessGameFacade _facade;
+    public StartGameView(ChessGameFacade controller){
         setTitle("Jeu d'échec");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(1000,400);
@@ -104,7 +101,7 @@ public class StartGameView extends JFrame {
         add(panel, BorderLayout.CENTER);
         setVisible(true);
         setResizable(false);
-        this._controller = controller;
+        this._facade = controller;
     }
 
     /*
@@ -118,11 +115,11 @@ public class StartGameView extends JFrame {
                 Color colorTeam1 = (jComboBox.getItemAt(jComboBox.getSelectedIndex()).equals("BLACK")) ? Color.BLACK : Color.WHITE;
                 Color colorTeam2 = (jComboBox2.getItemAt(jComboBox2.getSelectedIndex()).equals("BLACK")) ? Color.BLACK : Color.WHITE;
                 // On met en place la partie
-                this._controller.newGame(_txtFieldJoueur1.getText(), _txtFieldJoueur2.getText(), colorTeam1, colorTeam2);
+                this._facade.newGame(_txtFieldJoueur1.getText(), _txtFieldJoueur2.getText(), colorTeam1, colorTeam2);
                 // On génère le plateau
-                this._controller.generatedBoard();
+                this._facade.generatedBoard();
                 // lancement de la vue du plateau
-                new BoardView(this._controller);
+                new BoardView(this._facade);
             }
         }
     }

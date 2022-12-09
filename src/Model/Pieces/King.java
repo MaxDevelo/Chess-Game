@@ -28,8 +28,8 @@ public class King  extends Piece {
     }
 
     @Override
-    public String getName() {
-        return "K";
+    public Type getName() {
+        return Type.KING;
     }
     @Override
     public String getImage(){
@@ -77,5 +77,9 @@ public class King  extends Piece {
             }
         }
         return false;
+    }
+    @Override
+    public int getScore() {
+        return 0;
     }
 }

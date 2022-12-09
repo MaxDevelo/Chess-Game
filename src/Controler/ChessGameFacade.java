@@ -1,10 +1,12 @@
 package Controler;
 
 import Model.*;
+import Model.Pieces.Type;
 
+import static Model.Color.BLACK;
 import static Model.Color.WHITE;
 
-public class Controller {
+public class ChessGameFacade {
     private Game _game;
     private Board _board;
 
@@ -76,19 +78,26 @@ public class Controller {
     * Fonction qui met à jour le tableau 2d de cases suite au mouvement de la pièce
     * */
     public void moveAt(Square square, int pnlRow, int pnlColumn){
+
         Square[][] board = _board.getBoard();
         if(board[pnlRow][pnlColumn].getPiece() != null && board[pnlRow][pnlColumn].getPiece().getColor() != square.getPiece().getColor()){
+            if(_game.getPlayers().get(0).getCanPlay()){
+                _game.getPlayers().get(0).addPieceCaptured(board[pnlRow][pnlColumn].getPiece());
+            }
+            if(_game.getPlayers().get(1).getCanPlay()){
+                _game.getPlayers().get(1).addPieceCaptured(board[pnlRow][pnlColumn].getPiece());
+            }
             _board.attack(board[square.getRow()][square.getColumn()]);
             // On donne des points.
-            if(board[pnlRow][pnlColumn].getPiece().getName().equals("P")){
+            if(board[pnlRow][pnlColumn].getPiece().getName().equals(Type.PAWN)){
                 updateScore(1); // 1 POINT
-            }else if(board[pnlRow][pnlColumn].getPiece().getName().equals("B")){
+            }else if(board[pnlRow][pnlColumn].getPiece().getName().equals(Type.BISHOP)){
                 updateScore(3); // 3 POINTS
-            }else if(board[pnlRow][pnlColumn].getPiece().getName().equals("R")){
+            }else if(board[pnlRow][pnlColumn].getPiece().getName().equals(Type.ROOK)){
                 updateScore(5); // 5 POINTS
-            }else if(board[pnlRow][pnlColumn].getPiece().getName().equals("kn")){
+            }else if(board[pnlRow][pnlColumn].getPiece().getName().equals(Type.KNIGHT)){
                 updateScore(3); // 3 POINTS
-            }else if(board[pnlRow][pnlColumn].getPiece().getName().equals("Q")){
+            }else if(board[pnlRow][pnlColumn].getPiece().getName().equals(Type.QUEEN)){
                 updateScore(9); // 9 POINTS
             }else{
                 // ROI CAPTURE.
@@ -98,12 +107,31 @@ public class Controller {
         board[pnlRow][pnlColumn].setPiece(_board.getCurrentPiece());
         _board.setBoard(board);
     }
+    /*
+    * On vérifie si le Roi est en échec.
+    * */
+    public Boolean verifyIfCheckKing(){
+        for(int l = 0; l<8; l++){
+            for(int c=0; c<8; c++) {
+                    if(_board.getBoard()[l][c].getPiece() != null && _board.getBoard()[l][c].getPiece().getColor() ==  _game.getPlayerPlay().getColor()){
+                        _board.setValidSquares(_board.getBoard()[l][c]);
+                        if(_board.isCheck()){
+                            System.out.println("ECHEC DU ROI !");
+                            _game.setEndGame(true);
+                            _board.clearValidSquare();
+                            return true;
+                        }
+                    }
+            }
+        }
+        return false;
+    }
 
     /*
-    * Fonction qui met à jour le score du joueur
-    * */
-
+     * Fonction qui met à jour le score du joueur
+     * */
     public void updateScore(int score){
+
         int cursor = 0;
         _game.getPlayerPlay().setScore(score);
         for (Player p :  _game.getPlayers()) {

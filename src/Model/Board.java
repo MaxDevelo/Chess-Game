@@ -1,6 +1,7 @@
 package Model;
 
 import Model.Pieces.Piece;
+import Model.Pieces.Type;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -96,6 +97,7 @@ public class Board {
         Vérifier sur quelles cases la pièce peut aller.
     */
     public void setValidSquares(Square square){
+        clearValidSquare();
         for(int l = 0; l<8; l++) {
             for (int c = 0; c < 8; c++) {
                 if(square.getPiece().canMove(_board[l][c], square)){ // == true
@@ -112,13 +114,13 @@ public class Board {
     * */
     public Boolean isPromoted(Square square){
         if(square.getPiece() != null){
-            if(square.getPiece().getName().equals("P")){
-                if(square.getPiece().getColor() == Color.BLACK){
-                    if(square.getRow() == 7){
+            if(square.getPiece().getName() == Type.PAWN){
+                if(square.getPiece().getColor() == Color.WHITE){
+                    if(square.getRow() == 0){
                         return true;
                     }
                 }else{
-                    if(square.getRow() == 0){
+                    if(square.getRow() == 7){
                         return true;
                     }
                 }
@@ -148,20 +150,30 @@ public class Board {
      */
     public void attack(Square square){
         square.setPiece(null); // Pièce supprimé
-        /*
-        * METTRE LA PEICE CAPTURE DANS LA LISTE DES PEICES CAPTURE PAR LE JOUEUR
-        * */
     }
-    public Boolean isCHeck(){
-
+    /*
+    * Fonction qui vérifie si le roi est en échec
+    * */
+    public Boolean isCheck(){
+        for(int l = 0; l<8; l++) {
+            for (int c = 0; c < 8; c++) {
+                for(Square square : this._validSquares){
+                    if(square.getPiece() != null && square.getPiece().getName() == Type.KING){
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
     }
+    /*
+     * Fonction qui vérifie si il y a échec et mate
+     * */
     public Boolean isCheckMate(){
-        return false;
-    }
-    public Boolean verifCanMove(Square square){
-        if((square.getColumn() >=0 && square.getRow() <=7 )|| (square.getRow() >=0 && square.getColumn() <=7)){
-            return true;
+        for(int l = 0; l<8; l++) {
+            for (int c = 0; c < 8; c++) {
+                // A COMPLETER
+            }
         }
         return false;
     }

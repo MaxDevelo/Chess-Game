@@ -34,8 +34,8 @@ public class Queen  extends Piece {
 
 
     @Override
-    public String getName() {
-        return "Q";
+    public Type getName() {
+        return Type.QUEEN;
     }
     @Override
     public String getImage(){
@@ -79,5 +79,9 @@ public class Queen  extends Piece {
             return true;
         }
         return false;
+    }
+    @Override
+    public int getScore() {
+        return 9;
     }
 }

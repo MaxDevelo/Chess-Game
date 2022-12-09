@@ -1,11 +1,6 @@
-import Controler.Controller;
+import Controler.ChessGameFacade;
 import View.BoardView;
-import View.StartGameView;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import Model.Color;
 
 
@@ -13,7 +8,7 @@ import Model.Color;
 public class App {
     public static void main(String[] args) {
         // TESTE en mode HARDCODE
-        Controller controller = new Controller();
+        ChessGameFacade controller = new ChessGameFacade();
         controller.newGame("Maxime", "Théo", Color.WHITE, Color.BLACK);
         new BoardView(controller);
         // Le jeu commence par l'inscription des 2 joueurs

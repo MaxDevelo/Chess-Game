@@ -49,5 +49,8 @@ public class Player {
     public void setColor(Color color){
         this._colorTeam = color;
     }
+    public  List<Piece> getPieceCaptured(){
+        return _piecesCaptured;
+    }
 
 }

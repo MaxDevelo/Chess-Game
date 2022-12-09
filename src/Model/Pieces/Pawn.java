@@ -4,14 +4,14 @@ import Model.Color;
 import Model.Square;
 
 public class Pawn  extends Piece {
-
+    private Boolean _beginGame;
     public Pawn(Color color) {
         super(color);
+        this._beginGame = true;
     }
 
     @Override
     public Boolean canMove(Square square, Square currentSquare) {
-
         if(up(square, currentSquare) || left(square, currentSquare) || right(square, currentSquare)){
             return true;
         }
@@ -19,8 +19,8 @@ public class Pawn  extends Piece {
     }
 
     @Override
-    public String getName() {
-        return "P";
+    public Type getName() {
+        return Type.PAWN;
     }
     @Override
     public String getImage(){
@@ -30,15 +30,31 @@ public class Pawn  extends Piece {
     @Override
     public Boolean up(Square square, Square currentSquare) {
         if(this.getColor() == Model.Color.BLACK) {
-          return  (square.getRow() == currentSquare.getRow() + 1
-                  && currentSquare.getColumn() == square.getColumn())
-                  && square.getPiece() == null;
+            if(square.getRow() == currentSquare.getRow() + 1 && currentSquare.getColumn() == square.getColumn() && square.getPiece() == null){
+                return true;
+            }
+            if(this._beginGame){
+                if (square.getRow() == currentSquare.getRow() + 2 && currentSquare.getColumn() == square.getColumn() && square.getPiece() == null) {
+                    this._beginGame = false;
+                    return true;
+                }
+            }
         }else {
-            return (square.getRow() == currentSquare.getRow() - 1
-                    && currentSquare.getColumn() == square.getColumn())
-                    && square.getPiece() == null;
+            if(square.getRow() == currentSquare.getRow() - 1 && currentSquare.getColumn() == square.getColumn() && square.getPiece() == null){
+                return true;
+            }
+            if(this._beginGame) {
+                if (square.getRow() == currentSquare.getRow() - 2 && currentSquare.getColumn() == square.getColumn() && square.getPiece() == null) {
+                    this._beginGame = false;
+                    return true;
+                }
+            }
         }
+
+        return false;
+
     }
+
 
     @Override
     public Boolean down(Square square, Square currentSquare) {
@@ -73,5 +89,9 @@ public class Pawn  extends Piece {
                     && square.getPiece() != null
                     && square.getPiece().getColor() != this.getColor();
         }
+    }
+    @Override
+    public int getScore() {
+        return 1;
     }
 }

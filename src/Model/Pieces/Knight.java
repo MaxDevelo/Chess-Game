@@ -30,8 +30,8 @@ public class Knight  extends Piece  {
 
 
     @Override
-    public String getName() {
-        return "Kn";
+    public Type getName() {
+        return Type.KNIGHT;
     }
     @Override
     public String getImage(){
@@ -75,5 +75,9 @@ public class Knight  extends Piece  {
             return true;
         }
         return false;
+    }
+    @Override
+    public int getScore() {
+        return 3;
     }
 }

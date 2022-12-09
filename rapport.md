@@ -47,4 +47,5 @@ Codage de la:
 
 Il faudra faire un petit ùenud éroulant pour choisir entre Cavalier, Reine, Fou et Tour.
 
-
+Mise en place d'une enumeration des types de pièces et ajout de getScore comme méthode abstraite dans
+la classe Piece.
