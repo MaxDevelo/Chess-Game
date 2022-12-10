@@ -20,13 +20,13 @@ public class Rook extends Piece {
 
 
         // On rempli le tableau des case connu de la pièce
-       for(int l=0; l<8; l++){
-           for(int c=0; c<8; c++){
-               if(l == square.getRow() && c == square.getColumn()){
-                   _knownSquare[l][c] = square;
-               }
-           }
-       }
+        for(int l=0; l<8; l++){
+            for(int c=0; c<8; c++){
+                if(l == square.getRow() && c == square.getColumn()){
+                    _knownSquare[l][c] = square;
+                }
+            }
+        }
 
         // Bouger horizontalement
         if (currentSquare.getRow() == square.getRow()) {

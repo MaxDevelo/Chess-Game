@@ -40,7 +40,7 @@ public class ChessGameFacade {
                 _board.setSquare(square, l,  c);
             }
         }
-        // gGénération des pièces pièces
+        // Génération des pièces pièces
         _board.setBoard(_board.generatePiece(_board.getBoard()));
     }
     public void validMove(Square square){
