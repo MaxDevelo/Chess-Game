@@ -17,6 +17,8 @@ import static Model.Color.WHITE;
 
 
 public class BoardView extends JFrame{
+
+
     private Board _board;
     private JPanel[][] _panels;
     private JPanel pnl_board,  pnlPiecesCapturesWhite,  pnlPiecesCapturesBlack;
@@ -28,7 +30,6 @@ public class BoardView extends JFrame{
         Création de l'interface du plateau avec les 2 joueurs
     */
     public BoardView(ChessGameFacade controller){
-
         this._board = controller.getBoard();
         this._facade = controller;
         this._attack = false;
@@ -268,9 +269,14 @@ public class BoardView extends JFrame{
     * Déclanche le choix de selection de 4 pièces lors de la promotion
     * du pion.
     * */
-    public void selectPiecesPromotion(int row, int column){
-        _panels[row][column].remove(0); // On supprime la pièce pour promevoir
-        createPieceGUI(row, column);
+    public String selectPiecesPromotion(){
+        String[] pieces = {"Tour", "Cavalier", "Fou", "Reine"};
+        String input = "";
+        while(input == ""){
+             input = (String) JOptionPane.showInputDialog(null, "Choisissez une pièce à promouvoir :",
+                    "Promotion", JOptionPane.QUESTION_MESSAGE, null, pieces, pieces[0]);
+        }
+        return input;
     }
     /*
      * Procédure qui gère le déplacement de la pièce
@@ -288,8 +294,10 @@ public class BoardView extends JFrame{
                    _panels[panel.getLocation().y / 100][panel.getLocation().x / 100].add(_currentButtonPiece);
                    // PROMOTION DE LA PIECE (TEST | NON TERMINE)
                    if(_board.isPromoted(_board.getBoard()[panel.getLocation().y / 100][panel.getLocation().x / 100])){
-                       _board.promotion(_board.getBoard()[panel.getLocation().y / 100][panel.getLocation().x / 100]);
-                       selectPiecesPromotion(panel.getLocation().y/100, panel.getLocation().x/100);
+                       String namePiece = selectPiecesPromotion();
+                       _board.promotion(_board.getBoard()[panel.getLocation().y / 100][panel.getLocation().x / 100], namePiece);
+                       _panels[panel.getLocation().y/100][panel.getLocation().x/100].remove(0); // On supprime la pièce pour promevoir
+                       createPieceGUI(panel.getLocation().y/100, panel.getLocation().x/100);
                    }
                }
 

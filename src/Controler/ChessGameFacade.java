@@ -1,6 +1,7 @@
 package Controler;
 
 import Model.*;
+import Model.Pieces.Piece;
 import Model.Pieces.Type;
 
 import static Model.Color.BLACK;
@@ -54,7 +55,7 @@ public class ChessGameFacade {
         return this._board;
     }
     public void turnGame(Player player1, Player player2){
-
+        isStalemate();
         if(_game.getPlayers().get(0).getCanPlay()){
             player1.isTurn(false);
             player2.isTurn(true);
@@ -174,5 +175,29 @@ public class ChessGameFacade {
     public int getScorePlayer(Player player){
         return player.getScore();
     }
+
+    // Détection de patte
+    public boolean isStalemate() {
+        for (int i = 0; i < _board.getBoard().length; i++) {
+            for (int j = 0; j <  _board.getBoard()[i].length; j++) {
+                Piece piece =  _board.getBoard()[i][j].getPiece();
+                Player player = _game.getPlayers().get(0).getCanPlay() ? _game.getPlayers().get(0): _game.getPlayers().get(1);
+                if (piece != null && player.getColor() == piece.getColor()) {
+                    for (int k = 0; k <  _board.getBoard().length; k++) {
+                        for (int l = 0; l <  _board.getBoard()[k].length; l++) {
+                            if(_board.getBoard()[i][j].getPiece().getName() != Type.KING){
+                                if (piece.canMove(_board.getBoard()[k][l], _board.getBoard()[i][j]) && !_board.isCheck()) { // Regarde si la pièce peut bouger et qu'il n'y a pas echec
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println("isStalemate");
+        return true;
+    }
+
 
 }
