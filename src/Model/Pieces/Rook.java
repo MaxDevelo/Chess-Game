@@ -4,6 +4,7 @@ import Model.Color;
 import Model.Square;
 
 public class Rook extends Piece {
+    // Stocke les cases connu après vérification de la case
     private Square[][] _knownSquare;
     public Rook(Color color) {
         super(color);
@@ -13,18 +14,19 @@ public class Rook extends Piece {
     @Override
     public Boolean canMove(Square square, Square currentSquare) {
 
-        int i;
         // Si il est sur la meme case alors on renvoie faux
         if (currentSquare.getRow() == square.getRow() && currentSquare.getColumn() == square.getColumn())
             return false;
+
+
         // On rempli le tableau des case connu de la pièce
-       for(int l=0; l<8; l++){
-           for(int c=0; c<8; c++){
-               if(l == square.getRow() && c == square.getColumn()){
-                   _knownSquare[l][c] = square;
-               }
-           }
-       }
+        for(int l=0; l<8; l++){
+            for(int c=0; c<8; c++){
+                if(l == square.getRow() && c == square.getColumn()){
+                    _knownSquare[l][c] = square;
+                }
+            }
+        }
 
         // Bouger horizontalement
         if (currentSquare.getRow() == square.getRow()) {
@@ -65,7 +67,7 @@ public class Rook extends Piece {
     }
     @Override
     public String getImage(){
-        return  "img/Pieces/Rook";
+        return  "src/img/Pieces/Rook";
     }
 
     @Override
