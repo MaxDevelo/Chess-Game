@@ -21,8 +21,6 @@ public class Knight  extends Piece  {
                 return true;
             }else if(right(square, currentSquare)){
                 return true;
-            }else{
-                return false;
             }
         }
         return false;
@@ -35,7 +33,7 @@ public class Knight  extends Piece  {
     }
     @Override
     public String getImage(){
-        return  "img/Pieces/Knight";
+        return  "src/img/Pieces/Knight";
     }
     @Override
     public Boolean up(Square square, Square currentSquare) {

@@ -1,6 +1,6 @@
 package Model;
 
-import Model.Pieces.Piece;
+import Model.Pieces.*;
 import Model.Pieces.Type;
 
 import javax.swing.*;
@@ -201,18 +201,5 @@ public class Board {
         return false;
     }
 
-    /**
-     *  Vérification si il y a échec et mate
-     * @return retourne vrai si c'est le cas
-     */
-    public Boolean isCheckMate(){
-        for(int l = 0; l<8; l++) {
-            for (int c = 0; c < 8; c++) {
-                for(Square square : this._validSquares){
-                    // A COMPLETER
-                }
-            }
-        }
-        return false;
-    }
+
 }
