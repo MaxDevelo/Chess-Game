@@ -67,7 +67,7 @@ public class Rook extends Piece {
     }
     @Override
     public String getImage(){
-        return  "src/img/Pieces/Rook";
+        return  "/img/Pieces/Rook";
     }
 
     @Override

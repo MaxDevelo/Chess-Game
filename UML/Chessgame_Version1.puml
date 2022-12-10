@@ -44,7 +44,6 @@ package Model{
     + promotion(square: Square)
     + isPromoted(square: Square): Boolean
     + isCheck(): Boolean
-    + isCheckMate(): Boolean
     }
 
 
@@ -186,6 +185,8 @@ class ChessGameFacade{
     + moveAt(square: Square, pnlRow: Integer, pnlColumn: Integer)
     + turnGame(player1: Player, player2: Player)
     + updateScore(score: Integer)
+    + verifyIfCheckMateKing()
+    + verifyIfCheckKing()
 }
 
 }

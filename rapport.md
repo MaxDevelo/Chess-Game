@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 **RAPPORT DU RENDU 1**
 - Utilisation d'une Factory pour les types de pions (une classe Piece puis sous-classe Roi, Reine, Cavalier...)
 - Pour le plateau : class Square avec un attribut ligne colonne et Piece. Ligne et colonne nous permettent de connaitre la position d'une pièce et de déterminer où est-ce qu'elle peut se déplacer.
@@ -34,3 +35,20 @@ Dans la classe de Rook et Bishop, nous utilisons un tableau afin de stocker les 
 
 Création des pièces graphiques dans createPieceUI afinde pouvoir gérer le changement de pièces lors de la promotion ?
 Il faudra faire un petit menu déroulant pour choisir entre Cavalier, Reine, Fou et Tour.
+=======
+**RAPPORT DU RENDU 2**
+
+- Mise en palce des 2 popup en cas échec et échec et mat du **ROI**
+
+- On a changé le chemin des images (pièces) en les mettant dans un dossier resources et dans le code,
+nous avons pris le chemin à aprtie de getResource afin  que l'executable puisse accéder au images.
+
+A implémenter:
+- Interface de la promotion d'une pièce (choisir entre Reine, Fou, TOur et Cavalier)
+- Design d el'interface de FIN de partie
+- Faire un bonus
+
+
+
+Ajout d'un dossier pour l'executable (.jar)
+>>>>>>> rendu2

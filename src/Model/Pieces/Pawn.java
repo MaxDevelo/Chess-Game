@@ -24,7 +24,7 @@ public class Pawn  extends Piece {
     }
     @Override
     public String getImage(){
-        return  "src/img/Pieces/Pawn";
+        return  "/img/Pieces/Pawn";
     }
 
     @Override
