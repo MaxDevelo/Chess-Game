@@ -1,9 +1,14 @@
 Chess game
 ==========
 
+INSTALLATION ET LANCEMENT
+----------
+
+
+
+
 ![](img/chess-game2-low.jpg)
 
-L'objectif de ce projet est de concevoir une application permettant à deux joueurs humains de jouer aux échecs.
 
 Les règles
 ----------

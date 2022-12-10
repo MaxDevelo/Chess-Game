@@ -50,8 +50,9 @@ public class EndGameView extends JFrame {
     }
 
     public void reload(){
+        // TESTE
         ChessGameFacade controller = new ChessGameFacade();
-        controller.newGame("Maxime", "Théo", Model.Color.WHITE, Color.BLACK);
+        controller.newGame("[Nom Joueur1]", "[Nom Joueur2]", Color.WHITE, Color.BLACK);
         new BoardView(controller);
         dispose();
     }
