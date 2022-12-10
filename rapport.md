@@ -27,14 +27,15 @@ Passer par le controller uniquement pour modifier le model.
 (Revoir la méthode de déplacement des pièces. Une pièce renvoie tous les square où elle peut théoriquement se déplacer, le board sélectionne les cases où elle peut vraiment aller. Revenir sur ce qu'on avait avant et enlever la dépendance circulaire. Transformer le square en juste une position ? (row/column). Calculer tous les déplacements possible dans la pièce et renvoyer si la case passé en paramètre est dans cette liste.) Déplacement Ok.
 Séparer le code en petite fonction (haut, bas, gauche, droite).
 
+
 Implémentation du mouvement des pièces pour:
 - Pawn (Pion)
 - King (Roi)
 - Knight (Cavalier)
-
-Les mouvements des pièces non implémentées:
 - Bishop (Fou)
 - Rook (Tour)
+- 
+Les mouvements des pièces non implémentées:
 - Queen (Reine)
 
 Mise à par de la création des pièces graphique dans createPieceUI afin
@@ -50,6 +51,7 @@ Il faudra faire un petit menu déroulant pour choisir entre Cavalier, Reine, Fou
 Mise en place d'une énumération des types de pièces et ajout de getScore comme méthode abstraite dans
 la classe Piece.
 
-On a eu du mal avec implémentation de la Tour. En effet, celui-ci doit connaitre les obstacles (C'est-à-dire, les pièces qui
-l'entourent.
-Pour l'instant, on a pas eu d'idée, à par récupérer le tableau de case dans celui-ci
+Dans la classe de Rook et Bishop, nous utilisons un tableau afin de stocker les cases après vérification car
+la tour connait maintenant la case. Cela va permettre de voir les obstacle autour de celui-ci.
+
+Implémentation de la Reine termine. Nous avons utilisé le mouvement de la Tour et le mouvement du Fou

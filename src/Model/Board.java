@@ -24,7 +24,7 @@ public class Board {
      */
     public Square[][]  generatePiece(Square[][] board){
 
-        PieceFactory createPiece = new PieceFactory(_board);
+        PieceFactory createPiece = new PieceFactory();
 
         // NOIR
         board[0][0].setPiece(createPiece.createRook(Model.Color.BLACK));
@@ -164,7 +164,7 @@ public class Board {
      */
     public void promotion(Square square){
         Square[][] board = _board;
-        PieceFactory changePiece = new PieceFactory(_board);
+        PieceFactory changePiece = new PieceFactory();
         if(square.getPiece().getColor() == Color.BLACK){
             board[square.getRow()][square.getColumn()].setPiece(changePiece.createKnight(Model.Color.BLACK)); // CREATION CAVALIER
         }else{

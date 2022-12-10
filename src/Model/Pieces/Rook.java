@@ -10,10 +10,10 @@ import java.util.List;
 import static javax.swing.text.SimpleAttributeSet.EMPTY;
 
 public class Rook extends Piece {
-    private Square[][]  _boards;
-    public Rook(Color color, Square[][]  boards) {
+    private Square[][] _piecesKnow;
+    public Rook(Color color) {
         super(color);
-        _boards = boards;
+        _piecesKnow = new Square[8][8];
     }
 
     @Override
@@ -23,6 +23,14 @@ public class Rook extends Piece {
         // Si il est sur la meme case alors on renvoie faux
         if (currentSquare.getRow() == square.getRow() && currentSquare.getColumn() == square.getColumn())
             return false;
+        // On rempli le tableau des case connu de la pièce
+       for(int l=0; l<8; l++){
+           for(int c=0; c<8; c++){
+               if(l == square.getRow() && c == square.getColumn()){
+                   _piecesKnow[l][c] = square;
+               }
+           }
+       }
 
         // Bouger horizontalement
         if (currentSquare.getRow() == square.getRow()) {
@@ -72,7 +80,7 @@ public class Rook extends Piece {
         int dy = -1;
 
         for (i = currentSquare.getRow() + dy; i != square.getRow(); i += dy){
-            if (_boards[i][currentSquare.getColumn()].getPiece() != null){
+            if (_piecesKnow[i][currentSquare.getColumn()] != null && _piecesKnow[i][currentSquare.getColumn()].getPiece() != null){
                 return false;
             }
         }
@@ -86,7 +94,7 @@ public class Rook extends Piece {
         int dy = 1;
 
         for (i = currentSquare.getRow() + dy; i != square.getRow(); i += dy){
-            if (_boards[i][currentSquare.getColumn()].getPiece() != null){
+            if (_piecesKnow[i][currentSquare.getColumn()] != null &&  _piecesKnow[i][currentSquare.getColumn()].getPiece() != null){
                 return false;
             }
         }
@@ -100,7 +108,7 @@ public class Rook extends Piece {
         int dx = -1;
 
         for (i = currentSquare.getColumn() + dx; i != square.getColumn(); i += dx){
-            if (_boards[currentSquare.getRow()][i].getPiece() != null){
+            if (_piecesKnow[currentSquare.getRow()][i] != null &&  _piecesKnow[currentSquare.getRow()][i].getPiece() != null){
                 return false;
             }
         }
@@ -113,7 +121,7 @@ public class Rook extends Piece {
         int dx = 1;
 
         for (i = currentSquare.getColumn() + dx; i != square.getColumn(); i += dx){
-            if (_boards[currentSquare.getRow()][i].getPiece() != null){
+            if (_piecesKnow[currentSquare.getRow()][i] != null && _piecesKnow[currentSquare.getRow()][i].getPiece() != null){
                 return false;
             }
         }
