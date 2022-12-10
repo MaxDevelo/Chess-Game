@@ -162,13 +162,19 @@ public class Board {
      *  Changement de la pièce (Attention, c'est un test. NON TERMINE
      * @param square case où l'on a la promotion
      */
-    public void promotion(Square square){
+    public void promotion(Square square, String namePiece){
         Square[][] board = _board;
         PieceFactory changePiece = new PieceFactory();
-        if(square.getPiece().getColor() == Color.BLACK){
-            board[square.getRow()][square.getColumn()].setPiece(changePiece.createKnight(Model.Color.BLACK)); // CREATION CAVALIER
-        }else{
-            board[square.getRow()][square.getColumn()].setPiece(changePiece.createKnight(Model.Color.WHITE)); // CREATION CAVALIER
+        if(namePiece.equals("Tour")){
+            board[square.getRow()][square.getColumn()].setPiece(changePiece.createRook(square.getPiece().getColor()));
+        }else if(namePiece.equals("Cavalier")){
+            board[square.getRow()][square.getColumn()].setPiece(changePiece.createKnight(square.getPiece().getColor()));
+        }
+        else if(namePiece.equals("Fou")){
+            board[square.getRow()][square.getColumn()].setPiece(changePiece.createBishop(square.getPiece().getColor()));
+        }
+        else {
+            board[square.getRow()][square.getColumn()].setPiece(changePiece.createQueen(square.getPiece().getColor()));
         }
         setBoard(board);
     }
@@ -200,6 +206,5 @@ public class Board {
         }
         return false;
     }
-
 
 }

@@ -19,21 +19,48 @@ public class EndGameView extends JFrame {
         this._facade = facade;
         setTitle("FIN DE LA PARTIE");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(1680,840);
+        setSize(1000,400);
         setVisible(true);
         setResizable(false);
 
         for(Player player : _facade.getGame().getPlayers()){
             if(player.getWin()){
                 JPanel p = new JPanel();
-                JLabel name = new JLabel("Bien jouer, " + player.getName() + " !");
-                name.setFont(new Font("Serif", Font.BOLD, 50));
-                JLabel score = new JLabel(String.valueOf(player.getScore()));
-                score.setFont(new Font("Serif", Font.BOLD, 50));
-                p.setPreferredSize(new Dimension(840, 840));;
+                JLabel name = new JLabel("Le gagnant est " + player.getName());
+                name.setFont(new Font("Serif", Font.BOLD, 30));
+                name.setForeground(java.awt.Color.white);
+                p.add(name, BorderLayout.NORTH);
+                JLabel score = new JLabel(" avec un score de " + String.valueOf(player.getScore()));
+                score.setFont(new Font("Serif", Font.BOLD, 30));
+                score.setForeground(java.awt.Color.white);
                 p.add(name, BorderLayout.CENTER);
-                //  p.add(score, BorderLayout.SOUTH);
-                add(p, BorderLayout.CENTER);
+                p.add(score, BorderLayout.SOUTH);
+                p.setBackground(new java.awt.Color(48, 66, 36));
+                // Panel pour ajouter les pièces capturées
+                JPanel pnlPiecesCaptures = new JPanel();
+                for(Piece piece : player.getPieceCaptured()){
+
+                    // Mise en palce de l'image de la pièce
+                    ImageIcon imageIcon;
+                    if(piece.getColor() == Model.Color.BLACK){
+                        imageIcon = new ImageIcon(new ImageIcon(getClass().getResource(piece.getImage() + "_Black.png")
+                        ).getImage().getScaledInstance(50, 60, Image.SCALE_DEFAULT));
+                    }else{
+                        imageIcon = new ImageIcon(new ImageIcon(getClass().getResource(piece.getImage() + "_White.png")
+                        ).getImage().getScaledInstance(50, 60, Image.SCALE_DEFAULT));
+                    }
+                    JButton btnPiece = new JButton();
+                    btnPiece.setOpaque(false);
+                    btnPiece.setContentAreaFilled(false);
+                    btnPiece.setBorderPainted(false);
+                    btnPiece.setIcon(imageIcon);
+                    pnlPiecesCaptures.add(btnPiece);
+                }
+                pnlPiecesCaptures.setLayout(new GridLayout(2, 8));
+                add(p, BorderLayout.NORTH);
+                add(pnlPiecesCaptures,  BorderLayout.CENTER);
+
+
             }
 
         }
