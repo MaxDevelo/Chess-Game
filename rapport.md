@@ -34,8 +34,6 @@ Implémentation du mouvement des pièces pour:
 - Knight (Cavalier)
 - Bishop (Fou)
 - Rook (Tour)
-- 
-Les mouvements des pièces non implémentées:
 - Queen (Reine)
 
 Mise à par de la création des pièces graphique dans createPieceUI afin
