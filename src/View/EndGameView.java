@@ -29,7 +29,6 @@ public class EndGameView extends JFrame {
                 JLabel name = new JLabel("Le gagnant est " + player.getName());
                 name.setFont(new Font("Serif", Font.BOLD, 30));
                 name.setForeground(java.awt.Color.white);
-                p.add(name, BorderLayout.NORTH);
                 JLabel score = new JLabel(" avec un score de " + String.valueOf(player.getScore()));
                 score.setFont(new Font("Serif", Font.BOLD, 30));
                 score.setForeground(java.awt.Color.white);
@@ -37,7 +36,7 @@ public class EndGameView extends JFrame {
                 p.add(score, BorderLayout.SOUTH);
                 p.setBackground(new java.awt.Color(48, 66, 36));
                 // Panel pour ajouter les pièces capturées
-                JPanel pnlPiecesCaptures = new JPanel();
+                JPanel pnlPiecesCapturesBlack = new JPanel();
                 for(Piece piece : player.getPieceCaptured()){
 
                     // Mise en palce de l'image de la pièce
@@ -54,13 +53,11 @@ public class EndGameView extends JFrame {
                     btnPiece.setContentAreaFilled(false);
                     btnPiece.setBorderPainted(false);
                     btnPiece.setIcon(imageIcon);
-                    pnlPiecesCaptures.add(btnPiece);
+                    pnlPiecesCapturesBlack.add(btnPiece);
                 }
-                pnlPiecesCaptures.setLayout(new GridLayout(2, 8));
+                pnlPiecesCapturesBlack.setLayout(new GridLayout(2, 8));
                 add(p, BorderLayout.NORTH);
-                add(pnlPiecesCaptures,  BorderLayout.CENTER);
-
-
+                add(pnlPiecesCapturesBlack,  BorderLayout.CENTER);
             }
 
         }
@@ -72,7 +69,7 @@ public class EndGameView extends JFrame {
                 reload();
             }
         });
-        btnPlay.setSize(245, 130);
+        btnPlay.setSize(245, 300);
         add(btnPlay, BorderLayout.SOUTH);
     }
 

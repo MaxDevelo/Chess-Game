@@ -161,6 +161,7 @@ public class Board {
     /**
      *  Changement de la pièce (Attention, c'est un test. NON TERMINE
      * @param square case où l'on a la promotion
+     * @param namePiece nom de la pièce choisi
      */
     public void promotion(Square square, String namePiece){
         Square[][] board = _board;
@@ -173,9 +174,10 @@ public class Board {
         else if(namePiece.equals("Fou")){
             board[square.getRow()][square.getColumn()].setPiece(changePiece.createBishop(square.getPiece().getColor()));
         }
-        else {
+        else{
             board[square.getRow()][square.getColumn()].setPiece(changePiece.createQueen(square.getPiece().getColor()));
         }
+
         setBoard(board);
     }
     public void setBoard(Square[][] board){
@@ -198,7 +200,7 @@ public class Board {
         for(int l = 0; l<8; l++) {
             for (int c = 0; c < 8; c++) {
                 for(Square square : this._validSquares){
-                    if(square.getPiece() != null && square.getPiece().getName() == Type.KING){
+                    if(square.getPiece() != null && square.getPiece().getName().equals(Type.KING)){
                         return true;
                     }
                 }

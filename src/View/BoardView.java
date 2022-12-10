@@ -17,6 +17,8 @@ import static Model.Color.WHITE;
 
 
 public class BoardView extends JFrame{
+
+
     private Board _board;
     private JPanel[][] _panels;
     private JPanel pnl_board,  pnlPiecesCapturesWhite,  pnlPiecesCapturesBlack;
@@ -28,7 +30,6 @@ public class BoardView extends JFrame{
         Création de l'interface du plateau avec les 2 joueurs
     */
     public BoardView(ChessGameFacade controller){
-
         this._board = controller.getBoard();
         this._facade = controller;
         this._attack = false;
@@ -272,7 +273,7 @@ public class BoardView extends JFrame{
         String[] pieces = {"Tour", "Cavalier", "Fou", "Reine"};
         String input = "";
         while(input == ""){
-            input = (String) JOptionPane.showInputDialog(null, "Choisissez une pièce à promouvoir :",
+             input = (String) JOptionPane.showInputDialog(null, "Choisissez une pièce à promouvoir :",
                     "Promotion", JOptionPane.QUESTION_MESSAGE, null, pieces, pieces[0]);
         }
         return input;
