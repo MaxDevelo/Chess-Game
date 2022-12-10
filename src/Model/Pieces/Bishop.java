@@ -5,13 +5,12 @@ import Model.Color;
 import Model.Square;
 
 public class Bishop extends Piece {
+    // Stocke les cases connu après vérification de la case
     private Square[][] _knownSquare;
     public Bishop(Color color) {
         super(color);
         _knownSquare = new Square[8][8];
     }
-
-
 
     @Override
     public Boolean canMove(Square square, Square currentSquare) {   int i;
@@ -56,7 +55,7 @@ public class Bishop extends Piece {
     }
     @Override
     public String getImage(){
-        return  "img/Pieces/Bishop";
+        return  "src/img/Pieces/Bishop";
     }
 
     @Override

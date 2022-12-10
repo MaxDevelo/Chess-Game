@@ -40,7 +40,7 @@ public class ChessGameFacade {
                 _board.setSquare(square, l,  c);
             }
         }
-        // gGénération des pièces pièces
+        // Génération des pièces pièces
         _board.setBoard(_board.generatePiece(_board.getBoard()));
     }
     public void validMove(Square square){
@@ -108,15 +108,16 @@ public class ChessGameFacade {
         _board.setBoard(board);
     }
     /*
-    * On vérifie si le Roi est en échec ou si il est en échec et mate
-    * */
-    public Boolean verifyIfCheckKing(){
+    * On vérifie si il y a échec et mate
+    **/
+    public Boolean verifyIfCheckMateKing(){
         for(int l = 0; l<8; l++){
             for(int c=0; c<8; c++) {
                     if(_board.getBoard()[l][c].getPiece() != null && _board.getBoard()[l][c].getPiece().getColor() ==  _game.getPlayerPlay().getColor()){
                         _board.setValidSquares(_board.getBoard()[l][c]);
-                        if(_board.isCheck() || _board.isCheckMate()){
-                            System.out.println("ADIEUX LE ROI !");
+                        // On vérifie si le roi est en échec
+                        if(_board.isCheck()){
+                            System.out.println("Adieux le ROI !");
                             _game.setEndGame(true);
                             _board.clearValidSquare();
                             int n=0;
@@ -131,6 +132,25 @@ public class ChessGameFacade {
                             return true;
                         }
                     }
+            }
+        }
+        return false;
+    }
+
+    /*
+     * On vérifie si le Roi est en échec
+     */
+    public Boolean verifyIfCheckKing(){
+        for(int l = 0; l<8; l++){
+            for(int c=0; c<8; c++) {
+                if(_board.getBoard()[l][c].getPiece() != null && _board.getBoard()[l][c].getPiece().getColor() !=  _game.getPlayerPlay().getColor()){
+                    _board.setValidSquares(_board.getBoard()[l][c]);
+                    // On vérifie si le roi est en échec
+                    if(_board.isCheck()){
+                        return true;
+                    }
+                    _board.clearValidSquare();
+                }
             }
         }
         return false;

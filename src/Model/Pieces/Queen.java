@@ -6,7 +6,7 @@ import Model.Square;
 
 public class Queen  extends Piece {
 
-
+    // Stocke les cases connu après vérification de la case
     private Square[][] _knownSquare;
     public Queen(Color color) {
         super(color);
@@ -85,7 +85,7 @@ public class Queen  extends Piece {
     }
     @Override
     public String getImage(){
-        return  "img/Pieces/Queen";
+        return  "src/img/Pieces/Queen";
     }
 
     @Override

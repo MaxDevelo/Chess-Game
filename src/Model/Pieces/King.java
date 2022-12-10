@@ -33,7 +33,7 @@ public class King  extends Piece {
     }
     @Override
     public String getImage(){
-        return  "img/Pieces/King";
+        return  "src/img/Pieces/King";
     }
     @Override
     public Boolean up(Square square, Square currentSquare) {

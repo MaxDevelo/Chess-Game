@@ -297,7 +297,23 @@ public class BoardView extends JFrame{
                break;
             }
         }
-        turnGameGUI();
+        // Vérificatione échec du roi
+        if(_facade.verifyIfCheckKing()){
+            // Affiche une fenêtre de confirmation avec des boutons Oui / Non
+            JOptionPane.showConfirmDialog(null, "Echec du ROi, Attention", "ok", JOptionPane.CLOSED_OPTION);
+        }
+        turnGameGUI(); // On change de joueur
+        // Vérificatione échec et MATE du roi
+        if(_facade.verifyIfCheckMateKing()){
+            // Affiche une fenêtre de confirmation avec des boutons Oui / Non
+            int result = JOptionPane.showConfirmDialog(null, "Il y a échec du ROI !", "REJOUER", JOptionPane.CLOSED_OPTION);
+
+            // Si l'utilisateur a cliqué sur Oui, exécute la fonction
+            if (result == JOptionPane.OK_OPTION) {
+                new EndGameView(_facade);
+                dispose();
+            }
+        }
     }
     /*
      * Changement couleur des cases où sont le pièces afin  de savoir quel joueur doit jouer
@@ -324,11 +340,6 @@ public class BoardView extends JFrame{
      * Procédure qui recharge le score et tourne la partie
      * */
     public void reloadScoreGame(){
-        // Vérificatione échec du roi
-        if(_facade.verifyIfCheckKing()){
-            new EndGameView(_facade);
-            dispose();
-        }
         if(_facade.getGame().getPlayerPlay().getColor() == Model.Color.BLACK){
             _lbl_score_black.setText("Score: " + _facade.getScorePlayer(_facade.getGame().getPlayerPlay()));
         }else{
