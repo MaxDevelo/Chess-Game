@@ -7,8 +7,8 @@ hide enum methods
 skinparam roundcorner 20
 skinparam linetype polyline
 skinparam linetype ortho
-skinparam nodesep 40
-skinparam ranksep 80
+skinparam nodesep 100
+skinparam ranksep 100
 
 
 
@@ -216,7 +216,7 @@ StartGameView ..> BoardView: <<use>>
 BoardView ..> EndGameView: <<use>>
 
 StartGameView o---> "1 \n -_facade\n" ChessGameFacade: send >
-BoardView o---> "1 \n -_facade\n" ChessGameFacade: Own >
+BoardView o----> "1 \n -_facade\n" ChessGameFacade: Own >
 EndGameView o---> "1 \n -_facade\n" ChessGameFacade: Own >
 
 App ..> Controller : <<create>>
@@ -225,26 +225,30 @@ App ..> StartGameView : <<create>>
 ChessGameFacade  "0..1 \n -_game\n" o---> Game: > Own
 ChessGameFacade "0..1 \n -_board\n" o-->  Board: > Own
 
+Rook o-->  "0..64 \n -_knownPieces\n"  Square: > Know
+Bishop o--> "0..64 \n -_knownPieces\n"   Square: > Know
+Queen o--> "0..64\n -_knownPieces\n"   Square: > Know
 
-PieceFactory ..> Pawn : <<use>>
-PieceFactory ..> King : <<use>>
-PieceFactory ..> Rook : <<use>>
-PieceFactory ..> Bishop : <<use>>
-PieceFactory ..> Queen : <<use>>
-PieceFactory ..> Knight : <<use>>
-PieceFactory ..> Piece : <<use>>
+
+PieceFactory ....> Pawn : <<use>>
+PieceFactory .....> King : <<use>>
+PieceFactory ....> Rook : <<use>>
+PieceFactory ...> Bishop : <<use>>
+PieceFactory ...> Queen : <<use>>
+PieceFactory ...> Knight : <<use>>
+PieceFactory ....> Piece : <<use>>
 
 PieceFactory ..> Pawn : <<use>>
 
 Board ..> PieceFactory : <<use>>
 
 Board *--> "64 \n -_boardSquare" Square: < Compose
-Pawn --|> Piece
-King --|> Piece
-Rook --|> Piece
-Bishop --|> Piece
-Queen --|> Piece
-Knight --|> Piece
+Pawn -u--|> Piece
+King -u--|> Piece
+Rook -u--|> Piece
+Bishop -u--|> Piece
+Queen -u--|> Piece
+Knight -u--|> Piece
 
 Piece ..>  Type: <<use>>
 Controller ..>  Type: <<use>>
@@ -253,7 +257,7 @@ Controller ..>  Type: <<use>>
 Piece o--> "1 \n -_color\n" Color: Own
 Player o-u-> "0..1 \n -_colorPiece\n" Color: > Own
 
-Game "2 \n -_players\n"  *--> Player:  Compose <
+Game *-->  "2 \n -_players\n"  Player:  Compose <
 Player  "0..16 \n -_piecesCaptured\n" o--> Piece: > show
 Square o--> "1 \n -_piece\n" Piece: > Owns
 BoardView o--> "0..1 \n -_board\n" Board: show >

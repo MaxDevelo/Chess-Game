@@ -55,3 +55,6 @@ Dans la classe de Rook et Bishop, nous utilisons un tableau afin de stocker les 
 la tour connait maintenant la case. Cela va permettre de voir les obstacle autour de celui-ci.
 
 Implémentation de la Reine termine. Nous avons utilisé le mouvement de la Tour et le mouvement du Fou
+
+- Lien d'association entre Queen, Rook, Bishop et Square car isl peuvent exister sans. Cela va permettre de
+se souvenir des cases vérifié
