@@ -19,7 +19,7 @@ public class Game {
 
     /**
      *  On update à vrai si le jeu est fini
-     * @param enGame Boolean
+     * @param endGame Boolean
      */
     public void setEndGame(boolean endGame){
         this._endGame = endGame;

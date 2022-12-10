@@ -55,7 +55,7 @@ public class Bishop extends Piece {
     }
     @Override
     public String getImage(){
-        return  "src/img/Pieces/Bishop";
+        return  "/img/Pieces/Bishop";
     }
 
     @Override

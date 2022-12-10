@@ -85,7 +85,7 @@ public class Queen  extends Piece {
     }
     @Override
     public String getImage(){
-        return  "src/img/Pieces/Queen";
+        return  "/img/Pieces/Queen";
     }
 
     @Override
