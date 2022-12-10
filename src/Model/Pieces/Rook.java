@@ -4,10 +4,10 @@ import Model.Color;
 import Model.Square;
 
 public class Rook extends Piece {
-    private Square[][] _knownPieces;
+    private Square[][] _knownSquare;
     public Rook(Color color) {
         super(color);
-        _knownPieces = new Square[8][8];
+        _knownSquare = new Square[8][8];
     }
 
     @Override
@@ -21,7 +21,7 @@ public class Rook extends Piece {
        for(int l=0; l<8; l++){
            for(int c=0; c<8; c++){
                if(l == square.getRow() && c == square.getColumn()){
-                   _knownPieces[l][c] = square;
+                   _knownSquare[l][c] = square;
                }
            }
        }
@@ -74,7 +74,7 @@ public class Rook extends Piece {
         int dy = -1;
 
         for (i = currentSquare.getRow() + dy; i != square.getRow(); i += dy){
-            if (_knownPieces[i][currentSquare.getColumn()] != null && _knownPieces[i][currentSquare.getColumn()].getPiece() != null){
+            if (_knownSquare[i][currentSquare.getColumn()] != null && _knownSquare[i][currentSquare.getColumn()].getPiece() != null){
                 return false;
             }
         }
@@ -88,7 +88,7 @@ public class Rook extends Piece {
         int dy = 1;
 
         for (i = currentSquare.getRow() + dy; i != square.getRow(); i += dy){
-            if (_knownPieces[i][currentSquare.getColumn()] != null &&  _knownPieces[i][currentSquare.getColumn()].getPiece() != null){
+            if (_knownSquare[i][currentSquare.getColumn()] != null &&  _knownSquare[i][currentSquare.getColumn()].getPiece() != null){
                 return false;
             }
         }
@@ -102,7 +102,7 @@ public class Rook extends Piece {
         int dx = -1;
 
         for (i = currentSquare.getColumn() + dx; i != square.getColumn(); i += dx){
-            if (_knownPieces[currentSquare.getRow()][i] != null &&  _knownPieces[currentSquare.getRow()][i].getPiece() != null){
+            if (_knownSquare[currentSquare.getRow()][i] != null &&  _knownSquare[currentSquare.getRow()][i].getPiece() != null){
                 return false;
             }
         }
@@ -115,7 +115,7 @@ public class Rook extends Piece {
         int dx = 1;
 
         for (i = currentSquare.getColumn() + dx; i != square.getColumn(); i += dx){
-            if (_knownPieces[currentSquare.getRow()][i] != null && _knownPieces[currentSquare.getRow()][i].getPiece() != null){
+            if (_knownSquare[currentSquare.getRow()][i] != null && _knownSquare[currentSquare.getRow()][i].getPiece() != null){
                 return false;
             }
         }

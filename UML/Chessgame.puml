@@ -225,9 +225,9 @@ App ..> StartGameView : <<create>>
 ChessGameFacade  "0..1 \n -_game\n" o---> Game: > Own
 ChessGameFacade "0..1 \n -_board\n" o-->  Board: > Own
 
-Rook o-->  "0..64 \n -_knownPieces\n"  Square: > Know
-Bishop o--> "0..64 \n -_knownPieces\n"   Square: > Know
-Queen o--> "0..64\n -_knownPieces\n"   Square: > Know
+Rook o-->  "0..64 \n -_knownSquare\n"  Square: > Know
+Bishop o--> "0..64 \n -_knownSquare\n"   Square: > Know
+Queen o--> "0..64\n -_knownSquare\n"   Square: > Know
 
 
 PieceFactory ....> Pawn : <<use>>

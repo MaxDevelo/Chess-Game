@@ -5,10 +5,10 @@ import Model.Color;
 import Model.Square;
 
 public class Bishop extends Piece {
-    private Square[][] _knownPieces;
+    private Square[][] _knownSquare;
     public Bishop(Color color) {
         super(color);
-        _knownPieces = new Square[8][8];
+        _knownSquare = new Square[8][8];
     }
 
 
@@ -22,7 +22,7 @@ public class Bishop extends Piece {
         for(int l=0; l<8; l++){
             for(int c=0; c<8; c++){
                 if(l == square.getRow() && c == square.getColumn()){
-                    _knownPieces[l][c] = square;
+                    _knownSquare[l][c] = square;
                 }
             }
         }
@@ -34,7 +34,7 @@ public class Bishop extends Piece {
             int row = currentSquare.getRow() + rowStep;
             int col = currentSquare.getColumn() + colStep;
             while (row != square.getRow() && col != square.getColumn()) {
-                if (_knownPieces[row][col] != null && _knownPieces[row][col].getPiece() != null) {
+                if (_knownSquare[row][col] != null && _knownSquare[row][col].getPiece() != null) {
                     return false;
                 }
                 row += rowStep;
