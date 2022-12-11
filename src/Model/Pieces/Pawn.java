@@ -29,6 +29,9 @@ public class Pawn  extends Piece {
 
     @Override
     public Boolean up(Square square, Square currentSquare) {
+        if(currentSquare.getRow() == 1 ||currentSquare.getRow() == 6){
+            this._beginGame = true;
+        }
         if(this.getColor() == Model.Color.BLACK) {
             if(square.getRow() == currentSquare.getRow() + 1 && currentSquare.getColumn() == square.getColumn() && square.getPiece() == null){
                 return true;
@@ -44,8 +47,10 @@ public class Pawn  extends Piece {
                 return true;
             }
             if(this._beginGame) {
-                if (square.getRow() == currentSquare.getRow() - 2 && currentSquare.getColumn() == square.getColumn() && square.getPiece() == null) {
+                if(currentSquare.getRow() == 6){
                     this._beginGame = false;
+                }
+                if (square.getRow() == currentSquare.getRow() - 2 && currentSquare.getColumn() == square.getColumn() && square.getPiece() == null) {
                     return true;
                 }
             }
