@@ -4,4 +4,5 @@
 - Mise en place du menu de selectiond  epièce en cas de promotion
 - Ajout dossier Game_Executable pour ajout le .jar
 - Modification de la ise en forme dans la vue EndGameView
-- On a changé le chemin des images (pièces) en les mettant dans un dossier resources et dans le code,
+- On a changé le chemin des images (pièces) en les mettant dans un dossier resources et dans le code
+- On a corrigé le fait que le Pion peut avancer de 2 cases au début. Avant, seul le premier pion pouvait avancer de 2 cases.

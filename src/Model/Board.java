@@ -208,5 +208,22 @@ public class Board {
         }
         return false;
     }
+    // Prise en apssant
+    public boolean isTakenInPassing(Square square, Square currentSquare){
 
+        return false;
+    }
+    /**
+     *  Retourne la liste des cases où la pièce (qui met en échec le Roi)
+     *  peut aller et en prenant également le Roi afin de supprimer les cases où
+     *  le roi peut aller.
+     * @return retourne la liste des cases
+     */
+    public List<Square> squareForbidden(){
+        List<Square> squareBordidden = new ArrayList<>();
+        for (Square s : getValidSquares()) {
+            squareBordidden.add(s);
+        }
+        return squareBordidden;
+    }
 }

@@ -6,6 +6,8 @@ import java.awt.*;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import Controler.ChessGameFacade;
 import Model.Board;
@@ -227,7 +229,7 @@ public class BoardView extends JFrame{
     }
     /*
      * Validation en montrant où la pièce peut aller
-     * */
+     */
     public void validMove(JButton btnPiece) {
             if (_attack) {
                 movePiece((JPanel) btnPiece.getParent());
@@ -246,9 +248,19 @@ public class BoardView extends JFrame{
 
                     if (btnPiece.getName().equals("PAWN") || btnPiece.getName().equals("ROOK") || btnPiece.getName().equals("KNIGHT") || btnPiece.getName().equals("QUEEN") || btnPiece.getName().equals("KING") || btnPiece.getName().equals("BISHOP")) {
                         square = _board.getSquare(this._currentButtonPiece.getParent().getLocation().y / 100, this._currentButtonPiece.getParent().getLocation().x / 100);
-                        _facade.validMove(square);
+                        if(_facade.verifyIfCheckKing()){
+                            List<Square> squareBordidden = _board.squareForbidden();
+                            _facade.validMove(square);
+                            for (Square s : squareBordidden) {
+                                if(_board.getValidSquares().contains(s)){
+                                    _board.getValidSquares().remove(s);
+                                }
+                            }
+                        }else{
+                            _facade.validMove(square);
+                        }
                     }
-                    // BOucle qui permetd e récupérer et afficher les caes où le joueur
+                    // Boucle qui permetd e récupérer et afficher les cases où le joueur
                     // peut se déplacer avec la pèce
                     for (Square s : _board.getValidSquares()) {
                         if (_board.getBoard()[s.getRow()][s.getColumn()].getPiece() != null) {
@@ -284,6 +296,7 @@ public class BoardView extends JFrame{
      * */
     public void movePiece(JPanel panel){
         reloadSquareColor();
+
         for(Square s : _board.getValidSquares()) {
             if(s.getRow() == panel.getLocation().y/100 && s.getColumn() == panel.getLocation().x/100 ){
                 if(_panels[panel.getLocation().y / 100][panel.getLocation().x / 100].getComponents().length == 1){
@@ -301,22 +314,30 @@ public class BoardView extends JFrame{
                        createPieceGUI(panel.getLocation().y/100, panel.getLocation().x/100);
                    }
                }
-
                 reloadScoreGame();
                break;
             }
         }
+        turnGameGUI(); // On change de joueur
         // Vérificatione échec du roi
         if(_facade.verifyIfCheckKing()){
+            // On lui montre où est l'échec du roi
+            /*for (Square s : _board.getValidSquares()) {
+                if (_board.getBoard()[s.getRow()][s.getColumn()].getPiece() != null && _board.getBoard()[s.getRow()][s.getColumn()].getPiece().getName().equals(Model.Pieces.Type.KING)) {
+                    _panels[s.getRow()][s.getColumn()].setBackground(Color.RED);
+                    _panels[s.getRow()][s.getColumn()].repaint();
+                } else {
+                    _panels[s.getRow()][s.getColumn()].setBackground(Color.ORANGE);
+                    _panels[s.getRow()][s.getColumn()].repaint();
+                }
+            }*/
             // Affiche une fenêtre de confirmation avec des boutons Oui / Non
-            JOptionPane.showConfirmDialog(null, "Echec du ROi, Attention", "ok", JOptionPane.CLOSED_OPTION);
+            JOptionPane.showConfirmDialog(null, "Echec du Roi, Attention", "ok", JOptionPane.CLOSED_OPTION);
         }
-        turnGameGUI(); // On change de joueur
         // Vérificatione échec et MATE du roi
         if(_facade.verifyIfCheckMateKing()){
             // Affiche une fenêtre de confirmation avec des boutons Oui / Non
             int result = JOptionPane.showConfirmDialog(null, "Il y a échec du ROI !", "REJOUER", JOptionPane.CLOSED_OPTION);
-
             // Si l'utilisateur a cliqué sur Oui, exécute la fonction
             if (result == JOptionPane.OK_OPTION) {
                 new EndGameView(_facade);
@@ -324,6 +345,9 @@ public class BoardView extends JFrame{
             }
         }
     }
+
+
+
     /*
      * Changement couleur des cases où sont le pièces afin  de savoir quel joueur doit jouer
      * */

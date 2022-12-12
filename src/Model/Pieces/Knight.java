@@ -35,6 +35,12 @@ public class Knight  extends Piece  {
     public String getImage(){
         return  "/img/Pieces/Knight";
     }
+    /**
+     *  Retourne vrai si il peut avancer
+     * @param square la case à vérifier
+     * @param currentSquare case actuel où il y a notre pièce qu'on veut déplacer
+     * @return Cela retourne si il peut avancer ou non
+     */
     @Override
     public Boolean up(Square square, Square currentSquare) {
         if(square.getRow() == currentSquare.getRow()+2 && square.getColumn() == currentSquare.getColumn()+1){
@@ -44,7 +50,12 @@ public class Knight  extends Piece  {
         }
         return false;
     }
-
+    /**
+     *  Retourne vrai si il peut aller vers le bas
+     * @param square la case à vérifier
+     * @param currentSquare case actuel où il y a notre pièce qu'on veut déplacer
+     * @return Cela retourne si il peut aller vers le bas  non
+     */
     @Override
     public Boolean down(Square square, Square currentSquare) {
         if(square.getRow() == currentSquare.getRow()-2 && square.getColumn() == currentSquare.getColumn()+1){
@@ -54,7 +65,12 @@ public class Knight  extends Piece  {
         }
         return false;
     }
-
+    /**
+     *  Retourne vrai si il peut aller à gauche
+     * @param square la case à vérifier
+     * @param currentSquare case actuel où il y a notre pièce qu'on veut déplacer
+     * @return Cela retourne si il peut aller à gauche ou non
+     */
     @Override
     public Boolean left(Square square, Square currentSquare) {
         if(square.getRow() == currentSquare.getRow()-1 && square.getColumn() == currentSquare.getColumn()-2){
@@ -64,7 +80,12 @@ public class Knight  extends Piece  {
         }
         return false;
     }
-
+    /**
+     *  Retourne vrai si il peut aller vers la droite
+     * @param square la case à vérifier
+     * @param currentSquare case actuel où il y a notre pièce qu'on veut déplacer
+     * @return Cela retourne si il peut aller vers la droite ou non
+     */
     @Override
     public Boolean right(Square square, Square currentSquare) {
         if(square.getRow() == currentSquare.getRow()-1 && square.getColumn() == currentSquare.getColumn()+2){
@@ -74,6 +95,10 @@ public class Knight  extends Piece  {
         }
         return false;
     }
+    /**
+     * Retourne combien vaut cette pièce si on l'attrape
+     * @return un entier, le score
+     */
     @Override
     public int getScore() {
         return 3;

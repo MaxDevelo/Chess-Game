@@ -79,7 +79,6 @@ public class ChessGameFacade {
     * Fonction qui met à jour le tableau 2d de cases suite au mouvement de la pièce
     * */
     public void moveAt(Square square, int pnlRow, int pnlColumn){
-
         Square[][] board = _board.getBoard();
         if(board[pnlRow][pnlColumn].getPiece() != null && board[pnlRow][pnlColumn].getPiece().getColor() != square.getPiece().getColor()){
             if(_game.getPlayers().get(0).getCanPlay()){
@@ -176,6 +175,8 @@ public class ChessGameFacade {
         return player.getScore();
     }
 
+
+
     // Détection de patte
     public boolean isStalemate() {
         for (int i = 0; i < _board.getBoard().length; i++) {
@@ -195,7 +196,6 @@ public class ChessGameFacade {
                 }
             }
         }
-        System.out.println("isStalemate");
         return true;
     }
 }

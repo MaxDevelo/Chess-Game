@@ -33,7 +33,7 @@ public class Game {
 
     /**
      *  Retourne le joueur qui est entrain de jouer
-     * @return retourne le joueur entrain de jouer
+     *  @return retourne le joueur entrain de jouer
      */
     public Player getPlayerPlay(){
         return _currentPlayerPlay;

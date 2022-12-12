@@ -27,6 +27,12 @@ public class Pawn  extends Piece {
         return  "/img/Pieces/Pawn";
     }
 
+    /**
+     *  Retourne vrai si il peut avancer
+     * @param square la case à vérifier
+     * @param currentSquare case actuel où il y a notre pièce qu'on veut déplacer
+     * @return Cela retourne si il peut avancer ou non
+     */
     @Override
     public Boolean up(Square square, Square currentSquare) {
         if(currentSquare.getRow() == 1 ||currentSquare.getRow() == 6){
@@ -60,12 +66,22 @@ public class Pawn  extends Piece {
 
     }
 
-
+    /**
+     *  Retourne vrai si il peut aller vers le bas
+     * @param square la case à vérifier
+     * @param currentSquare case actuel où il y a notre pièce qu'on veut déplacer
+     * @return Cela retourne si il peut aller vers le bas  non
+     */
     @Override
     public Boolean down(Square square, Square currentSquare) {
         return  false;
     }
-
+    /**
+     *  Retourne vrai si il peut aller à gauche
+     * @param square la case à vérifier
+     * @param currentSquare case actuel où il y a notre pièce qu'on veut déplacer
+     * @return Cela retourne si il peut aller à gauche ou non
+     */
     @Override
     public Boolean left(Square square, Square currentSquare) {
         if(this.getColor() == Model.Color.BLACK) {
@@ -80,7 +96,12 @@ public class Pawn  extends Piece {
                     && square.getPiece().getColor() != this.getColor();
         }
     }
-
+    /**
+     *  Retourne vrai si il peut aller vers la droite
+     * @param square la case à vérifier
+     * @param currentSquare case actuel où il y a notre pièce qu'on veut déplacer
+     * @return Cela retourne si il peut aller vers la droite ou non
+     */
     @Override
     public Boolean right(Square square, Square currentSquare) {
         if(this.getColor() == Model.Color.BLACK) {
@@ -95,6 +116,10 @@ public class Pawn  extends Piece {
                     && square.getPiece().getColor() != this.getColor();
         }
     }
+    /**
+     * Retourne combien vaut cette pièce si on l'attrape
+     * @return un entier, le score
+     */
     @Override
     public int getScore() {
         return 1;

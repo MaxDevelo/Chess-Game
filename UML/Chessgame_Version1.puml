@@ -44,6 +44,7 @@ package Model{
     + promotion(square: Square)
     + isPromoted(square: Square): Boolean
     + isCheck(): Boolean
+    + squareForbidden(): Square[]
     }
 
 

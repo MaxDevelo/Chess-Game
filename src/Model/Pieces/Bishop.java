@@ -6,6 +6,7 @@ import Model.Square;
 
 public class Bishop extends Piece {
     // Stocke les cases connu après vérification de la case
+    // afin de pouvoir anticiper les obstacles.
     private Square[][] _knownSquare;
     public Bishop(Color color) {
         super(color);
