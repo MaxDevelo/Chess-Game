@@ -12,9 +12,14 @@ public class StartGameView extends JFrame {
     private JComboBox<String> jComboBox, jComboBox2;
     private ChessGameFacade _facade;
     public StartGameView(ChessGameFacade controller){
+        setIconImage(new ImageIcon(getClass().getResource("/img/logo.png")).getImage());
         setTitle("Jeu d'échec");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(1000,400);
+        // Centrer l'applciation
+        Toolkit toolKit = getToolkit();
+        Dimension size = toolKit.getScreenSize();
+        setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
 
         JPanel panel = new JPanel();
         panel.setPreferredSize(new Dimension(200, 50));;

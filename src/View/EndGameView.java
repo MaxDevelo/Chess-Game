@@ -16,10 +16,16 @@ public class EndGameView extends JFrame {
     private ChessGameFacade _facade;
     private JPanel  pnlPiecesCapturesWhite,  pnlPiecesCapturesBlack;
     public EndGameView(ChessGameFacade facade){
+        setIconImage(new ImageIcon(getClass().getResource("/img/logo.png")).getImage());
         this._facade = facade;
         setTitle("FIN DE LA PARTIE");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(1000,400);
+        // Centrer l'applciation
+        Toolkit toolKit = getToolkit();
+        Dimension size = toolKit.getScreenSize();
+        setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
+
         setVisible(true);
         setResizable(false);
 
