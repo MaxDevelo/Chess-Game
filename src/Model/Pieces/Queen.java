@@ -171,4 +171,14 @@ public class Queen  extends Piece {
     public int getScore() {
         return 9;
     }
+
+    @Override
+    public Boolean isFirstMove() {
+        return null;
+    }
+
+    @Override
+    public void setIsFirstMove(Boolean isFirstMove) {
+
+    }
 }

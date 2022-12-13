@@ -5,9 +5,11 @@ import Model.Square;
 
 public class Pawn  extends Piece {
     private Boolean _beginGame;
+    private Boolean _isFirstMove;
     public Pawn(Color color) {
         super(color);
         this._beginGame = true;
+        this._isFirstMove = true;
     }
 
     @Override
@@ -123,5 +125,15 @@ public class Pawn  extends Piece {
     @Override
     public int getScore() {
         return 1;
+    }
+
+    @Override
+    public Boolean isFirstMove() {
+        return _isFirstMove;
+    }
+
+    @Override
+    public void setIsFirstMove(Boolean isFirstMove) {
+        this._isFirstMove = isFirstMove;
     }
 }

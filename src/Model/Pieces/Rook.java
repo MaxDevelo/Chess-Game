@@ -152,4 +152,14 @@ public class Rook extends Piece {
     public int getScore() {
         return 5;
     }
+
+    @Override
+    public Boolean isFirstMove() {
+        return null;
+    }
+
+    @Override
+    public void setIsFirstMove(Boolean isFirstMove) {
+
+    }
 }

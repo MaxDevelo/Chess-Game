@@ -31,6 +31,7 @@ public class ChessGameFacade {
         // le joueur TEAM WHITE commence en premier
         _game.setPlayerPlay((player1.getColor() == WHITE)? player1: player2);
         generatedBoard();
+
     }
 
     public void generatedBoard(){
@@ -80,13 +81,21 @@ public class ChessGameFacade {
     * */
     public void moveAt(Square square, int pnlRow, int pnlColumn){
         Square[][] board = _board.getBoard();
+        if(square.getPiece().getColor().equals(Color.BLACK)){
+            if(board[pnlRow-1][pnlColumn].getPiece() != null && board[pnlRow-1][pnlColumn].getPiece().getName().equals(Type.PAWN) && pnlRow-1 == 4){
+                _game.getPlayers().get((_game.getPlayers().get(0).getCanPlay()) ? 0 : 1).addPieceCaptured(board[pnlRow-1][pnlColumn].getPiece());
+                updateScore(1);
+                _board.attack(board[pnlRow-1][pnlColumn]);
+            }
+        }else{
+            if(board[pnlRow+1][pnlColumn].getPiece() != null && board[pnlRow+1][pnlColumn].getPiece().getName().equals(Type.PAWN) && pnlRow+1 == 3){
+                _game.getPlayers().get((_game.getPlayers().get(0).getCanPlay()) ? 0 : 1).addPieceCaptured(board[pnlRow+1][pnlColumn].getPiece());
+                updateScore(1);
+                _board.attack(board[pnlRow+1][pnlColumn]);
+            }
+        }
         if(board[pnlRow][pnlColumn].getPiece() != null && board[pnlRow][pnlColumn].getPiece().getColor() != square.getPiece().getColor()){
-            if(_game.getPlayers().get(0).getCanPlay()){
-                _game.getPlayers().get(0).addPieceCaptured(board[pnlRow][pnlColumn].getPiece());
-            }
-            if(_game.getPlayers().get(1).getCanPlay()){
-                _game.getPlayers().get(1).addPieceCaptured(board[pnlRow][pnlColumn].getPiece());
-            }
+            _game.getPlayers().get((_game.getPlayers().get(0).getCanPlay()) ? 0 : 1).addPieceCaptured(board[pnlRow][pnlColumn].getPiece());
             _board.attack(board[square.getRow()][square.getColumn()]);
             // On donne des points.
             if(board[pnlRow][pnlColumn].getPiece().getName().equals(Type.PAWN)){
@@ -105,6 +114,13 @@ public class ChessGameFacade {
         }
         board[square.getRow()][square.getColumn()].setPiece(null);
         board[pnlRow][pnlColumn].setPiece(_board.getCurrentPiece());
+        // Onr écupère le prmeier mouvement du Pion pour la prise en passant
+        if(board[pnlRow][pnlColumn].getPiece().getName().equals(Type.PAWN)){
+            if((pnlRow-1 == 2 || pnlRow+1 == 5) && board[pnlRow][pnlColumn].getPiece().isFirstMove()){
+                _board.setLastPieceMove(board[pnlRow][pnlColumn]);
+            }
+            board[pnlRow][pnlColumn].getPiece().setIsFirstMove(false);
+        }
         _board.setBoard(board);
     }
     /*

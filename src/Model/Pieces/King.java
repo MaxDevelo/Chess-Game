@@ -107,4 +107,14 @@ public class King  extends Piece {
     public int getScore() {
         return 0;
     }
+
+    @Override
+    public Boolean isFirstMove() {
+        return null;
+    }
+
+    @Override
+    public void setIsFirstMove(Boolean isFirstMove) {
+
+    }
 }

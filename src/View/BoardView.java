@@ -27,7 +27,6 @@ public class BoardView extends JFrame{
     private JButton _currentButtonPiece;
     private ChessGameFacade _facade;
     private JLabel  _lbl_score_white, _lbl_score_black,  _lblTurnBlack, _lblTurnWhite;
-    public Boolean _attack;
     /*
         Création de l'interface du plateau avec les 2 joueurs
     */
@@ -35,7 +34,6 @@ public class BoardView extends JFrame{
       setIconImage(new ImageIcon(getClass().getResource("/img/logo.png")).getImage());;
         this._board = controller.getBoard();
         this._facade = controller;
-        this._attack = false;
         setSize(1680,840);
         // Centrer l'applciation
         Toolkit toolKit = getToolkit();
@@ -250,10 +248,8 @@ public class BoardView extends JFrame{
      * Validation en montrant où la pièce peut aller
      */
     public void validMove(JButton btnPiece) {
-            if (_attack) {
-                movePiece((JPanel) btnPiece.getParent());
-            }
-            this._attack = false;
+        movePiece((JPanel) btnPiece.getParent());
+
             Player player;
             if (_facade.getGame().getPlayers().get(0).getCanPlay()) {
                 player = _facade.getGame().getPlayers().get(0);
@@ -263,7 +259,7 @@ public class BoardView extends JFrame{
             this._currentButtonPiece = btnPiece;
             Square square;
             if (btnPiece.getParent() != null) {
-                if (player.getColor() == _facade.getBoard().getBoard()[btnPiece.getParent().getLocation().y / 100][btnPiece.getParent().getLocation().x / 100].getPiece().getColor()) {
+                if (_facade.getBoard().getBoard()[btnPiece.getParent().getLocation().y / 100][btnPiece.getParent().getLocation().x / 100].getPiece() != null && player.getColor() == _facade.getBoard().getBoard()[btnPiece.getParent().getLocation().y / 100][btnPiece.getParent().getLocation().x / 100].getPiece().getColor()) {
 
                     if (btnPiece.getName().equals("PAWN") || btnPiece.getName().equals("ROOK") || btnPiece.getName().equals("KNIGHT") || btnPiece.getName().equals("QUEEN") || btnPiece.getName().equals("KING") || btnPiece.getName().equals("BISHOP")) {
                         square = _board.getSquare(this._currentButtonPiece.getParent().getLocation().y / 100, this._currentButtonPiece.getParent().getLocation().x / 100);
@@ -282,10 +278,11 @@ public class BoardView extends JFrame{
                     // Boucle qui permetd e récupérer et afficher les cases où le joueur
                     // peut se déplacer avec la pèce
                     for (Square s : _board.getValidSquares()) {
+                        // Gère la prise en passant du Pion
+
                         if (_board.getBoard()[s.getRow()][s.getColumn()].getPiece() != null) {
                             _panels[s.getRow()][s.getColumn()].setBackground(new Color(241, 139, 129));
                             _panels[s.getRow()][s.getColumn()].repaint();
-                            this._attack = true;
                         } else {
                             _panels[s.getRow()][s.getColumn()].setBackground(new Color(129, 241, 139));
                             _panels[s.getRow()][s.getColumn()].repaint();
@@ -293,7 +290,6 @@ public class BoardView extends JFrame{
                     }
                 }
             }
-
     }
 
     /*
@@ -325,7 +321,7 @@ public class BoardView extends JFrame{
                    _facade.moveAt(_board.getBoard()[_currentButtonPiece.getParent().getLocation().y / 100][_currentButtonPiece.getParent().getLocation().x / 100], panel.getLocation().y / 100, panel.getLocation().x / 100);
                    piecesCapturesGUI();
                    _panels[panel.getLocation().y / 100][panel.getLocation().x / 100].add(_currentButtonPiece);
-                   // PROMOTION DE LA PIECE (TEST | NON TERMINE)
+                   // Promotion du PION
                    if(_board.isPromoted(_board.getBoard()[panel.getLocation().y / 100][panel.getLocation().x / 100])){
                        String namePiece = selectPiecesPromotion();
                        _board.promotion(_board.getBoard()[panel.getLocation().y / 100][panel.getLocation().x / 100], namePiece);
@@ -333,6 +329,13 @@ public class BoardView extends JFrame{
                        createPieceGUI(panel.getLocation().y/100, panel.getLocation().x/100);
                    }
                }
+               // Gère la prise en passant du Pion
+                if(_board.getBoard()[s.getRow()+1][s.getColumn()].getPiece() == null && _panels[s.getRow()+1][s.getColumn()].getComponents().length == 1){
+                    _panels[s.getRow()+1][s.getColumn()].remove(_panels[s.getRow()+1][s.getColumn()].getComponent(0));
+                }
+                if(_board.getBoard()[s.getRow()-1][s.getColumn()].getPiece() == null && _panels[s.getRow()-1][s.getColumn()].getComponents().length == 1){
+                    _panels[s.getRow()-1][s.getColumn()].remove(_panels[s.getRow()-1][s.getColumn()].getComponent(0));
+                }
                 reloadScoreGame();
                break;
             }
@@ -340,16 +343,6 @@ public class BoardView extends JFrame{
         turnGameGUI(); // On change de joueur
         // Vérificatione échec du roi
         if(_facade.verifyIfCheckKing()){
-            // On lui montre où est l'échec du roi
-            /*for (Square s : _board.getValidSquares()) {
-                if (_board.getBoard()[s.getRow()][s.getColumn()].getPiece() != null && _board.getBoard()[s.getRow()][s.getColumn()].getPiece().getName().equals(Model.Pieces.Type.KING)) {
-                    _panels[s.getRow()][s.getColumn()].setBackground(Color.RED);
-                    _panels[s.getRow()][s.getColumn()].repaint();
-                } else {
-                    _panels[s.getRow()][s.getColumn()].setBackground(Color.ORANGE);
-                    _panels[s.getRow()][s.getColumn()].repaint();
-                }
-            }*/
             // Affiche une fenêtre de confirmation avec des boutons Oui / Non
             JOptionPane.showConfirmDialog(null, "Echec du Roi, Attention", "ok", JOptionPane.CLOSED_OPTION);
         }

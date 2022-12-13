@@ -84,4 +84,14 @@ public class Bishop extends Piece {
         return 3;
     }
 
+    @Override
+    public Boolean isFirstMove() {
+        return null;
+    }
+
+    @Override
+    public void setIsFirstMove(Boolean isFirstMove) {
+
+    }
+
 }

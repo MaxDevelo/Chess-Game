@@ -45,6 +45,7 @@ package Model{
     + isPromoted(square: Square): Boolean
     + isCheck(): Boolean
     + squareForbidden(): Square[]
+    + setLastPieceMove(lastPieceMove: Square)
     }
 
 
@@ -106,6 +107,8 @@ package Model{
     + {abstract}left(square: Square, currentSquare: Square): boolean
     + {abstract}right(square: Square, currentSquare: Square): boolean
     + {abstract}getScore(): int
+    + {abstract} isFirstMove(): Boolean
+    + {abstract} setIsFirstMove(isFirstMove: Boolean)
     }
 
     class Pawn{
@@ -118,6 +121,8 @@ package Model{
     + {abstract}left(square: Square, currentSquare: Square): boolean
     + {abstract}right(square: Square, currentSquare: Square): boolean
     + {abstract}getScore(): int
+    + {abstract} isFirstMove(): Boolean
+    + {abstract} setIsFirstMove(isFirstMove: Boolean)
     }
 
     class King{
@@ -129,6 +134,8 @@ package Model{
     + {abstract}left(square: Square, currentSquare: Square): boolean
     + {abstract}right(square: Square, currentSquare: Square): boolean
     + {abstract}getScore(): int
+    + {abstract} isFirstMove(): Boolean
+    + {abstract} setIsFirstMove(isFirstMove: Boolean)
     }
 
     class Rook{
@@ -140,6 +147,8 @@ package Model{
     + {abstract}left(square: Square, currentSquare: Square): boolean
     + {abstract}right(square: Square, currentSquare: Square): boolean
     + {abstract}getScore(): int
+    + {abstract} isFirstMove(): Boolean
+    + {abstract} setIsFirstMove(isFirstMove: Boolean)
     }
 
     class Bishop{
@@ -151,6 +160,8 @@ package Model{
     + {abstract}left(square: Square, currentSquare: Square): boolean
     + {abstract}right(square: Square, currentSquare: Square): boolean
     + {abstract}getScore(): int
+    + {abstract} isFirstMove(): Boolean
+    + {abstract} setIsFirstMove(isFirstMove: Boolean)
     }
 
     class Queen{
@@ -162,6 +173,8 @@ package Model{
     + {abstract}left(square: Square, currentSquare: Square): boolean
     + {abstract}right(square: Square, currentSquare: Square): boolean
     + {abstract}getScore(): int
+    + {abstract} isFirstMove(): Boolean
+    + {abstract} setIsFirstMove(isFirstMove: Boolean)
     }
 
     class Knight{
@@ -173,6 +186,8 @@ package Model{
     + {abstract}left(square: Square, currentSquare: Square): boolean
     + {abstract}right(square: Square, currentSquare: Square): boolean
     + {abstract}getScore(): int
+    + {abstract} isFirstMove(): Boolean
+    + {abstract} setIsFirstMove(isFirstMove: Boolean)
     }
 
 }
