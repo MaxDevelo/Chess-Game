@@ -16,6 +16,7 @@ import Model.Player;
 import Model.Square;
 
 import static Model.Color.WHITE;
+import static Model.Pieces.Type.PAWN;
 
 
 public class BoardView extends JFrame{
@@ -278,14 +279,20 @@ public class BoardView extends JFrame{
                     // Boucle qui permetd e récupérer et afficher les cases où le joueur
                     // peut se déplacer avec la pèce
                     for (Square s : _board.getValidSquares()) {
-                        // Gère la prise en passant du Pion
 
                         if (_board.getBoard()[s.getRow()][s.getColumn()].getPiece() != null) {
                             _panels[s.getRow()][s.getColumn()].setBackground(new Color(241, 139, 129));
                             _panels[s.getRow()][s.getColumn()].repaint();
                         } else {
-                            _panels[s.getRow()][s.getColumn()].setBackground(new Color(129, 241, 139));
-                            _panels[s.getRow()][s.getColumn()].repaint();
+                            // Mise en place de la couleur rouge pour indiquer que le pion peut aller de coté
+                            // (Quand il y a une prise en passant)
+                            if(s.getColumn() != btnPiece.getParent().getLocation().x / 100 && _facade.getBoard().getBoard()[btnPiece.getParent().getLocation().y / 100][btnPiece.getParent().getLocation().x / 100].getPiece().getName().equals(PAWN)){
+                                _panels[s.getRow()][s.getColumn()].setBackground(new Color(241, 139, 129));
+                                _panels[s.getRow()][s.getColumn()].repaint();
+                            } else{
+                                _panels[s.getRow()][s.getColumn()].setBackground(new Color(129, 241, 139));
+                                _panels[s.getRow()][s.getColumn()].repaint();
+                            }
                         }
                     }
                 }

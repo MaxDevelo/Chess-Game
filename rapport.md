@@ -10,3 +10,5 @@
 - Récupération et mise en palce d'une avriable dans Board afin de stocker la case de la dernière pièce déplacer afin de gérer la prise en passant du Pion.
 
 Nous avons gérer la prise en passant pour le pion.
+
+- Ajout de la couleur rouge sur la case quand il y a prise en passant pour indiquer qu'il peut attaquer le pion
