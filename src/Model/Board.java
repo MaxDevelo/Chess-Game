@@ -3,7 +3,6 @@ package Model;
 import Model.Pieces.*;
 import Model.Pieces.Type;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class Board {
 
         PieceFactory createPiece = new PieceFactory();
 
-        // NOIR
+        // Pièces NOIR
         board[0][0].setPiece(createPiece.createRook(Model.Color.BLACK));
         board[0][1].setPiece(createPiece.createKnight(Model.Color.BLACK));
         board[0][2].setPiece(createPiece.createBishop(Model.Color.BLACK));
@@ -49,7 +48,7 @@ public class Board {
         board[1][7].setPiece(createPiece.createPawn(Model.Color.BLACK));
 
 
-        // BLANC
+        // Pièces BLANCHES
         board[6][0].setPiece(createPiece.createPawn(Model.Color.WHITE));
         board[6][1].setPiece(createPiece.createPawn(Model.Color.WHITE));
         board[6][2].setPiece(createPiece.createPawn(Model.Color.WHITE));
@@ -97,7 +96,7 @@ public class Board {
      *  Retourner le tableau de case
      * @return retourne le tableau
      */
-    public Square[][] getBoard(){
+    public Square[][] getBoards(){
         return this._board;
     }
 
@@ -143,7 +142,7 @@ public class Board {
     }
 
     /**
-     *  Clear la liste
+     *  Clear la liste des cases valide (qui permet de savoir où la Pièce peut aller
      */
     public void clearValidSquare(){ // On rénitialise la liste des cases validés
         this._validSquares.clear();
@@ -185,6 +184,7 @@ public class Board {
         }
         return false;
     }
+
 
     /**
      *  Changement de la pièce (Attention, c'est un test. NON TERMINE
@@ -244,11 +244,11 @@ public class Board {
      * @return retourne la liste des cases
      */
     public List<Square> squareForbidden(){
-        List<Square> squareBordidden = new ArrayList<>();
+        List<Square> squareForbidden = new ArrayList<>();
         for (Square s : getValidSquares()) {
-            squareBordidden.add(s);
+            squareForbidden.add(s);
         }
-        return squareBordidden;
+        return squareForbidden;
     }
 
     /**

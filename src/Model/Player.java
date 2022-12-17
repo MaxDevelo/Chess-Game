@@ -15,7 +15,7 @@ public class Player {
 
     public Player(){
         this._piecesCaptured = new ArrayList<>();
-        this._score = 0;
+        this._score = 0; // Score a 0
         this._isWin = false;
     }
     public int getScore(){
@@ -59,12 +59,22 @@ public class Player {
     public void setColor(Color color){
         this._colorTeam = color;
     }
+    /**
+     *  Permet de récupérer les pièces capturées du joueur
+     */
     public  List<Piece> getPieceCaptured(){
         return _piecesCaptured;
     }
+    /**
+     *  Permet d'indiquer si le joueur à gagner
+     * @param isWin booléan pour indiquer si le joueur à gagner
+     */
     public void setWin(Boolean isWin){
         this._isWin = isWin;
     }
+    /**
+     *  Permet de savoir qui a gagner la partie
+     */
     public Boolean getWin(){
         return this._isWin;
     }
