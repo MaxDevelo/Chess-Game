@@ -1,8 +1,40 @@
 Chess game
 ==========
 
-INSTALLATION ET LANCEMENT
-----------
+### INSTALLATION ET LANCEMENT
+
+### WINDOWS
+
+```sh
+# Cloner le dépôt
+git clone https://git.unistra.fr/wawrzyniak-legros/a31-chessgame.git
+```
+##### Lancement
+Lancer à la main le fichier ChessGame.jar dans le dossier/Game_Executable
+
+### LINUX
+
+```sh
+
+# Cloner le dépôt
+git clone https://git.unistra.fr/wawrzyniak-legros/a31-chessgame.git
+
+# Aller dans le dossier
+cd a31-chessgame
+
+# Lancement
+java -jar ./Game_Executable/ChessGame.jar
+```
+
+### MAC
+
+```sh
+# Cloner le dépôt
+git clone https://git.unistra.fr/wawrzyniak-legros/a31-chessgame.git
+
+# Lancement
+java -jar ./Game_Executable/ChessGame.jar
+```
 
 
 

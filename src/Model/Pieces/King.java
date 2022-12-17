@@ -35,6 +35,12 @@ public class King  extends Piece {
     public String getImage(){
         return  "/img/Pieces/King";
     }
+    /**
+     *  Retourne vrai si il peut avancer
+     * @param square la case à vérifier
+     * @param currentSquare case actuel où il y a notre pièce qu'on veut déplacer
+     * @return Cela retourne si il peut avancer ou non
+     */
     @Override
     public Boolean up(Square square, Square currentSquare) {
         if(square.getRow() == currentSquare.getRow()-1 && square.getColumn() == currentSquare.getColumn()){
@@ -42,7 +48,12 @@ public class King  extends Piece {
         }
         return false;
     }
-
+    /**
+     *  Retourne vrai si il peut aller vers le bas
+     * @param square la case à vérifier
+     * @param currentSquare case actuel où il y a notre pièce qu'on veut déplacer
+     * @return Cela retourne si il peut aller vers le bas  non
+     */
     @Override
     public Boolean down(Square square, Square currentSquare) {
         if(square.getRow() == currentSquare.getRow()+1 && square.getColumn() == currentSquare.getColumn()){ // DOWN
@@ -50,7 +61,12 @@ public class King  extends Piece {
         }
         return false;
     }
-
+    /**
+     *  Retourne vrai si il peut aller à gauche
+     * @param square la case à vérifier
+     * @param currentSquare case actuel où il y a notre pièce qu'on veut déplacer
+     * @return Cela retourne si il peut aller à gauche ou non
+     */
     @Override
     public Boolean left(Square square, Square currentSquare) {
         if(square.getColumn() == currentSquare.getColumn()-1){
@@ -64,7 +80,12 @@ public class King  extends Piece {
         }
         return false;
     }
-
+    /**
+     *  Retourne vrai si il peut aller vers la droite
+     * @param square la case à vérifier
+     * @param currentSquare case actuel où il y a notre pièce qu'on veut déplacer
+     * @return Cela retourne si il peut aller vers la droite ou non
+     */
     @Override
     public Boolean right(Square square, Square currentSquare) {
         if(square.getColumn() == currentSquare.getColumn()+1){
@@ -78,8 +99,22 @@ public class King  extends Piece {
         }
         return false;
     }
+    /**
+     * Retourne combien vaut cette pièce. HORS. Le roi n'a pas de score
+     * @return un entier, le score. Attention, le roi n'a pas de score
+     */
     @Override
     public int getScore() {
         return 0;
+    }
+
+    @Override
+    public Boolean isFirstMove() {
+        return null;
+    }
+
+    @Override
+    public void setIsFirstMove(Boolean isFirstMove) {
+
     }
 }

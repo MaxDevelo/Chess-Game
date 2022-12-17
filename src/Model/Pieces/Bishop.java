@@ -6,6 +6,7 @@ import Model.Square;
 
 public class Bishop extends Piece {
     // Stocke les cases connu après vérification de la case
+    // afin de pouvoir anticiper les obstacles.
     private Square[][] _knownSquare;
     public Bishop(Color color) {
         super(color);
@@ -81,6 +82,16 @@ public class Bishop extends Piece {
     @Override
     public int getScore() {
         return 3;
+    }
+
+    @Override
+    public Boolean isFirstMove() {
+        return null;
+    }
+
+    @Override
+    public void setIsFirstMove(Boolean isFirstMove) {
+
     }
 
 }

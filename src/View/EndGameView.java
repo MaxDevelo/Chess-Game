@@ -16,30 +16,37 @@ public class EndGameView extends JFrame {
     private ChessGameFacade _facade;
     private JPanel  pnlPiecesCapturesWhite,  pnlPiecesCapturesBlack;
     public EndGameView(ChessGameFacade facade){
+        setIconImage(new ImageIcon(getClass().getResource("/img/logo.png")).getImage());
         this._facade = facade;
         setTitle("FIN DE LA PARTIE");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(1000,400);
+        // Centrer l'applciation
+        Toolkit toolKit = getToolkit();
+        Dimension size = toolKit.getScreenSize();
+        setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
+
         setVisible(true);
         setResizable(false);
-
         for(Player player : _facade.getGame().getPlayers()){
-            if(player.getWin()){
+            if(player.getWin()){ // Si le joueur observé a gagné, on l'affiche
                 JPanel p = new JPanel();
-                JLabel name = new JLabel("Le gagnant est " + player.getName());
-                name.setFont(new Font("Serif", Font.BOLD, 30));
-                name.setForeground(java.awt.Color.white);
-                JLabel score = new JLabel(" avec un score de " + String.valueOf(player.getScore()));
+                JLabel name = new JLabel("Le gagnant est " + player.getName()); // Nom du gagnant
+                name.setFont(new Font("Serif", Font.BOLD, 30)); // Ajout d'une Font
+                name.setForeground(java.awt.Color.white); // Ajout d'une couleur au texte
+                JLabel score = new JLabel(" avec un score de " + String.valueOf(player.getScore())); // Son score
                 score.setFont(new Font("Serif", Font.BOLD, 30));
                 score.setForeground(java.awt.Color.white);
-                p.add(name, BorderLayout.CENTER);
-                p.add(score, BorderLayout.SOUTH);
+                p.add(name, BorderLayout.CENTER); // Ajout du nom au centre
+                p.add(score, BorderLayout.SOUTH);// Ajout du score vers le bas
                 p.setBackground(new java.awt.Color(48, 66, 36));
                 // Panel pour ajouter les pièces capturées
                 JPanel pnlPiecesCapturesBlack = new JPanel();
+                // Ajout des pièces capturées
+                System.out.println(player.getPieceCaptured().size());
                 for(Piece piece : player.getPieceCaptured()){
 
-                    // Mise en palce de l'image de la pièce
+                    // Mise en place de l'image de la pièce
                     ImageIcon imageIcon;
                     if(piece.getColor() == Model.Color.BLACK){
                         imageIcon = new ImageIcon(new ImageIcon(getClass().getResource(piece.getImage() + "_Black.png")
@@ -61,6 +68,7 @@ public class EndGameView extends JFrame {
             }
 
         }
+        // outon pour rejoueur au jeu
         JButton btnPlay = new JButton("REJOUER");
 
         btnPlay.addMouseListener(new MouseAdapter() {
@@ -73,12 +81,15 @@ public class EndGameView extends JFrame {
         add(btnPlay, BorderLayout.SOUTH);
     }
 
+    /**
+     *  Rejouer au jeu d'échec
+     */
     public void reload(){
         // TESTE
         ChessGameFacade controller = new ChessGameFacade();
         controller.newGame("[Nom Joueur1]", "[Nom Joueur2]", Color.WHITE, Color.BLACK);
         new BoardView(controller);
-        dispose();
+        dispose(); // Suppression du JFrame EndGameView
     }
 
 

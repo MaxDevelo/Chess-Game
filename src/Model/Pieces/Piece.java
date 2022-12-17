@@ -23,6 +23,8 @@ public abstract class Piece {
     public abstract Boolean left(Square square, Square currentSquare);
     public abstract Boolean right(Square square, Square currentSquare);
     public abstract int getScore();
+    public abstract Boolean isFirstMove();
+    public abstract void setIsFirstMove(Boolean isFirstMove);
 
 
 }
