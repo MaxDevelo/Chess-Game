@@ -16,3 +16,9 @@ Nous avons gérer la prise en passant pour le pion.
 - Correction du problème au niveau de l'échec et mate. Le joueur pouvait fermer le popup et conitnuer à jouer
 - Lors de la promotion du Pion, nous avons sécurisé le fait que si le joueur ferme la boite de dialogue pour choisir
 entre les 4 pièces, la boite de dialogue continue toujours à s'afficher tant qu'il a pas fait Ok.
+
+- Mise à jour du README en ajoutant la notice d'installation (Windows, Linux, Mac)
+
+##### A FAIRE
+- ROQUE
+- TESTER
