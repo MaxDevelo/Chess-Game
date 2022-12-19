@@ -167,12 +167,12 @@ public class Board {
         if (_lastPieceMove != null && _lastPieceMove.getPiece() != null && _lastPieceMove.getPiece().getColor() != currentSquare.getPiece().getColor()) {
             if (_lastPieceMove.getPiece().getColor().equals(Color.BLACK)) {
                 // Si la dernière pièce qui a bougé est à gauche de la pièce actuelle
-                if (_lastPieceMove.getRow() - 1 == 2 && currentSquare.getRow() - 1 == 2) {
+                if ((_lastPieceMove.getRow() - 1 == 2 && currentSquare.getRow() - 1 == 2) && (_lastPieceMove.getColumn() ==  currentSquare.getColumn()-1 || _lastPieceMove.getColumn() ==  currentSquare.getColumn()+1) ) {
                     return true;
                 }
             } else {
                 // Si la dernière pièce qui a bougé est à droite de la pièce actuelle
-                if (_lastPieceMove.getRow() + 1 == 5 && currentSquare.getRow() + 1 == 5) {
+                if ((_lastPieceMove.getRow() + 1 == 5 && currentSquare.getRow() + 1 == 5) && (_lastPieceMove.getColumn() ==  currentSquare.getColumn()-1 || _lastPieceMove.getColumn() ==  currentSquare.getColumn()+1)) {
                     return true;
                 }
             }
@@ -325,6 +325,27 @@ public class Board {
             }
         }
         return false;
+    }
+    /**
+     * Vérifie si il n'y a plus de mouvement possible pour le joueur
+     * (En prenant pas en compte le Roi) afind e savoir si il y a
+     * partie nulle
+     * @param color Couleur des pièces du joueur
+     */
+    public Boolean noMovePossible(Color color){
+        clearValidSquare();
+        for (int l = 0; l < 8; l++) {
+            for (int c = 0; c < 8; c++) {
+                if(_board[l][c].getPiece() != null && _board[l][c].getPiece().getColor() == color && !_board[l][c].getPiece().getType().equals(Type.KING)){
+                    setValidSquares(_board[l][c]);
+                    if(_validSquares.size() > 0){
+                        return false;
+                    }
+                    clearValidSquare();
+                }
+            }
+        }
+        return true;
     }
 }
 

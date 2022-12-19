@@ -5,16 +5,24 @@ import java.util.List;
 
 public class Game {
     private boolean _endGame;
+    private boolean _nullGame;
     private List<Player> _players;
     private Player _currentPlayerPlay;
     public Game(){
         this._players = new ArrayList<>();
+        this._nullGame = false;
     }
     public void setPlayer(Player player){
         this._players.add(player);
     }
     public List<Player> getPlayers(){
         return this._players;
+    }
+    public void setNullGame(boolean nullGame){
+        this._nullGame = nullGame;
+    }
+    public boolean getNullGame(){
+        return this._nullGame;
     }
 
     /**

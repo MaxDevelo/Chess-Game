@@ -87,7 +87,7 @@ public class BoardView extends JFrame{
         _lbl_score_white = new JLabel();
         _lbl_score_white.setText("Score: 0");
         _lbl_score_white.setLocation(pnlPieceCapturedWhite.getLocation());
-        _lbl_score_white.setFont(new Font("Serif", Font.BOLD, 50));
+        _lbl_score_white.setFont(new Font("Serif", Font.BOLD, 60));
         stat.setPreferredSize(new Dimension(400, 120));
         stat.add(lbl_title, BorderLayout.SOUTH);
         stat.add(_lbl_score_white, BorderLayout.NORTH);
@@ -129,7 +129,7 @@ public class BoardView extends JFrame{
         _lbl_score_black = new JLabel();
         _lbl_score_black.setText("Score: 0");
         _lbl_score_black.setLocation(pnlPieceCapturedBlack.getLocation());
-        _lbl_score_black.setFont(new Font("Serif", Font.BOLD, 50));
+        _lbl_score_black.setFont(new Font("Serif", Font.BOLD, 60));
 
         stat.setPreferredSize(new Dimension(400, 120));
         stat.add(lbl_title, BorderLayout.NORTH);
@@ -288,7 +288,7 @@ public class BoardView extends JFrame{
                         _facade.validMove(square);
                     }
                 }
-                // Boucle qui permetd e récupérer et afficher les cases où le joueur
+                // Boucle qui permet de récupérer et afficher les cases où le joueur
                 // peut se déplacer avec la pèce
                 for (Square s : _board.getValidSquares()) {
                     // Si la case valide contient une pièce ennemi, alors on met la case en Rouge (pour indiquer, que la pièce
@@ -351,7 +351,7 @@ public class BoardView extends JFrame{
                }
                 // Vérifie si la pièce de la case qu'on veut déplacer est bien un Roi
                 // Permet de gérer le Roque
-                if(_board.getBoards()[panel.getLocation().y / 100][panel.getLocation().x / 100].getPiece().getType().equals(Model.Pieces.Type.KING)){
+                if(_board.getBoards()[panel.getLocation().y / 100][panel.getLocation().x / 100].getPiece() != null && _board.getBoards()[panel.getLocation().y / 100][panel.getLocation().x / 100].getPiece().getType().equals(Model.Pieces.Type.KING)){
                     // Gestion du Roque à gauche du plateau
                     if(_board.verifyLimitBoard((panel.getLocation().x / 100)-1) && _panels[panel.getLocation().y / 100][(panel.getLocation().x / 100)-1].getComponents().length == 1 && _board.getBoards()[panel.getLocation().y / 100][(panel.getLocation().x / 100)-1].getPiece() == null){
                         _panels[panel.getLocation().y / 100][(panel.getLocation().x / 100)+1].add(_panels[panel.getLocation().y / 100][(panel.getLocation().x / 100)-1].getComponent(0));
@@ -365,7 +365,7 @@ public class BoardView extends JFrame{
                 if(_currentButtonPiece.getParent() != null && _board.getBoards()[_currentButtonPiece.getParent().getLocation().y / 100][_currentButtonPiece.getParent().getLocation().x / 100].getPiece().getType().equals(Model.Pieces.Type.PAWN)){
                     // Permet de vérifier que dans la tableau Board, le Pion Noir a été mangé et dans la Tableau 2D de panels (Echequier)
                     // il y a le bouton du Pion, afin de le supprimer de la case
-                    if(_board.verifyLimitBoard((panel.getLocation().x / 100)+1) && _board.getBoards()[s.getRow()+1][s.getColumn()].getPiece() == null && _panels[s.getRow()+1][s.getColumn()].getComponents().length == 1){
+                    if(_board.verifyLimitBoard(s.getRow()+1) && _board.getBoards()[s.getRow()+1][s.getColumn()].getPiece() == null && _panels[s.getRow()+1][s.getColumn()].getComponents().length == 1){
                         _panels[s.getRow()+1][s.getColumn()].remove(_panels[s.getRow()+1][s.getColumn()].getComponent(0));
                     }
                     // Permet de vérifier que dans la tableau Board, le Pion Blanc a été mangé et dans la Tableau 2D de panels (Echequier)
@@ -375,10 +375,17 @@ public class BoardView extends JFrame{
                     }
                 }
                 reloadScoreGame();// on recharge le score des 2 joueurs
-               break;
+                _facade.turnGame(_facade.getGame().getPlayers().get(0), _facade.getGame().getPlayers().get(1));
+                turnGameGUI(); // On change de joueur
+                break;
             }
         }
-        turnGameGUI(); // On change de joueur
+        // Si il y a partie Nulle. La partie est fini
+        if(_facade.getGame().getNullGame()){
+            JOptionPane.showConfirmDialog(null, "Il y a partie NULLE", "ok", JOptionPane.CLOSED_OPTION);
+            new EndGameView(_facade);
+            dispose();
+        }
         // Vérificatione échec du roi
         if(_facade.verifyIfCheckKing()){
             // Affiche une fenêtre de confirmation avec des boutons Oui / Non
@@ -422,7 +429,6 @@ public class BoardView extends JFrame{
             _lbl_score_white.setText("Score: " + _facade.getGame().getPlayerPlay().getScore());
 
         }
-        _facade.turnGame(_facade.getGame().getPlayers().get(0), _facade.getGame().getPlayers().get(1));
     }
 
     /**

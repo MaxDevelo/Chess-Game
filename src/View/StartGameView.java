@@ -48,8 +48,6 @@ public class StartGameView extends JFrame {
 
         // Mise en place du bouton pour jouer
         JButton btnPlay = new JButton("Commencer la partie");
-        btnPlay.setSize(20, 100);
-
         // Event qui déclanche la partie quand on appui sur le bouton joueur
         btnPlay.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
@@ -121,8 +119,8 @@ public class StartGameView extends JFrame {
     * Lancement de la aprtie
     * */
     public void playGame(){
-        // On vérifie si les nom sont au dessus de 4 caractères et en dessous de 14 caractères
-        if(_txtFieldJoueur1.getText().length() >= 4 && _txtFieldJoueur1.getText().length() <= 20 && _txtFieldJoueur2.getText().length() <= 20 && _txtFieldJoueur2.getText() .length() >= 4){
+        // On vérifie si les nom sont au dessus de 4 caractères et en dessous de 10 caractères
+        if(_txtFieldJoueur1.getText().length() >= 4 && _txtFieldJoueur1.getText().length() <= 10 && _txtFieldJoueur2.getText().length() <= 10 && _txtFieldJoueur2.getText() .length() >= 4){
             // On vérifie que les 2 joueurs n'ont pas la meme couleur
             if(!jComboBox.getItemAt(jComboBox.getSelectedIndex()).equals(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()))){
                 Color colorTeam1 = (jComboBox.getItemAt(jComboBox.getSelectedIndex()).equals("BLACK")) ? Color.BLACK : Color.WHITE;
@@ -133,6 +131,7 @@ public class StartGameView extends JFrame {
                 this._facade.generatedBoard();
                 // lancement de la vue du plateau
                 new BoardView(this._facade);
+                dispose();
             }
         }
     }

@@ -48,11 +48,13 @@ package Model{
     + setLastPieceMove(lastPieceMove: Square)
     + canCastle(currentSquare: Square): Boolean
     + verifyLimitBoard(pos: Integer): Boolean
+    + noMovePossible(): Boolean
     }
 
 
     class Game{
     - _isTurn: Boolean
+    - _nullGame: Boolean
     - _endGame: Boolean
     + Game()
     + setPlayer(player: Player);
@@ -61,6 +63,8 @@ package Model{
     + getEndGame(): Boolean
     + setPlayerPlay(currentPlayerPlay: Player)
     + getPlayerPlay(): Player
+    + setNullGame(nullGame: Boolean)
+    + getNullGame(): Boolean
      }
     class Player{
     - _name: String
@@ -205,6 +209,7 @@ class ChessGameFacade{
     + updateScore(score: Integer)
     + verifyIfCheckMateKing()
     + verifyIfCheckKing()
+    + isPat(): Boolean
 }
 
 }
