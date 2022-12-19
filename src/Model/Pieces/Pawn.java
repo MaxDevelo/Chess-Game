@@ -11,7 +11,12 @@ public class Pawn  extends Piece {
         this._beginGame = true;
         this._isFirstMove = true;
     }
-
+    /**
+     *  Retourne vrai si la pièce peut avancer
+     * @param square la case à vérifier
+     * @param currentSquare case actuel où il y a notre pièce qu'on veut déplacer
+     * @return retourne vrai si la pièce peut aller sur cette case
+     */
     @Override
     public Boolean canMove(Square square, Square currentSquare) {
         if(up(square, currentSquare) || left(square, currentSquare) || right(square, currentSquare)){
@@ -21,7 +26,7 @@ public class Pawn  extends Piece {
     }
 
     @Override
-    public Type getName() {
+    public Type getType() {
         return Type.PAWN;
     }
     @Override
@@ -86,7 +91,7 @@ public class Pawn  extends Piece {
      */
     @Override
     public Boolean left(Square square, Square currentSquare) {
-        if(this.getColor() == Model.Color.BLACK) {
+        if(this.getColor().equals(Model.Color.BLACK)) {
             return   ((square.getRow() == currentSquare.getRow()+1)
                     && (currentSquare.getColumn()-1 == square.getColumn()))
                     && square.getPiece() != null
@@ -106,7 +111,7 @@ public class Pawn  extends Piece {
      */
     @Override
     public Boolean right(Square square, Square currentSquare) {
-        if(this.getColor() == Model.Color.BLACK) {
+        if(this.getColor().equals(Model.Color.BLACK)) {
             return   ((square.getRow() == currentSquare.getRow()+1)
                     && (currentSquare.getColumn()+1 == square.getColumn()))
                     && square.getPiece() != null

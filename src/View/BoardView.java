@@ -26,9 +26,10 @@ public class BoardView extends JFrame{
     private JButton _currentButtonPiece;
     private ChessGameFacade _facade;
     private JLabel  _lbl_score_white, _lbl_score_black,  _lblTurnBlack, _lblTurnWhite;
-    /*
-        Création de l'interface du plateau avec les 2 joueurs
-    */
+    /**
+     * Création de l'interface du plateau avec les 2 joueurs
+     * @param controller prend en paramètre le controlleur
+     */
     public BoardView(ChessGameFacade controller){
       setIconImage(new ImageIcon(getClass().getResource("/img/logo.png")).getImage());;
         this._board = controller.getBoard();
@@ -61,9 +62,10 @@ public class BoardView extends JFrame{
         setResizable(false);
         turnGameGUI();
     }
-/*
-* procédure qui génère les 2 endroit où l'on va stocker les pièces capturés des 2 joueurs
-* */
+    /**
+     * Procédure qui génère les 2 endroit où l'on va stocker les pièces capturés des 2 joueurs
+     * @param chessApp Panel du jeu échec
+     */
     public void chessPlayersGUI(JPanel chessApp){
         //Pieces capturé par la team White
         JPanel pnlPieceCapturedWhite = new JPanel();
@@ -150,9 +152,11 @@ public class BoardView extends JFrame{
         chessApp.add(pnlPieceCapturedBlack, BorderLayout.LINE_END);
     }
 
-    /*
-    * Procédure qui génère le plateau de jeu
-    * */
+
+    /**
+     * Procédure qui génère le plateau de jeu
+     * @param chessApp Panel du jeu échec
+     */
     public void generatedBoardGUI(JPanel chessApp){
         this._panels = new JPanel[8][8];
         GridLayout chessLayout = new GridLayout(8,8);
@@ -172,7 +176,7 @@ public class BoardView extends JFrame{
                 panel.addMouseListener(new MouseAdapter() {
                     public void mousePressed(MouseEvent e) {
                         super.mouseClicked(e);
-                        movePiece(panel);
+                        movePieceGUI(panel);
                     }
                 });
                 _panels[l][c] = panel;
@@ -186,9 +190,9 @@ public class BoardView extends JFrame{
         pnl_board.setPreferredSize(new Dimension(800, 800));
         chessApp.add(pnl_board, BorderLayout.CENTER);
     }
-    /*
+    /**
      * Génération des pièces du plateau
-     * */
+     */
     public void generatedPieceGUI(){
         for(int l = 0; l<8; l++) {
             for (int c = 0; c < 8; c++) {
@@ -198,9 +202,9 @@ public class BoardView extends JFrame{
             }
         }
     }
-    /*
+    /**
      * Génération de la pièce
-     * */
+     */
     public void createPieceGUI(int l, int c){
         ImageIcon imageIcon;
         imageIcon = new ImageIcon(new ImageIcon(getClass().getResource(_board.getBoards()[l][c].getPiece().getImage()
@@ -212,7 +216,7 @@ public class BoardView extends JFrame{
         btnPiece.setContentAreaFilled(false);
         btnPiece.setBorderPainted(false);
         btnPiece.setIcon(imageIcon);
-        btnPiece.setName(_board.getBoards()[l][c].getPiece().getName().name());
+        btnPiece.setName(_board.getBoards()[l][c].getPiece().getType().name());
         btnPiece.setSize( 100, 100);
         btnPiece.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
@@ -224,9 +228,10 @@ public class BoardView extends JFrame{
         });
         _panels[l][c].add(btnPiece);
     }
-    /*
-        Restart les couleurs
-    */
+
+    /**
+     * Restart les couleurs du plateau
+     */
     public void reloadSquareColor(){
         for(int l = 0; l<8; l++){
             for(int c=0; c<8; c++){
@@ -243,12 +248,14 @@ public class BoardView extends JFrame{
             }
         }
     }
-    /*
+
+    /**
      * Validation en montrant où la pièce peut aller
+     * @param btnPiece bouton de la pièce que l'on souhaite déplacer sur la plateau
      */
     public void validMove(JButton btnPiece) {
 
-        movePiece((JPanel) btnPiece.getParent());
+        movePieceGUI((JPanel) btnPiece.getParent());
 
         Player player;
         if (_facade.getGame().getPlayers().get(0).getCanPlay()) {
@@ -290,9 +297,9 @@ public class BoardView extends JFrame{
                         _panels[s.getRow()][s.getColumn()].setBackground(new Color(241, 139, 129));
                         _panels[s.getRow()][s.getColumn()].repaint();
                     } else {
-                        // Mise en place de la couleur rouge pour indiquer que le pion peut aller de coté
+                        // Mise en place de la couleur rodétection des pièces clouéesCheckuge pour indiquer que le pion peut aller de coté
                         // (Quand il y a une prise en passant)
-                        if(s.getColumn() != btnPiece.getParent().getLocation().x / 100 && _facade.getBoard().getBoards()[btnPiece.getParent().getLocation().y / 100][btnPiece.getParent().getLocation().x / 100].getPiece().getName().equals(PAWN)){
+                        if(s.getColumn() != btnPiece.getParent().getLocation().x / 100 && _facade.getBoard().getBoards()[btnPiece.getParent().getLocation().y / 100][btnPiece.getParent().getLocation().x / 100].getPiece().getType().equals(PAWN)){
                             _panels[s.getRow()][s.getColumn()].setBackground(new Color(241, 139, 129));
                             _panels[s.getRow()][s.getColumn()].repaint();
                         } else{ // Couleur pour indiquer où le joueur peut aller avec sa pièce
@@ -305,10 +312,10 @@ public class BoardView extends JFrame{
         }
     }
 
-    /*
-    * Déclanche le choix de selection de 4 pièces lors de la promotion
-    * du pion.
-    * */
+    /**
+     * Déclanche le choix de selection de 4 pièces lors de la promotion
+     * du pion.
+     */
     public String selectPiecesPromotion(){
         String[] pieces = {"Tour", "Cavalier", "Fou", "Reine"};
         String input = "";
@@ -320,12 +327,11 @@ public class BoardView extends JFrame{
     }
 
 
-    /*
+    /**
      * Procédure qui gère le déplacement de la pièce
-     * */
-    public void movePiece(JPanel panel){
+     */
+    public void movePieceGUI(JPanel panel){
         reloadSquareColor();
-
         for(Square s : _board.getValidSquares()) {
             if(s.getRow() == panel.getLocation().y/100 && s.getColumn() == panel.getLocation().x/100 ){
                 if(_panels[panel.getLocation().y / 100][panel.getLocation().x / 100].getComponents().length == 1){
@@ -343,17 +349,28 @@ public class BoardView extends JFrame{
                        createPieceGUI(panel.getLocation().y/100, panel.getLocation().x/100);
                    }
                }
+                // Vérifie si la pièce de la case qu'on veut déplacer est bien un Roi
+                // Permet de gérer le Roque
+                if(_board.getBoards()[panel.getLocation().y / 100][panel.getLocation().x / 100].getPiece().getType().equals(Model.Pieces.Type.KING)){
+                    // Gestion du Roque à gauche du plateau
+                    if(_board.verifyLimitBoard((panel.getLocation().x / 100)-1) && _panels[panel.getLocation().y / 100][(panel.getLocation().x / 100)-1].getComponents().length == 1 && _board.getBoards()[panel.getLocation().y / 100][(panel.getLocation().x / 100)-1].getPiece() == null){
+                        _panels[panel.getLocation().y / 100][(panel.getLocation().x / 100)+1].add(_panels[panel.getLocation().y / 100][(panel.getLocation().x / 100)-1].getComponent(0));
+                    }// Gestion du Roque à droite du plateau
+                    else  if(_board.verifyLimitBoard((panel.getLocation().x / 100)+2) && _panels[panel.getLocation().y / 100][(panel.getLocation().x / 100)+2].getComponents().length == 1 && _board.getBoards()[panel.getLocation().y / 100][(panel.getLocation().x / 100)+2].getPiece() == null){
+                        _panels[panel.getLocation().y / 100][(panel.getLocation().x / 100)-1].add(_panels[panel.getLocation().y / 100][(panel.getLocation().x / 100)+2].getComponent(0));
+                    }
+                }
                // Gère la prise en passant du Pion
                 // On vérifie bien que la pièce actuelle est un Pion
-                if(_currentButtonPiece.getParent() != null && _board.getBoards()[_currentButtonPiece.getParent().getLocation().y / 100][_currentButtonPiece.getParent().getLocation().x / 100].getPiece().getName().equals(Model.Pieces.Type.PAWN)){
+                if(_currentButtonPiece.getParent() != null && _board.getBoards()[_currentButtonPiece.getParent().getLocation().y / 100][_currentButtonPiece.getParent().getLocation().x / 100].getPiece().getType().equals(Model.Pieces.Type.PAWN)){
                     // Permet de vérifier que dans la tableau Board, le Pion Noir a été mangé et dans la Tableau 2D de panels (Echequier)
                     // il y a le bouton du Pion, afin de le supprimer de la case
-                    if(_board.getBoards()[s.getRow()+1][s.getColumn()].getPiece() == null && _panels[s.getRow()+1][s.getColumn()].getComponents().length == 1){
+                    if(_board.verifyLimitBoard((panel.getLocation().x / 100)+1) && _board.getBoards()[s.getRow()+1][s.getColumn()].getPiece() == null && _panels[s.getRow()+1][s.getColumn()].getComponents().length == 1){
                         _panels[s.getRow()+1][s.getColumn()].remove(_panels[s.getRow()+1][s.getColumn()].getComponent(0));
                     }
                     // Permet de vérifier que dans la tableau Board, le Pion Blanc a été mangé et dans la Tableau 2D de panels (Echequier)
                     // il y a le bouton du Pion, afin de le supprimer de la case
-                    if(_board.getBoards()[s.getRow()-1][s.getColumn()].getPiece() == null && _panels[s.getRow()-1][s.getColumn()].getComponents().length == 1){
+                    if(_board.verifyLimitBoard(s.getRow()-1) && _board.getBoards()[s.getRow()-1][s.getColumn()].getPiece() == null && _panels[s.getRow()-1][s.getColumn()].getComponents().length == 1){
                         _panels[s.getRow()-1][s.getColumn()].remove(_panels[s.getRow()-1][s.getColumn()].getComponent(0));
                     }
                 }
@@ -376,11 +393,9 @@ public class BoardView extends JFrame{
         }
     }
 
-
-
-    /*
+    /**
      * Indique qui doit jouer
-     * */
+     */
     public void turnGameGUI(){
        for(Player player : _facade.getGame().getPlayers()){
            // Si le joueur peut jouer (donc ici, il a deja fini de joueur)
@@ -396,11 +411,12 @@ public class BoardView extends JFrame{
            }
        }
     }
-    /*
+
+    /**
      * Procédure qui recharge le score et tourne la partie
-     * */
+     */
     public void reloadScoreGame(){
-        if(_facade.getGame().getPlayerPlay().getColor() == Model.Color.BLACK){
+        if(_facade.getGame().getPlayerPlay().getColor().equals(Model.Color.BLACK)){
             _lbl_score_black.setText("Score: " + _facade.getGame().getPlayerPlay().getScore());
         }else{
             _lbl_score_white.setText("Score: " + _facade.getGame().getPlayerPlay().getScore());
@@ -408,9 +424,10 @@ public class BoardView extends JFrame{
         }
         _facade.turnGame(_facade.getGame().getPlayers().get(0), _facade.getGame().getPlayers().get(1));
     }
-    /*
+
+    /**
      * Procédure qui permet de visualiser les pièces capturées du joueur
-     * */
+     */
     public void piecesCapturesGUI(){
         for(Component component : pnlPiecesCapturesWhite.getComponents()){
             pnlPiecesCapturesWhite.remove(component);
@@ -424,7 +441,7 @@ public class BoardView extends JFrame{
 
                 // Mise en place de l'image de la pièce
                 ImageIcon imageIcon;
-                if(piece.getColor() == Model.Color.BLACK){ // Ajout de la pice Noir capturée
+                if(piece.getColor().equals(Model.Color.BLACK)){ // Ajout de la pice Noir capturée
                     imageIcon = new ImageIcon(new ImageIcon(getClass().getResource(piece.getImage() + "_Black.png")
                     ).getImage().getScaledInstance(30, 35, Image.SCALE_DEFAULT));
                 }else{ // Ajout de la pièce Blanche capturée
@@ -437,7 +454,7 @@ public class BoardView extends JFrame{
                 btnPiece.setBorderPainted(false);
                 btnPiece.setIcon(imageIcon); // Ajout de l'icon
                 // Ajout des pièces capturées
-                if( piece.getColor() == Model.Color.BLACK){
+                if( piece.getColor().equals(Model.Color.BLACK)){
                     pnlPiecesCapturesWhite.add(btnPiece);
                 }else{
                     pnlPiecesCapturesBlack.add(btnPiece);

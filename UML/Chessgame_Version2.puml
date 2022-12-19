@@ -46,6 +46,8 @@ package Model{
     + isCheck(): Boolean
     + squareForbidden(): Square[]
     + setLastPieceMove(lastPieceMove: Square)
+    + canCastle(currentSquare: Square): Boolean
+    + verifyLimitBoard(pos: Integer): Boolean
     }
 
 
@@ -69,7 +71,7 @@ package Model{
     + getScore(): int
     + setScore(score: int)
     + setName(String name)
-    + getName(): String
+    + getType(): String
     + setColor(color: Color)
     + getColor(): Color
     + addPieceCaptured(piece: Piece);
@@ -100,94 +102,94 @@ package Model{
     abstract Piece{
     + Piece(isWhite: Color)
     + getColor(): Color
-    + {abstract}getName(): Type
+    + {abstract}getType(): Type
     + {abstract}canMove(square: Square, currentSquare: Square): Boolean
     + {abstract}up(square: Square, currentSquare: Square): boolean
     + {abstract}down(square: Square, currentSquare: Square): boolean
     + {abstract}left(square: Square, currentSquare: Square): boolean
     + {abstract}right(square: Square, currentSquare: Square): boolean
     + {abstract}getScore(): int
-    + {abstract} isFirstMove(): Boolean
-    + {abstract} setIsFirstMove(isFirstMove: Boolean)
+    + {abstract}isFirstMove(): Boolean
+    + {abstract}setIsFirstMove(isFirstMove: Boolean)
     }
 
     class Pawn{
     + Pawn(color: Color)
-    + getName(): String
-    + {abstract}getName(): Type
-    + {abstract}canMove(square: Square, currentSquare: Square): Boolean
-    + {abstract}up(square: Square, currentSquare: Square): boolean
-    + {abstract}down(square: Square, currentSquare: Square): boolean
-    + {abstract}left(square: Square, currentSquare: Square): boolean
-    + {abstract}right(square: Square, currentSquare: Square): boolean
-    + {abstract}getScore(): int
-    + {abstract} isFirstMove(): Boolean
-    + {abstract} setIsFirstMove(isFirstMove: Boolean)
+    + getType(): String
+    + getType(): Type
+    + canMove(square: Square, currentSquare: Square): Boolean
+    + up(square: Square, currentSquare: Square): boolean
+    + down(square: Square, currentSquare: Square): boolean
+    + left(square: Square, currentSquare: Square): boolean
+    + right(square: Square, currentSquare: Square): boolean
+    + getScore(): int
+    + isFirstMove(): Boolean
+    + setIsFirstMove(isFirstMove: Boolean)
     }
 
     class King{
     + King(color: Color)
-    + {abstract}getName(): Type
-    + {abstract}canMove(square: Square, currentSquare: Square): Boolean
-    + {abstract}up(square: Square, currentSquare: Square): boolean
-    + {abstract}down(square: Square, currentSquare: Square): boolean
-    + {abstract}left(square: Square, currentSquare: Square): boolean
-    + {abstract}right(square: Square, currentSquare: Square): boolean
-    + {abstract}getScore(): int
-    + {abstract} isFirstMove(): Boolean
-    + {abstract} setIsFirstMove(isFirstMove: Boolean)
+    + getType(): Type
+    + canMove(square: Square, currentSquare: Square): Boolean
+    + up(square: Square, currentSquare: Square): boolean
+    + down(square: Square, currentSquare: Square): boolean
+    + left(square: Square, currentSquare: Square): boolean
+    + right(square: Square, currentSquare: Square): boolean
+    + getScore(): int
+    + isFirstMove(): Boolean
+    + setIsFirstMove(isFirstMove: Boolean)
     }
 
     class Rook{
     + Rook(color: Color)
-    + {abstract}getName(): Type
-    + {abstract}canMove(square: Square, currentSquare: Square): Boolean
-    + {abstract}up(square: Square, currentSquare: Square): boolean
-    + {abstract}down(square: Square, currentSquare: Square): boolean
-    + {abstract}left(square: Square, currentSquare: Square): boolean
-    + {abstract}right(square: Square, currentSquare: Square): boolean
-    + {abstract}getScore(): int
-    + {abstract} isFirstMove(): Boolean
-    + {abstract} setIsFirstMove(isFirstMove: Boolean)
+    + getType(): Type
+    + canMove(square: Square, currentSquare: Square): Boolean
+    + up(square: Square, currentSquare: Square): boolean
+    + down(square: Square, currentSquare: Square): boolean
+    + left(square: Square, currentSquare: Square): boolean
+    + right(square: Square, currentSquare: Square): boolean
+    + getScore(): int
+    + isFirstMove(): Boolean
+    + setIsFirstMove(isFirstMove: Boolean)
     }
 
     class Bishop{
     + Bishop(color: Color)
-    + {abstract}getName(): Type
-    + {abstract}canMove(square: Square, currentSquare: Square): Boolean
-    + {abstract}up(square: Square, currentSquare: Square): boolean
-    + {abstract}down(square: Square, currentSquare: Square): boolean
-    + {abstract}left(square: Square, currentSquare: Square): boolean
-    + {abstract}right(square: Square, currentSquare: Square): boolean
-    + {abstract}getScore(): int
-    + {abstract} isFirstMove(): Boolean
-    + {abstract} setIsFirstMove(isFirstMove: Boolean)
+    + getType(): Type
+    + canMove(square: Square, currentSquare: Square): Boolean
+    + up(square: Square, currentSquare: Square): boolean
+    + down(square: Square, currentSquare: Square): boolean
+    + left(square: Square, currentSquare: Square): boolean
+    + right(square: Square, currentSquare: Square): boolean
+    + getScore(): int
+    + isFirstMove(): Boolean
+    + setIsFirstMove(isFirstMove: Boolean)
     }
 
     class Queen{
     + Queen(color: Color)
-    + {abstract}getName(): Type
-    + {abstract}canMove(square: Square, currentSquare: Square): Boolean
-    + {abstract}up(square: Square, currentSquare: Square): boolean
-    + {abstract}down(square: Square, currentSquare: Square): boolean
-    + {abstract}left(square: Square, currentSquare: Square): boolean
-    + {abstract}right(square: Square, currentSquare: Square): boolean
-    + {abstract}getScore(): int
-    + {abstract} isFirstMove(): Boolean
-    + {abstract} setIsFirstMove(isFirstMove: Boolean)
+    + getType(): Type
+    + canMove(square: Square, currentSquare: Square): Boolean
+    + up(square: Square, currentSquare: Square): boolean
+    + down(square: Square, currentSquare: Square): boolean
+    + left(square: Square, currentSquare: Square): boolean
+    + right(square: Square, currentSquare: Square): boolean
+    + getScore(): int
+    + isFirstMove(): Boolean
+    + setIsFirstMove(isFirstMove: Boolean)
     }
 
     class Knight{
     + Knight(color: Color)
-    + {abstract}getName(): Type
-    + {abstract}canMove(square: Square, currentSquare: Square): Boolean
-    + {abstract}up(square: Square, currentSquare: Square): boolean
-    + {abstract}down(square: Square, currentSquare: Square): boolean
-    + {abstract}left(square: Square, currentSquare: Square): boolean
-    + {abstract}right(square: Square, currentSquare: Square): boolean
-    + {abstract}getScore(): int
-    + {abstract} isFirstMove(): Boolean
-    + {abstract} setIsFirstMove(isFirstMove: Boolean)
+    + getType(): Type
+    + canMove(square: Square, currentSquare: Square): Boolean
+    + up(square: Square, currentSquare: Square): boolean
+    + down(square: Square, currentSquare: Square): boolean
+    + left(square: Square, currentSquare: Square): boolean
+    + right(square: Square, currentSquare: Square): boolean
+    + getScore(): int
+    + isFirstMove(): Boolean
+    + setIsFirstMove(isFirstMove: Boolean)
     }
 
 }
@@ -221,7 +223,7 @@ class  BoardView{
     + createPieceGUI(l: Integer, c: Integer)
     + generatedBoardGUI()
     + selectPiecesPromotion()
-    + movePiece()
+    + movePieceGUI()
 }
 class EndGameView{
     + EndGameView(facade: ChessGameFacade)

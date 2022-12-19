@@ -12,7 +12,12 @@ public class Bishop extends Piece {
         super(color);
         _knownSquare = new Square[8][8];
     }
-
+    /**
+     *  Retourne vrai si la pièce peut avancer
+     * @param square la case à vérifier
+     * @param currentSquare case actuel où il y a notre pièce qu'on veut déplacer
+     * @return retourne vrai si la pièce peut aller sur cette case
+     */
     @Override
     public Boolean canMove(Square square, Square currentSquare) {   int i;
         // Si il est sur la meme case alors on renvoie faux
@@ -51,7 +56,7 @@ public class Bishop extends Piece {
 
 
     @Override
-    public Type getName() {
+    public Type getType() {
         return Type.BISHOP;
     }
     @Override

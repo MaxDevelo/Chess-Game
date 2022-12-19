@@ -18,7 +18,8 @@ Nous avons gérer la prise en passant pour le pion.
 entre les 4 pièces, la boite de dialogue continue toujours à s'afficher tant qu'il a pas fait Ok.
 
 - Mise à jour du README en ajoutant la notice d'installation (Windows, Linux, Mac)
-
-##### A FAIRE
-- ROQUE
-- TESTER
+- Nous avons ajouté la fonction canCastle dans la classe Board afin de vérifier si le Roi peut roquer. Dans cette fonction, lorsque le Roi peut roquer,
+on ajoute la case où il peut roquer dans les cases valides. 
+- Nous avons décidé d'enlever l'appelle de la fonction qui clear la liste des cases valide (clearValidSquare()) dans la fonction où l'on ajoute les cases valides en la mettant à l'endroit où on l'appelle car
+lorsque l'on voulait gérer le Roque du Roi, la liste des cases valides étaient chaque fois Clear. Car on en avait besoin lorsque l'on vérifiait si le Roi était en Echec.
+- Ajout de la fonction verifyLimitBoard afin de vérifier si la position n'est pas en dehors du plateau afin de gérer les erreurs.

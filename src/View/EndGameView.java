@@ -14,20 +14,21 @@ import static Model.Color.WHITE;
 
 public class EndGameView extends JFrame {
     private ChessGameFacade _facade;
-    private JPanel  pnlPiecesCapturesWhite,  pnlPiecesCapturesBlack;
     public EndGameView(ChessGameFacade facade){
+        // Ajout icon au jeux
         setIconImage(new ImageIcon(getClass().getResource("/img/logo.png")).getImage());
         this._facade = facade;
         setTitle("FIN DE LA PARTIE");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(1000,400);
-        // Centrer l'applciation
+        // Centrer l'application
         Toolkit toolKit = getToolkit();
         Dimension size = toolKit.getScreenSize();
         setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
 
         setVisible(true);
         setResizable(false);
+
         for(Player player : _facade.getGame().getPlayers()){
             if(player.getWin()){ // Si le joueur observé a gagné, on l'affiche
                 JPanel p = new JPanel();
@@ -43,19 +44,18 @@ public class EndGameView extends JFrame {
                 // Panel pour ajouter les pièces capturées
                 JPanel pnlPiecesCapturesBlack = new JPanel();
                 // Ajout des pièces capturées
-                System.out.println(player.getPieceCaptured().size());
                 for(Piece piece : player.getPieceCaptured()){
 
                     // Mise en place de l'image de la pièce
                     ImageIcon imageIcon;
-                    if(piece.getColor() == Model.Color.BLACK){
+                    if(piece.getColor().equals(Model.Color.BLACK)){
                         imageIcon = new ImageIcon(new ImageIcon(getClass().getResource(piece.getImage() + "_Black.png")
                         ).getImage().getScaledInstance(50, 60, Image.SCALE_DEFAULT));
                     }else{
-
                         imageIcon = new ImageIcon(new ImageIcon(getClass().getResource(piece.getImage() + "_White.png")
                         ).getImage().getScaledInstance(50, 60, Image.SCALE_DEFAULT));
                     }
+                    // Création de la pièce capturée par le joueur
                     JButton btnPiece = new JButton();
                     btnPiece.setOpaque(false);
                     btnPiece.setContentAreaFilled(false);
@@ -69,12 +69,13 @@ public class EndGameView extends JFrame {
             }
 
         }
-        // outon pour rejoueur au jeu
+        // Bouton pour rejoueur au jeu
         JButton btnPlay = new JButton("REJOUER");
 
         btnPlay.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 super.mouseClicked(e);
+                // Rejouer
                 reload();
             }
         });
