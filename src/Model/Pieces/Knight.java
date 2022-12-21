@@ -9,7 +9,12 @@ public class Knight  extends Piece  {
     public Knight(Color color) {
         super(color);
     }
-
+    /**
+     *  Retourne vrai si la pièce peut avancer
+     * @param square la case à vérifier
+     * @param currentSquare case actuel où il y a notre pièce qu'on veut déplacer
+     * @return retourne vrai si la pièce peut aller sur cette case
+     */
     @Override
     public Boolean canMove(Square square, Square currentSquare) {
         if(square.getPiece() == null || square.getPiece().getColor() != currentSquare.getPiece().getColor()){
@@ -28,7 +33,7 @@ public class Knight  extends Piece  {
 
 
     @Override
-    public Type getName() {
+    public Type getType() {
         return Type.KNIGHT;
     }
     @Override

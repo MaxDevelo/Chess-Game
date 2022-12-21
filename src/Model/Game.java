@@ -5,10 +5,12 @@ import java.util.List;
 
 public class Game {
     private boolean _endGame;
+    private boolean _nullGame;
     private List<Player> _players;
     private Player _currentPlayerPlay;
     public Game(){
         this._players = new ArrayList<>();
+        this._nullGame = false;
     }
     public void setPlayer(Player player){
         this._players.add(player);
@@ -16,17 +18,21 @@ public class Game {
     public List<Player> getPlayers(){
         return this._players;
     }
+    public void setNullGame(boolean nullGame){
+        this._nullGame = nullGame;
+    }
+    public boolean getNullGame(){
+        return this._nullGame;
+    }
 
     /**
      *  On update à vrai si le jeu est fini
-     * @param endGame Boolean
+     *  @param endGame Boolean
      */
     public void setEndGame(boolean endGame){
         this._endGame = endGame;
     }
-    public boolean getEndGame(){
-        return this._endGame;
-    }
+
     public void setPlayerPlay(Player currentPlayerPlay){
         this._currentPlayerPlay = currentPlayerPlay;
     }

@@ -62,16 +62,25 @@ public class ChessGameFacade {
      */
     public void validMove(Square square){
         _board.setCurrentPiece(square.getPiece());
+        _board.clearValidSquare();
+        if(!verifyIfCheckKing()){
+            if (square.getPiece().getType().equals(Model.Pieces.Type.KING) && square.getPiece().isFirstMove()) {
+                _board.canCastle(square);
+            }
+        }
+        // Vérifie si il y a un Roque
         _board.setValidSquares(square);
     }
     /**
-     *  Retourne le jeu
+     *  Fonction qui permet de récuperer le Jeu
+     * @return retourne le jeu
      */
     public Game getGame(){
         return this._game;
     }
     /**
-     *  Retourne le plateau
+     *  Fonction qui permet de récupérer le board
+     *  @return retourne le board
      */
     public Board getBoard(){
         return this._board;
@@ -82,6 +91,7 @@ public class ChessGameFacade {
      * @param player2 Joueur 2
      */
     public void turnGame(Player player1, Player player2){
+        // On regarde si c'est le joueur 1 qui a deja joué
         if(_game.getPlayers().get(0).getCanPlay()){
             player1.isTurn(false);
             player2.isTurn(true);
@@ -92,6 +102,8 @@ public class ChessGameFacade {
             _game.setPlayerPlay(player1);
         }
         int cursor = 0;
+        // On met à jour la liste des joueurs afin de changer le tour de
+        // celui qui doit jouer
         for (Player p :  _game.getPlayers()) {
             if(p.getName().equals(player1.getName())){
                 _game.getPlayers().set(cursor, player1);
@@ -99,6 +111,10 @@ public class ChessGameFacade {
                 _game.getPlayers().set(cursor, player2);
             }
             cursor++;
+        }
+        if(isPat()){
+            System.out.println("PARTIE NULLE");
+            _game.setNullGame(true);
         }
     }
 
@@ -111,38 +127,51 @@ public class ChessGameFacade {
     public void moveAt(Square square, int pnlRow, int pnlColumn){
         // On récupère le plateau
         Square[][] board = _board.getBoards();
-        // On vérifie si la  pièce est noir et qu'elle est de type PION pour gérer la prise en apssant
-        if(square.getPiece().getColor().equals(Color.BLACK) && square.getPiece().getName().equals(Type.PAWN)){
-            // On vérifie si on peut effectuer la prise en passant
-            if(board[pnlRow-1][pnlColumn].getPiece() != null && board[pnlRow-1][pnlColumn].getPiece().getName().equals(Type.PAWN) && pnlRow-1 == 4){
+        // On vérifie si la  pièce est noir et qu'elle est de type PION pour gérer la prise en passant
+        if(square.getPiece().getColor().equals(Color.BLACK) && square.getPiece().getType().equals(Type.PAWN)){
+            // On vérifie si on peut effectuer la prise en passant.
+            if(square.getColumn() != pnlColumn && board[pnlRow-1][pnlColumn].getPiece() != null && board[pnlRow-1][pnlColumn].getPiece().getType().equals(Type.PAWN) && pnlRow-1 == 4 ){
                 _game.getPlayers().get((_game.getPlayers().get(0).getCanPlay()) ? 0 : 1).addPieceCaptured(board[pnlRow-1][pnlColumn].getPiece());
                 updateScore(1);
                 _board.attack(board[pnlRow-1][pnlColumn]);
             }
             // On vérifie si on peut effectuer la prise en passant
-        }else if(square.getPiece().getColor().equals(Color.WHITE) && square.getPiece().getName().equals(Type.PAWN)){
-            if(board[pnlRow+1][pnlColumn].getPiece() != null && board[pnlRow+1][pnlColumn].getPiece().getName().equals(Type.PAWN) && pnlRow+1 == 3){
+        }else if(square.getPiece().getColor().equals(Color.WHITE) && square.getPiece().getType().equals(Type.PAWN)){
+            if(square.getColumn() != pnlColumn && board[pnlRow+1][pnlColumn].getPiece() != null && board[pnlRow+1][pnlColumn].getPiece().getType().equals(Type.PAWN) && pnlRow+1 == 3){
                 _game.getPlayers().get((_game.getPlayers().get(0).getCanPlay()) ? 0 : 1).addPieceCaptured(board[pnlRow+1][pnlColumn].getPiece());
                 updateScore(1);
                 _board.attack(board[pnlRow+1][pnlColumn]);
             }
+            // On vérifie si il y a un Roque possible
+        } else if (_board.canCastle(square)) {
+            // Vérifier si le déplacement du Roi est vers la Droite et que sur 2 cases après, il y a une Tour
+            if(_board.verifyLimitBoard(pnlColumn+2) && _board.getBoards()[pnlRow][pnlColumn+2].getPiece() != null && square.getColumn() < pnlColumn && _board.getBoards()[pnlRow][pnlColumn+2].getPiece().getType().equals(Type.ROOK)){
+                board[pnlRow][pnlColumn-1].setPiece(_board.getBoards()[pnlRow][pnlColumn+2].getPiece());
+                board[pnlRow][pnlColumn+2].setPiece(null);
+            }
+            // Vérifier si le déplacement du Roi est vers la Gauche et que sur la case précédente il y a une Tour
+            if(_board.verifyLimitBoard(pnlColumn-1) && _board.getBoards()[pnlRow][pnlColumn-1].getPiece() != null && square.getColumn() > pnlColumn && _board.getBoards()[pnlRow][pnlColumn-1].getPiece().getType().equals(Type.ROOK)){
+                board[pnlRow][pnlColumn + 1].setPiece(_board.getBoards()[pnlRow][pnlColumn - 1].getPiece());
+                board[pnlRow][pnlColumn - 1].setPiece(null);
+            }
+            _board.setBoard(board);
         }
         // Si la case que l'on veut aller a une pièce ennemi, alors on l'attaque
-        if(board[pnlRow][pnlColumn].getPiece() != null && board[pnlRow][pnlColumn].getPiece().getColor() != square.getPiece().getColor()){
+        if(board[pnlRow][pnlColumn].getPiece() != null && !board[pnlRow][pnlColumn].getPiece().getColor().equals(square.getPiece().getColor())){
             // Ajout de la case capturée dans la liste des pièces capturées chez le joueur
             _game.getPlayers().get((_game.getPlayers().get(0).getCanPlay()) ? 0 : 1).addPieceCaptured(board[pnlRow][pnlColumn].getPiece());
             // Attaquer la pièce (permet de mettre cette case à NULL)
             _board.attack(board[square.getRow()][square.getColumn()]);
             // On donne des points.
-            if(board[pnlRow][pnlColumn].getPiece().getName().equals(Type.PAWN)){
+            if(board[pnlRow][pnlColumn].getPiece().getType().equals(Type.PAWN)){
                 updateScore(1); // 1 POINT
-            }else if(board[pnlRow][pnlColumn].getPiece().getName().equals(Type.BISHOP)){
+            }else if(board[pnlRow][pnlColumn].getPiece().getType().equals(Type.BISHOP)){
                 updateScore(3); // 3 POINTS
-            }else if(board[pnlRow][pnlColumn].getPiece().getName().equals(Type.ROOK)){
+            }else if(board[pnlRow][pnlColumn].getPiece().getType().equals(Type.ROOK)){
                 updateScore(5); // 5 POINTS
-            }else if(board[pnlRow][pnlColumn].getPiece().getName().equals(Type.KNIGHT)){
+            }else if(board[pnlRow][pnlColumn].getPiece().getType().equals(Type.KNIGHT)){
                 updateScore(3); // 3 POINTS
-            }else if(board[pnlRow][pnlColumn].getPiece().getName().equals(Type.QUEEN)){
+            }else if(board[pnlRow][pnlColumn].getPiece().getType().equals(Type.QUEEN)){
                 updateScore(9); // 9 POINTS
             }else{
                 // RIEN POUR LE ROI car sa met fin à la partie
@@ -153,13 +182,21 @@ public class ChessGameFacade {
         // On ajout la pièce dans sa nouvelle case.
         board[pnlRow][pnlColumn].setPiece(_board.getCurrentPiece());
         // Onr écupère le premier mouvement du Pion pour la prise en passant
-        if(board[pnlRow][pnlColumn].getPiece().getName().equals(Type.PAWN)){
+        if(board[pnlRow][pnlColumn].getPiece().getType().equals(Type.PAWN)){
             if((pnlRow-1 == 2 || pnlRow+1 == 5) && board[pnlRow][pnlColumn].getPiece().isFirstMove()){
                 _board.setLastPieceMove(board[pnlRow][pnlColumn]);
             }
             board[pnlRow][pnlColumn].getPiece().setIsFirstMove(false);
         }
         _board.setBoard(board);
+        // Le Roi termine son premier mouvement
+        if(board[pnlRow][pnlColumn].getPiece().getType().equals(Type.KING) &&  board[pnlRow][pnlColumn].getPiece().isFirstMove() != null){
+            board[pnlRow][pnlColumn].getPiece().setIsFirstMove(false);
+        }
+        // La Tour termine son premier mouvement
+        if(board[pnlRow][pnlColumn].getPiece().getType().equals(Type.ROOK) &&  board[pnlRow][pnlColumn].getPiece().isFirstMove() != null){
+            board[pnlRow][pnlColumn].getPiece().setIsFirstMove(false);
+        }
     }
 
 
@@ -171,6 +208,7 @@ public class ChessGameFacade {
             for(int c=0; c<8; c++) {
                 // On regarde que la case à une pièce et que cette pièce est de la meme couleur que le joueur
                     if(_board.getBoards()[l][c].getPiece() != null && _board.getBoards()[l][c].getPiece().getColor() ==  _game.getPlayerPlay().getColor()){
+                        _board.clearValidSquare();
                         _board.setValidSquares(_board.getBoards()[l][c]);
                         // On vérifie si le roi est en échec
                         if(_board.isCheck()){
@@ -204,6 +242,7 @@ public class ChessGameFacade {
             for(int c=0; c<8; c++) {
                 // On regarde que la case à une pièce et que cette pièce est de la meme couleur que le joueur
                 if(_board.getBoards()[l][c].getPiece() != null && _board.getBoards()[l][c].getPiece().getColor() !=  _game.getPlayerPlay().getColor()){
+                    _board.clearValidSquare();
                     _board.setValidSquares(_board.getBoards()[l][c]);
                     // On vérifie si le roi est en échec
                     if(_board.isCheck()){
@@ -231,6 +270,14 @@ public class ChessGameFacade {
             }
             cursor++;
         }
+    }
+    /**
+     * Fonction qui vérifie si le Joueur peut déplacer une pièce
+     * Si il peut pas, alors on a partie nulle
+     * return vrai si il y a partie nulle
+     */
+    public Boolean isPat(){
+        return _board.noMovePossible(_game.getPlayerPlay().getColor());
     }
 
 }

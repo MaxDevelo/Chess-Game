@@ -7,11 +7,18 @@ public class Rook extends Piece {
     // Stocke les cases connu après vérification de la case
     // afin de pouvoir anticiper les obstacles.
     private Square[][] _knownSquare;
+    private boolean _isFirstMove;
     public Rook(Color color) {
         super(color);
         _knownSquare = new Square[8][8];
+        this._isFirstMove = true;
     }
-
+    /**
+     *  Retourne vrai si la pièce peut avancer
+     * @param square la case à vérifier
+     * @param currentSquare case actuel où il y a notre pièce qu'on veut déplacer
+     * @return retourne vrai si la pièce peut aller sur cette case
+     */
     @Override
     public Boolean canMove(Square square, Square currentSquare) {
 
@@ -63,7 +70,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public Type getName() {
+    public Type getType() {
         return Type.ROOK;
     }
     @Override
@@ -155,11 +162,11 @@ public class Rook extends Piece {
 
     @Override
     public Boolean isFirstMove() {
-        return null;
+        return this._isFirstMove;
     }
 
     @Override
     public void setIsFirstMove(Boolean isFirstMove) {
-
+        this._isFirstMove = isFirstMove;
     }
 }

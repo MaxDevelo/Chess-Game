@@ -5,10 +5,17 @@ import Model.Square;
 
 public class King  extends Piece {
 
+    private boolean _isFirstMove;
     public King(Color color) {
         super(color);
+        this._isFirstMove = true;
     }
-
+    /**
+     *  Retourne vrai si la pièce peut avancer
+     * @param square la case à vérifier
+     * @param currentSquare case actuel où il y a notre pièce qu'on veut déplacer
+     * @return retourne vrai si la pièce peut aller sur cette case
+     */
     @Override
     public Boolean canMove(Square square, Square currentSquare) {
         if(square.getPiece() == null || square.getPiece().getColor() != currentSquare.getPiece().getColor()){
@@ -28,7 +35,7 @@ public class King  extends Piece {
     }
 
     @Override
-    public Type getName() {
+    public Type getType() {
         return Type.KING;
     }
     @Override
@@ -110,11 +117,11 @@ public class King  extends Piece {
 
     @Override
     public Boolean isFirstMove() {
-        return null;
+        return _isFirstMove;
     }
 
     @Override
     public void setIsFirstMove(Boolean isFirstMove) {
-
+        this._isFirstMove = isFirstMove;
     }
 }
