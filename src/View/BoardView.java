@@ -332,53 +332,56 @@ public class BoardView extends JFrame{
      */
     public void movePieceGUI(JPanel panel){
         reloadSquareColor();
-        for(Square s : _board.getValidSquares()) {
-            if(s.getRow() == panel.getLocation().y/100 && s.getColumn() == panel.getLocation().x/100 ){
-                if(_panels[panel.getLocation().y / 100][panel.getLocation().x / 100].getComponents().length == 1){
-                    _panels[panel.getLocation().y / 100][panel.getLocation().x / 100].remove(_panels[panel.getLocation().y / 100][panel.getLocation().x / 100].getComponent(0));
-                }
-               if(_currentButtonPiece.getParent() != null){ // Vérifie que la case (Panel) du bouton n'est pas NULL
-                   _facade.moveAt(_board.getBoards()[_currentButtonPiece.getParent().getLocation().y / 100][_currentButtonPiece.getParent().getLocation().x / 100], panel.getLocation().y / 100, panel.getLocation().x / 100);
-                   piecesCapturesGUI();
-                   _panels[panel.getLocation().y / 100][panel.getLocation().x / 100].add(_currentButtonPiece);
-                   // Promotion du PION
-                   if(_board.isPromoted(_board.getBoards()[panel.getLocation().y / 100][panel.getLocation().x / 100])){
-                       String namePiece = selectPiecesPromotion();
-                       _board.promotion(_board.getBoards()[panel.getLocation().y / 100][panel.getLocation().x / 100], namePiece);
-                       _panels[panel.getLocation().y/100][panel.getLocation().x/100].remove(0); // On supprime la pièce pour promevoir
-                       createPieceGUI(panel.getLocation().y/100, panel.getLocation().x/100);
+            int i = 0;
+            while (i < _board.getValidSquares().size()) {
+                Square s = _board.getValidSquares().get(i);
+                if(s.getRow() == panel.getLocation().y/100 && s.getColumn() == panel.getLocation().x/100 ){
+                    if(_panels[panel.getLocation().y / 100][panel.getLocation().x / 100].getComponents().length == 1){
+                        _panels[panel.getLocation().y / 100][panel.getLocation().x / 100].remove(_panels[panel.getLocation().y / 100][panel.getLocation().x / 100].getComponent(0));
+                    }
+                   if(_currentButtonPiece.getParent() != null){ // Vérifie que la case (Panel) du bouton n'est pas NULL
+                       _facade.moveAt(_board.getBoards()[_currentButtonPiece.getParent().getLocation().y / 100][_currentButtonPiece.getParent().getLocation().x / 100], panel.getLocation().y / 100, panel.getLocation().x / 100);
+                       piecesCapturesGUI();
+                       _panels[panel.getLocation().y / 100][panel.getLocation().x / 100].add(_currentButtonPiece);
+                       // Promotion du PION
+                       if(_board.isPromoted(_board.getBoards()[panel.getLocation().y / 100][panel.getLocation().x / 100])){
+                           String namePiece = selectPiecesPromotion();
+                           _board.promotion(_board.getBoards()[panel.getLocation().y / 100][panel.getLocation().x / 100], namePiece);
+                           _panels[panel.getLocation().y/100][panel.getLocation().x/100].remove(0); // On supprime la pièce pour promevoir
+                           createPieceGUI(panel.getLocation().y/100, panel.getLocation().x/100);
+                       }
                    }
-               }
-                // Vérifie si la pièce de la case qu'on veut déplacer est bien un Roi
-                // Permet de gérer le Roque
-                if(_board.getBoards()[panel.getLocation().y / 100][panel.getLocation().x / 100].getPiece() != null && _board.getBoards()[panel.getLocation().y / 100][panel.getLocation().x / 100].getPiece().getType().equals(Model.Pieces.Type.KING)){
-                    // Gestion du Roque à gauche du plateau
-                    if(_board.verifyLimitBoard((panel.getLocation().x / 100)-1) && _panels[panel.getLocation().y / 100][(panel.getLocation().x / 100)-1].getComponents().length == 1 && _board.getBoards()[panel.getLocation().y / 100][(panel.getLocation().x / 100)-1].getPiece() == null){
-                        _panels[panel.getLocation().y / 100][(panel.getLocation().x / 100)+1].add(_panels[panel.getLocation().y / 100][(panel.getLocation().x / 100)-1].getComponent(0));
-                    }// Gestion du Roque à droite du plateau
-                    else  if(_board.verifyLimitBoard((panel.getLocation().x / 100)+2) && _panels[panel.getLocation().y / 100][(panel.getLocation().x / 100)+2].getComponents().length == 1 && _board.getBoards()[panel.getLocation().y / 100][(panel.getLocation().x / 100)+2].getPiece() == null){
-                        _panels[panel.getLocation().y / 100][(panel.getLocation().x / 100)-1].add(_panels[panel.getLocation().y / 100][(panel.getLocation().x / 100)+2].getComponent(0));
+                    // Vérifie si la pièce de la case qu'on veut déplacer est bien un Roi
+                    // Permet de gérer le Roque
+                    if(_board.getBoards()[panel.getLocation().y / 100][panel.getLocation().x / 100].getPiece() != null && _board.getBoards()[panel.getLocation().y / 100][panel.getLocation().x / 100].getPiece().getType().equals(Model.Pieces.Type.KING)){
+                        // Gestion du Roque à gauche du plateau
+                        if(_board.verifyLimitBoard((panel.getLocation().x / 100)-1) && _panels[panel.getLocation().y / 100][(panel.getLocation().x / 100)-1].getComponents().length == 1 && _board.getBoards()[panel.getLocation().y / 100][(panel.getLocation().x / 100)-1].getPiece() == null){
+                            _panels[panel.getLocation().y / 100][(panel.getLocation().x / 100)+1].add(_panels[panel.getLocation().y / 100][(panel.getLocation().x / 100)-1].getComponent(0));
+                        }// Gestion du Roque à droite du plateau
+                        else  if(_board.verifyLimitBoard((panel.getLocation().x / 100)+2) && _panels[panel.getLocation().y / 100][(panel.getLocation().x / 100)+2].getComponents().length == 1 && _board.getBoards()[panel.getLocation().y / 100][(panel.getLocation().x / 100)+2].getPiece() == null){
+                            _panels[panel.getLocation().y / 100][(panel.getLocation().x / 100)-1].add(_panels[panel.getLocation().y / 100][(panel.getLocation().x / 100)+2].getComponent(0));
+                        }
                     }
+                   // Gère la prise en passant du Pion
+                    // On vérifie bien que la pièce actuelle est un Pion
+                    if(_currentButtonPiece.getParent() != null && _board.getBoards()[_currentButtonPiece.getParent().getLocation().y / 100][_currentButtonPiece.getParent().getLocation().x / 100].getPiece().getType().equals(Model.Pieces.Type.PAWN)){
+                        // Permet de vérifier que dans la tableau Board, le Pion Noir a été mangé et dans la Tableau 2D de panels (Echequier)
+                        // il y a le bouton du Pion, afin de le supprimer de la case
+                        if(_board.verifyLimitBoard(s.getRow()+1) && _board.getBoards()[s.getRow()+1][s.getColumn()].getPiece() == null && _panels[s.getRow()+1][s.getColumn()].getComponents().length == 1){
+                            _panels[s.getRow()+1][s.getColumn()].remove(_panels[s.getRow()+1][s.getColumn()].getComponent(0));
+                        }
+                        // Permet de vérifier que dans la tableau Board, le Pion Blanc a été mangé et dans la Tableau 2D de panels (Echequier)
+                        // il y a le bouton du Pion, afin de le supprimer de la case
+                        if(_board.verifyLimitBoard(s.getRow()-1) && _board.getBoards()[s.getRow()-1][s.getColumn()].getPiece() == null && _panels[s.getRow()-1][s.getColumn()].getComponents().length == 1){
+                            _panels[s.getRow()-1][s.getColumn()].remove(_panels[s.getRow()-1][s.getColumn()].getComponent(0));
+                        }
+                    }
+                    reloadScoreGame();// on recharge le score des 2 joueurs
+                    _facade.turnGame(_facade.getGame().getPlayers().get(0), _facade.getGame().getPlayers().get(1));
+                    turnGameGUI(); // On change de joueur
+                    break; // Quitter le while
                 }
-               // Gère la prise en passant du Pion
-                // On vérifie bien que la pièce actuelle est un Pion
-                if(_currentButtonPiece.getParent() != null && _board.getBoards()[_currentButtonPiece.getParent().getLocation().y / 100][_currentButtonPiece.getParent().getLocation().x / 100].getPiece().getType().equals(Model.Pieces.Type.PAWN)){
-                    // Permet de vérifier que dans la tableau Board, le Pion Noir a été mangé et dans la Tableau 2D de panels (Echequier)
-                    // il y a le bouton du Pion, afin de le supprimer de la case
-                    if(_board.verifyLimitBoard(s.getRow()+1) && _board.getBoards()[s.getRow()+1][s.getColumn()].getPiece() == null && _panels[s.getRow()+1][s.getColumn()].getComponents().length == 1){
-                        _panels[s.getRow()+1][s.getColumn()].remove(_panels[s.getRow()+1][s.getColumn()].getComponent(0));
-                    }
-                    // Permet de vérifier que dans la tableau Board, le Pion Blanc a été mangé et dans la Tableau 2D de panels (Echequier)
-                    // il y a le bouton du Pion, afin de le supprimer de la case
-                    if(_board.verifyLimitBoard(s.getRow()-1) && _board.getBoards()[s.getRow()-1][s.getColumn()].getPiece() == null && _panels[s.getRow()-1][s.getColumn()].getComponents().length == 1){
-                        _panels[s.getRow()-1][s.getColumn()].remove(_panels[s.getRow()-1][s.getColumn()].getComponent(0));
-                    }
-                }
-                reloadScoreGame();// on recharge le score des 2 joueurs
-                _facade.turnGame(_facade.getGame().getPlayers().get(0), _facade.getGame().getPlayers().get(1));
-                turnGameGUI(); // On change de joueur
-                break;
-            }
+                i++;
         }
         // Si il y a partie Nulle. La partie est fini
         if(_facade.getGame().getNullGame()){

@@ -94,8 +94,7 @@ public class EndGameView extends JFrame {
      *  Rejouer au jeu d'échec
      */
     public void reload(){
-        ChessGameFacade controller = new ChessGameFacade();
-        new StartGameView(controller);
+        new StartGameView( new ChessGameFacade());
         dispose(); // Suppression du JFrame EndGameView
     }
 
