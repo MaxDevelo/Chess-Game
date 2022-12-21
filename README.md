@@ -10,7 +10,7 @@ Chess game
 git clone https://git.unistra.fr/wawrzyniak-legros/a31-chessgame.git
 ```
 ##### Lancement
-Lancer à la main le fichier ChessGame.jar dans le dossier/Game_Executable
+Lancer à la main le fichier Chessgame.jar dans le dossier/Game_Executable
 
 ### LINUX
 
@@ -23,7 +23,7 @@ git clone https://git.unistra.fr/wawrzyniak-legros/a31-chessgame.git
 cd a31-chessgame
 
 # Lancement
-java -jar ./Game_Executable/ChessGame.jar
+java -jar ./Game_Executable/Chessgame.jar
 ```
 
 ### MAC
@@ -33,7 +33,7 @@ java -jar ./Game_Executable/ChessGame.jar
 git clone https://git.unistra.fr/wawrzyniak-legros/a31-chessgame.git
 
 # Lancement
-java -jar ./Game_Executable/ChessGame.jar
+java -jar ./Game_Executable/Chessgame.jar
 ```
 
 
