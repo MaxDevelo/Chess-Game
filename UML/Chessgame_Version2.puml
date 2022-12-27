@@ -70,10 +70,10 @@ package Model{
     - _name: String
     - _canPlay: Boolean
     - _colorPiece: Color
-    - _score: int
+    - _score: Integer
     + Player()
-    + getScore(): int
-    + setScore(score: int)
+    + getScore(): Integer
+    + setScore(score: Integer)
     + setName(String name)
     + getType(): String
     + setColor(color: Color)
@@ -112,7 +112,7 @@ package Model{
     + {abstract}down(square: Square, currentSquare: Square): boolean
     + {abstract}left(square: Square, currentSquare: Square): boolean
     + {abstract}right(square: Square, currentSquare: Square): boolean
-    + {abstract}getScore(): int
+    + {abstract}getScore(): Integer
     + {abstract}isFirstMove(): Boolean
     + {abstract}setIsFirstMove(isFirstMove: Boolean)
     }
@@ -126,7 +126,7 @@ package Model{
     + down(square: Square, currentSquare: Square): boolean
     + left(square: Square, currentSquare: Square): boolean
     + right(square: Square, currentSquare: Square): boolean
-    + getScore(): int
+    + getScore(): Integer
     + isFirstMove(): Boolean
     + setIsFirstMove(isFirstMove: Boolean)
     }
@@ -139,7 +139,7 @@ package Model{
     + down(square: Square, currentSquare: Square): boolean
     + left(square: Square, currentSquare: Square): boolean
     + right(square: Square, currentSquare: Square): boolean
-    + getScore(): int
+    + getScore(): Integer
     + isFirstMove(): Boolean
     + setIsFirstMove(isFirstMove: Boolean)
     }
@@ -152,7 +152,7 @@ package Model{
     + down(square: Square, currentSquare: Square): boolean
     + left(square: Square, currentSquare: Square): boolean
     + right(square: Square, currentSquare: Square): boolean
-    + getScore(): int
+    + getScore(): Integer
     + isFirstMove(): Boolean
     + setIsFirstMove(isFirstMove: Boolean)
     }
@@ -165,7 +165,7 @@ package Model{
     + down(square: Square, currentSquare: Square): boolean
     + left(square: Square, currentSquare: Square): boolean
     + right(square: Square, currentSquare: Square): boolean
-    + getScore(): int
+    + getScore(): Integer
     + isFirstMove(): Boolean
     + setIsFirstMove(isFirstMove: Boolean)
     }
@@ -178,7 +178,7 @@ package Model{
     + down(square: Square, currentSquare: Square): boolean
     + left(square: Square, currentSquare: Square): boolean
     + right(square: Square, currentSquare: Square): boolean
-    + getScore(): int
+    + getScore(): Integer
     + isFirstMove(): Boolean
     + setIsFirstMove(isFirstMove: Boolean)
     }
@@ -191,7 +191,7 @@ package Model{
     + down(square: Square, currentSquare: Square): boolean
     + left(square: Square, currentSquare: Square): boolean
     + right(square: Square, currentSquare: Square): boolean
-    + getScore(): int
+    + getScore(): Integer
     + isFirstMove(): Boolean
     + setIsFirstMove(isFirstMove: Boolean)
     }

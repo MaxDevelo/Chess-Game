@@ -21,3 +21,6 @@ lorsque l'on voulait gérer le Roque du Roi, la liste des cases valides étaient
 - Dans la méthode moveAt, nous avons ajouté dans la condition qui permet de vérifier si il y a prise passant, que la colonne de la case actuelle de la pièce n'est pas la meme que la case où l'on souhaite aller. En effet
 si on ne fait pas sa et que le joueur ne veut pas faire la prise en passant en avançant juste d'une case. Cela comptait comme si il avait fait une prise en passant.
 - Mise à jour du README en ajoutant la notice d'installation (Windows, Linux, Mac)
+- On a réussi à mettre le ficheir plantUML en svg (car dans la version 1, on ne savait plus comment faire...)
+
+Ce qu'on a pas fait dans ce projet, c'est la détection des pièces clouées, car on avait du mal à comprendre et à mettre en place.
