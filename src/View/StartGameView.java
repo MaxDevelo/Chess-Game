@@ -120,7 +120,7 @@ public class StartGameView extends JFrame {
     * */
     public void playGame(){
         // On vérifie si les nom sont au dessus de 4 caractères et en dessous de 10 caractères
-        if(_txtFieldJoueur1.getText().length() >= 4 && _txtFieldJoueur1.getText().length() <= 10 && _txtFieldJoueur2.getText().length() <= 10 && _txtFieldJoueur2.getText() .length() >= 4){
+        if(_txtFieldJoueur1.getText().length() <= 10 && _txtFieldJoueur2.getText().length() <= 10){
             // On vérifie que les 2 joueurs n'ont pas la meme couleur
             if(!jComboBox.getItemAt(jComboBox.getSelectedIndex()).equals(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()))){
                 Color colorTeam1 = (jComboBox.getItemAt(jComboBox.getSelectedIndex()).equals("BLACK")) ? Color.BLACK : Color.WHITE;
