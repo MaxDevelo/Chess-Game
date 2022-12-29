@@ -22,5 +22,6 @@ lorsque l'on voulait gérer le Roque du Roi, la liste des cases valides étaient
 si on ne fait pas sa et que le joueur ne veut pas faire la prise en passant en avançant juste d'une case. Cela comptait comme si il avait fait une prise en passant.
 - Mise à jour du README en ajoutant la notice d'installation (Windows, Linux, Mac)
 - On a réussi à mettre le ficheir plantUML en svg (car dans la version 1, on ne savait plus comment faire...)
+- On a modifié la taille de la fenetre car elle était trop grande.
 
 Ce qu'on a pas fait dans ce projet, c'est la détection des pièces clouées, car on avait du mal à comprendre et à mettre en place.

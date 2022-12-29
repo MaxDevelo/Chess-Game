@@ -34,7 +34,7 @@ public class BoardView extends JFrame{
       setIconImage(new ImageIcon(getClass().getResource("/img/logo.png")).getImage());;
         this._board = controller.getBoard();
         this._facade = controller;
-        setSize(1680,840);
+        setSize(1280,700);
         // Centrer l'applciation
         Toolkit toolKit = getToolkit();
         Dimension size = toolKit.getScreenSize();
@@ -44,7 +44,7 @@ public class BoardView extends JFrame{
 
         // Création de l'interface de jeu
         JPanel chessApp = new JPanel();
-        chessApp.setSize(800,1200);
+        chessApp.setSize(300,840);
         chessApp.setBackground(new Color(48, 66, 36));
         setTitle("Jeu d'échec");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -79,7 +79,7 @@ public class BoardView extends JFrame{
 
         lbl_title.setLocation(pnlPieceCapturedWhite.getLocation());
         // Ajout d'une FONT
-        lbl_title.setFont(new Font("Serif", Font.BOLD, 30));
+        lbl_title.setFont(new Font("Serif", Font.BOLD, 20));
 
 
         // label qui permet de savoir le score du joueur
@@ -87,20 +87,20 @@ public class BoardView extends JFrame{
         _lbl_score_white = new JLabel();
         _lbl_score_white.setText("Score: 0");
         _lbl_score_white.setLocation(pnlPieceCapturedWhite.getLocation());
-        _lbl_score_white.setFont(new Font("Serif", Font.BOLD, 60));
-        stat.setPreferredSize(new Dimension(400, 120));
+        _lbl_score_white.setFont(new Font("Serif", Font.BOLD, 30));
+        stat.setPreferredSize(new Dimension(400, 200));
         stat.add(lbl_title, BorderLayout.SOUTH);
         stat.add(_lbl_score_white, BorderLayout.NORTH);
         // LE TOUR
         _lblTurnWhite = new JLabel();
         _lblTurnWhite.setText("TON TOUR");
-        _lblTurnWhite.setFont(new Font("Arial", Font.BOLD, 30));
+        _lblTurnWhite.setFont(new Font("Arial", Font.BOLD, 20));
         pnlPieceCapturedWhite.add(_lblTurnWhite, BorderLayout.NORTH);
         pnlPieceCapturedWhite.add(stat, BorderLayout.CENTER);
         pnlPieceCapturedWhite.add(stat, BorderLayout.NORTH);
 
 
-        pnlPieceCapturedWhite.setPreferredSize(new Dimension(420, 300));
+        pnlPieceCapturedWhite.setPreferredSize(new Dimension(300, 400));
 
         // Panel pour ajouter les pièces capturées
         pnlPiecesCapturesWhite = new JPanel();
@@ -121,7 +121,7 @@ public class BoardView extends JFrame{
 
         lbl_title.setLocation(pnlPieceCapturedBlack.getLocation());
         // Ajout d'une FONT
-        lbl_title.setFont(new Font("Serif", Font.BOLD, 30));
+        lbl_title.setFont(new Font("Serif", Font.BOLD, 20));
 
 
         // label qui permet de savoir le score du joueur
@@ -129,7 +129,7 @@ public class BoardView extends JFrame{
         _lbl_score_black = new JLabel();
         _lbl_score_black.setText("Score: 0");
         _lbl_score_black.setLocation(pnlPieceCapturedBlack.getLocation());
-        _lbl_score_black.setFont(new Font("Serif", Font.BOLD, 60));
+        _lbl_score_black.setFont(new Font("Serif", Font.BOLD, 30));
 
         stat.setPreferredSize(new Dimension(400, 120));
         stat.add(lbl_title, BorderLayout.NORTH);
@@ -141,7 +141,7 @@ public class BoardView extends JFrame{
         pnlPieceCapturedBlack.add(_lblTurnBlack, BorderLayout.NORTH);
         pnlPieceCapturedBlack.add(stat, BorderLayout.CENTER);
 
-        pnlPieceCapturedBlack.setPreferredSize(new Dimension(420, 300));
+        pnlPieceCapturedBlack.setPreferredSize(new Dimension(300, 400));
         chessApp.add(pnlPieceCapturedBlack, BorderLayout.LINE_END);
 
         // Panel pour ajouter les pièces capturées
@@ -171,7 +171,7 @@ public class BoardView extends JFrame{
                 }else{
                     panel.setBackground((c%2 != 0)?  new Color( 	235, 236, 208): new Color( 	119, 148, 85));
                 }
-                panel.setSize(100, 100);
+                panel.setSize(80, 80);
                 panel.setLocation(posX, posY);
                 panel.addMouseListener(new MouseAdapter() {
                     public void mousePressed(MouseEvent e) {
@@ -187,7 +187,7 @@ public class BoardView extends JFrame{
             posY += 100;
             posX = 0;
         }
-        pnl_board.setPreferredSize(new Dimension(800, 800));
+        pnl_board.setPreferredSize(new Dimension(640, 640));
         chessApp.add(pnl_board, BorderLayout.CENTER);
     }
     /**
@@ -209,7 +209,7 @@ public class BoardView extends JFrame{
         ImageIcon imageIcon;
         imageIcon = new ImageIcon(new ImageIcon(getClass().getResource(_board.getBoards()[l][c].getPiece().getImage()
                 + ((_board.getBoards()[l][c].getPiece().getColor() == Model.Color.BLACK) ? "_Black.png" : "_White.png"))
-        ).getImage().getScaledInstance(60, 80, Image.SCALE_DEFAULT));
+        ).getImage().getScaledInstance(40, 60, Image.SCALE_DEFAULT));
         JButton btnPiece = new JButton();
         // Fond du bouton transparent
         btnPiece.setOpaque(false);
@@ -217,7 +217,7 @@ public class BoardView extends JFrame{
         btnPiece.setBorderPainted(false);
         btnPiece.setIcon(imageIcon);
         btnPiece.setName(_board.getBoards()[l][c].getPiece().getType().name());
-        btnPiece.setSize( 100, 100);
+        btnPiece.setSize( 80, 80);
         btnPiece.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 reloadSquareColor();
@@ -267,11 +267,11 @@ public class BoardView extends JFrame{
         Square square;
         if (btnPiece.getParent() != null) { // On vérifie que le bouton de la pièce a bien un Panel (une case)
             // On vérifie dans notretableau Board de square que la case a bien la pièce et que la pièce correspond au joueur en regardant la couleur
-            if (_facade.getBoard().getBoards()[btnPiece.getParent().getLocation().y / 100][btnPiece.getParent().getLocation().x / 100].getPiece() != null
-                    && player.getColor() == _facade.getBoard().getBoards()[btnPiece.getParent().getLocation().y / 100][btnPiece.getParent().getLocation().x / 100].getPiece().getColor()) {
+            if (_facade.getBoard().getBoards()[btnPiece.getParent().getLocation().y / 80][btnPiece.getParent().getLocation().x / 80].getPiece() != null
+                    && player.getColor() == _facade.getBoard().getBoards()[btnPiece.getParent().getLocation().y / 80][btnPiece.getParent().getLocation().x / 80].getPiece().getColor()) {
                 if (btnPiece.getName().equals("PAWN") || btnPiece.getName().equals("ROOK") || btnPiece.getName().equals("KNIGHT") || btnPiece.getName().equals("QUEEN") || btnPiece.getName().equals("KING") || btnPiece.getName().equals("BISHOP")) {
                     // on récupère la case de la pièce
-                    square = _board.getSquare(this._currentButtonPiece.getParent().getLocation().y / 100, this._currentButtonPiece.getParent().getLocation().x / 100);
+                    square = _board.getSquare(this._currentButtonPiece.getParent().getLocation().y / 80, this._currentButtonPiece.getParent().getLocation().x / 80);
                     // On regarde si le Roi est en échec ou non
                     if(_facade.verifyIfCheckKing()){
                         // Si le Roi est en échec, on stocke les cases qui mettent le Roi en échec Et cela permet au roi de ne pas aller
@@ -299,7 +299,7 @@ public class BoardView extends JFrame{
                     } else {
                         // Mise en place de la couleur rodétection des pièces clouéesCheckuge pour indiquer que le pion peut aller de coté
                         // (Quand il y a une prise en passant)
-                        if(s.getColumn() != btnPiece.getParent().getLocation().x / 100 && _facade.getBoard().getBoards()[btnPiece.getParent().getLocation().y / 100][btnPiece.getParent().getLocation().x / 100].getPiece().getType().equals(PAWN)){
+                        if(s.getColumn() != btnPiece.getParent().getLocation().x / 80 && _facade.getBoard().getBoards()[btnPiece.getParent().getLocation().y / 80][btnPiece.getParent().getLocation().x / 80].getPiece().getType().equals(PAWN)){
                             _panels[s.getRow()][s.getColumn()].setBackground(new Color(241, 139, 129));
                             _panels[s.getRow()][s.getColumn()].repaint();
                         } else{ // Couleur pour indiquer où le joueur peut aller avec sa pièce
@@ -335,36 +335,36 @@ public class BoardView extends JFrame{
             int i = 0;
             while (i < _board.getValidSquares().size()) {
                 Square s = _board.getValidSquares().get(i);
-                if(s.getRow() == panel.getLocation().y/100 && s.getColumn() == panel.getLocation().x/100 ){
-                    if(_panels[panel.getLocation().y / 100][panel.getLocation().x / 100].getComponents().length == 1){
-                        _panels[panel.getLocation().y / 100][panel.getLocation().x / 100].remove(_panels[panel.getLocation().y / 100][panel.getLocation().x / 100].getComponent(0));
+                if(s.getRow() == panel.getLocation().y/80 && s.getColumn() == panel.getLocation().x/80 ){
+                    if(_panels[panel.getLocation().y / 80][panel.getLocation().x / 80].getComponents().length == 1){
+                        _panels[panel.getLocation().y / 80][panel.getLocation().x / 80].remove(_panels[panel.getLocation().y / 80][panel.getLocation().x / 80].getComponent(0));
                     }
                    if(_currentButtonPiece.getParent() != null){ // Vérifie que la case (Panel) du bouton n'est pas NULL
-                       _facade.moveAt(_board.getBoards()[_currentButtonPiece.getParent().getLocation().y / 100][_currentButtonPiece.getParent().getLocation().x / 100], panel.getLocation().y / 100, panel.getLocation().x / 100);
+                       _facade.moveAt(_board.getBoards()[_currentButtonPiece.getParent().getLocation().y / 80][_currentButtonPiece.getParent().getLocation().x / 80], panel.getLocation().y / 80, panel.getLocation().x / 80);
                        piecesCapturesGUI();
-                       _panels[panel.getLocation().y / 100][panel.getLocation().x / 100].add(_currentButtonPiece);
+                       _panels[panel.getLocation().y / 80][panel.getLocation().x / 80].add(_currentButtonPiece);
                        // Promotion du PION
-                       if(_board.isPromoted(_board.getBoards()[panel.getLocation().y / 100][panel.getLocation().x / 100])){
+                       if(_board.isPromoted(_board.getBoards()[panel.getLocation().y / 80][panel.getLocation().x / 80])){
                            String namePiece = selectPiecesPromotion();
-                           _board.promotion(_board.getBoards()[panel.getLocation().y / 100][panel.getLocation().x / 100], namePiece);
-                           _panels[panel.getLocation().y/100][panel.getLocation().x/100].remove(0); // On supprime la pièce pour promevoir
-                           createPieceGUI(panel.getLocation().y/100, panel.getLocation().x/100);
+                           _board.promotion(_board.getBoards()[panel.getLocation().y / 80][panel.getLocation().x / 80], namePiece);
+                           _panels[panel.getLocation().y/80][panel.getLocation().x/80].remove(0); // On supprime la pièce pour promevoir
+                           createPieceGUI(panel.getLocation().y/80, panel.getLocation().x/80);
                        }
                    }
                     // Vérifie si la pièce de la case qu'on veut déplacer est bien un Roi
                     // Permet de gérer le Roque
-                    if(_board.getBoards()[panel.getLocation().y / 100][panel.getLocation().x / 100].getPiece() != null && _board.getBoards()[panel.getLocation().y / 100][panel.getLocation().x / 100].getPiece().getType().equals(Model.Pieces.Type.KING)){
+                    if(_board.getBoards()[panel.getLocation().y / 80][panel.getLocation().x / 80].getPiece() != null && _board.getBoards()[panel.getLocation().y / 80][panel.getLocation().x / 80].getPiece().getType().equals(Model.Pieces.Type.KING)){
                         // Gestion du Roque à gauche du plateau
-                        if(_board.verifyLimitBoard((panel.getLocation().x / 100)-1) && _panels[panel.getLocation().y / 100][(panel.getLocation().x / 100)-1].getComponents().length == 1 && _board.getBoards()[panel.getLocation().y / 100][(panel.getLocation().x / 100)-1].getPiece() == null){
-                            _panels[panel.getLocation().y / 100][(panel.getLocation().x / 100)+1].add(_panels[panel.getLocation().y / 100][(panel.getLocation().x / 100)-1].getComponent(0));
+                        if(_board.verifyLimitBoard((panel.getLocation().x / 80)-1) && _panels[panel.getLocation().y / 80][(panel.getLocation().x / 80)-1].getComponents().length == 1 && _board.getBoards()[panel.getLocation().y / 80][(panel.getLocation().x / 80)-1].getPiece() == null){
+                            _panels[panel.getLocation().y / 80][(panel.getLocation().x / 80)+1].add(_panels[panel.getLocation().y / 80][(panel.getLocation().x / 80)-1].getComponent(0));
                         }// Gestion du Roque à droite du plateau
-                        else  if(_board.verifyLimitBoard((panel.getLocation().x / 100)+2) && _panels[panel.getLocation().y / 100][(panel.getLocation().x / 100)+2].getComponents().length == 1 && _board.getBoards()[panel.getLocation().y / 100][(panel.getLocation().x / 100)+2].getPiece() == null){
-                            _panels[panel.getLocation().y / 100][(panel.getLocation().x / 100)-1].add(_panels[panel.getLocation().y / 100][(panel.getLocation().x / 100)+2].getComponent(0));
+                        else  if(_board.verifyLimitBoard((panel.getLocation().x / 80)+2) && _panels[panel.getLocation().y / 80][(panel.getLocation().x / 80)+2].getComponents().length == 1 && _board.getBoards()[panel.getLocation().y / 80][(panel.getLocation().x / 80)+2].getPiece() == null){
+                            _panels[panel.getLocation().y / 80][(panel.getLocation().x / 80)-1].add(_panels[panel.getLocation().y / 80][(panel.getLocation().x / 80)+2].getComponent(0));
                         }
                     }
                    // Gère la prise en passant du Pion
                     // On vérifie bien que la pièce actuelle est un Pion
-                    if(_currentButtonPiece.getParent() != null && _board.getBoards()[_currentButtonPiece.getParent().getLocation().y / 100][_currentButtonPiece.getParent().getLocation().x / 100].getPiece().getType().equals(Model.Pieces.Type.PAWN)){
+                    if(_currentButtonPiece.getParent() != null && _board.getBoards()[_currentButtonPiece.getParent().getLocation().y / 80][_currentButtonPiece.getParent().getLocation().x / 80].getPiece().getType().equals(Model.Pieces.Type.PAWN)){
                         // Permet de vérifier que dans la tableau Board, le Pion Noir a été mangé et dans la Tableau 2D de panels (Echequier)
                         // il y a le bouton du Pion, afin de le supprimer de la case
                         if(_board.verifyLimitBoard(s.getRow()+1) && _board.getBoards()[s.getRow()+1][s.getColumn()].getPiece() == null && _panels[s.getRow()+1][s.getColumn()].getComponents().length == 1){
@@ -452,10 +452,10 @@ public class BoardView extends JFrame{
                 ImageIcon imageIcon;
                 if(piece.getColor().equals(Model.Color.BLACK)){ // Ajout de la pice Noir capturée
                     imageIcon = new ImageIcon(new ImageIcon(getClass().getResource(piece.getImage() + "_Black.png")
-                    ).getImage().getScaledInstance(30, 35, Image.SCALE_DEFAULT));
+                    ).getImage().getScaledInstance(20, 25, Image.SCALE_DEFAULT));
                 }else{ // Ajout de la pièce Blanche capturée
                     imageIcon = new ImageIcon(new ImageIcon(getClass().getResource(piece.getImage() + "_White.png")
-                    ).getImage().getScaledInstance(30, 35, Image.SCALE_DEFAULT));
+                    ).getImage().getScaledInstance(20, 25, Image.SCALE_DEFAULT));
                 }
                 JButton btnPiece = new JButton();
                 btnPiece.setOpaque(false); // Enlever le fond
