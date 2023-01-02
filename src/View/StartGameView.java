@@ -127,10 +127,6 @@ public class StartGameView extends JFrame {
                 Color colorTeam2 = (jComboBox2.getItemAt(jComboBox2.getSelectedIndex()).equals("BLACK")) ? Color.BLACK : Color.WHITE;
                 // On met en place la partie
                 this._facade.newGame(_txtFieldJoueur1.getText(), _txtFieldJoueur2.getText(), colorTeam1, colorTeam2);
-                // On génère le plateau
-                this._facade.generatedBoard();
-                // lancement de la vue du plateau
-                new BoardView(this._facade);
                 dispose();
             }
         }

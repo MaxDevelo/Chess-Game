@@ -1,15 +1,14 @@
 package Controler;
 
 import Model.*;
-import Model.Pieces.Piece;
 import Model.Pieces.Type;
+import View.BoardView;
 
 import static Model.Color.WHITE;
 
 public class ChessGameFacade {
     private Game _game;
     private Board _board;
-
 
     /**
      *  Création de la partie
@@ -40,8 +39,15 @@ public class ChessGameFacade {
         // On stocke le joueur en mémoire le temps qu'il joue
         _game.setPlayerPlay((player1.getColor() == WHITE)? player1: player2);
         generatedBoard();
-
+        // On génère le plateau
+        generatedBoard();
+        // Création de l'observer
+        BoardObserver o = new BoardView(this);
+        _board.addObserver(o);
+        _board._notifyObserversTurnGame();
     }
+
+
     /**
      *  Génération de l'échequier qui stocke des cases
      */
@@ -113,9 +119,10 @@ public class ChessGameFacade {
             cursor++;
         }
         if(isPat()){
-            System.out.println("PARTIE NULLE");
             _game.setNullGame(true);
         }
+        // On met a jour le tour du joueur
+        _board._notifyObserversTurnGame();
     }
 
     /**
@@ -137,7 +144,7 @@ public class ChessGameFacade {
             }
             // On vérifie si on peut effectuer la prise en passant
         }else if(square.getPiece().getColor().equals(Color.WHITE) && square.getPiece().getType().equals(Type.PAWN)){
-            if(square.getColumn() != pnlColumn && board[pnlRow+1][pnlColumn].getPiece() != null && board[pnlRow+1][pnlColumn].getPiece().getType().equals(Type.PAWN) && pnlRow+1 == 3){
+            if(_board.verifyLimitBoard(pnlRow+1) && square.getColumn() != pnlColumn && board[pnlRow+1][pnlColumn].getPiece() != null && board[pnlRow+1][pnlColumn].getPiece().getType().equals(Type.PAWN) && pnlRow+1 == 3){
                 _game.getPlayers().get((_game.getPlayers().get(0).getCanPlay()) ? 0 : 1).addPieceCaptured(board[pnlRow+1][pnlColumn].getPiece());
                 updateScore(1);
                 _board.attack(board[pnlRow+1][pnlColumn]);
@@ -270,6 +277,9 @@ public class ChessGameFacade {
             }
             cursor++;
         }
+        int scoreBlack = _game.getPlayers().get(0).getColor().equals(Model.Color.BLACK) ? _game.getPlayers().get(0).getScore() : _game.getPlayers().get(1).getScore();
+        int scoreWhite = _game.getPlayers().get(0).getColor().equals(Model.Color.WHITE) ? _game.getPlayers().get(0).getScore() : _game.getPlayers().get(1).getScore();
+        _board._notifyObserversScore(scoreBlack, scoreWhite);
     }
     /**
      * Fonction qui vérifie si le Joueur peut déplacer une pièce
