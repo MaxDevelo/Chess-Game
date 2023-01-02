@@ -11,14 +11,38 @@ public class Board {
     private Piece _currentPiece;
     private Square _lastPieceMove;
     private List<Square> _validSquares;
-
+    private List<BoardObserver> _observers = new ArrayList<>();
     public Board() {
         _board = new Square[8][8];
         this._validSquares = new ArrayList<>();
         this._lastPieceMove = null;
     }
+    /**
+     * Ajout de l'observer
+     * @param observer
+     */
+    public void addObserver(BoardObserver observer){
+        this._observers.add(observer);
+    }
 
-
+    /**
+     * Met à jour le score des 2 joueur
+     * @param scoreBlack Score des pièces Noires
+     * @param scoreWhite Score des pièces Blanches
+     */
+    public void _notifyObserversScore(int scoreBlack, int scoreWhite){
+        for(BoardObserver o : _observers){
+            o.onUpdateScore(scoreBlack, scoreWhite);
+        }
+    }
+    /**
+     * Met à jour le joueur qui doit jouer
+     */
+    public void _notifyObserversTurnGame(){
+        for(BoardObserver o : _observers){
+            o.onUpdateTurnGame();
+        }
+    }
     /**
      * Génération des pièces dans le tableau de case
      *

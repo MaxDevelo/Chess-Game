@@ -12,12 +12,13 @@ import Model.Board;
 import Model.Pieces.Piece;
 import Model.Player;
 import Model.Square;
+import Model.BoardObserver;
 
 import static Model.Color.WHITE;
 import static Model.Pieces.Type.PAWN;
 
 
-public class BoardView extends JFrame{
+public class BoardView extends JFrame implements BoardObserver {
 
 
     private Board _board;
@@ -60,7 +61,6 @@ public class BoardView extends JFrame{
         add(chessApp);
         setVisible(true);
         setResizable(false);
-        turnGameGUI();
     }
     /**
      * Procédure qui génère les 2 endroit où l'on va stocker les pièces capturés des 2 joueurs
@@ -221,7 +221,6 @@ public class BoardView extends JFrame{
         btnPiece.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 reloadSquareColor();
-                turnGameGUI();
                 validMove(btnPiece);
 
             }
@@ -376,9 +375,7 @@ public class BoardView extends JFrame{
                         _panels[s.getRow()-1][s.getColumn()].remove(_panels[s.getRow()-1][s.getColumn()].getComponent(0));
                     }
                 }
-                reloadScoreGame();// on recharge le score des 2 joueurs
                 _facade.turnGame(_facade.getGame().getPlayers().get(0), _facade.getGame().getPlayers().get(1));
-                turnGameGUI(); // On change de joueur
                 break; // Quitter le while
             }
             i++;
@@ -400,37 +397,6 @@ public class BoardView extends JFrame{
             int result = JOptionPane.showConfirmDialog(null, "Il y a échec du ROI !", "ok", JOptionPane.CLOSED_OPTION);
             new EndGameView(_facade);
             dispose();
-        }
-    }
-
-    /**
-     * Indique qui doit jouer
-     */
-    public void turnGameGUI(){
-        for(Player player : _facade.getGame().getPlayers()){
-            // Si le joueur peut jouer (donc ici, il a deja fini de joueur)
-            // On donne le droit de jouer à l'autre joueur
-            if(player.getCanPlay()) {
-                if(player.getColor().equals(Model.Color.BLACK)){
-                    _lblTurnBlack.setVisible(true);
-                    _lblTurnWhite.setVisible(false);
-                }else{
-                    _lblTurnBlack.setVisible(false);
-                    _lblTurnWhite.setVisible(true);
-                }
-            }
-        }
-    }
-
-    /**
-     * Procédure qui recharge le score et tourne la partie
-     */
-    public void reloadScoreGame(){
-        if(_facade.getGame().getPlayerPlay().getColor().equals(Model.Color.BLACK)){
-            _lbl_score_black.setText("Score: " + _facade.getGame().getPlayerPlay().getScore());
-        }else{
-            _lbl_score_white.setText("Score: " + _facade.getGame().getPlayerPlay().getScore());
-
         }
     }
 
@@ -475,4 +441,32 @@ public class BoardView extends JFrame{
         pnlPiecesCapturesBlack.setLayout(new GridLayout(2, 8));
     }
 
+
+    /**
+     * Update du score des joueurs
+     */
+    @Override
+    public void onUpdateScore(int scoreBlack, int scoreWhite) {
+        _lbl_score_black.setText("Score: " + scoreBlack);
+        _lbl_score_white.setText("Score: " + scoreWhite);
+    }
+    /**
+     * Indique qui doit jouer
+     */
+    @Override
+    public void onUpdateTurnGame() {
+        for(Player player : _facade.getGame().getPlayers()){
+            // Si le joueur peut jouer (donc ici, il a deja fini de joueur)
+            // On donne le droit de jouer à l'autre joueur
+            if(player.getCanPlay()) {
+                if(player.getColor().equals(Model.Color.BLACK)){
+                    _lblTurnBlack.setVisible(true);
+                    _lblTurnWhite.setVisible(false);
+                }else{
+                    _lblTurnBlack.setVisible(false);
+                    _lblTurnWhite.setVisible(true);
+                }
+            }
+        }
+    }
 }
