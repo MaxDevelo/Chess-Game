@@ -32,7 +32,7 @@ package Model{
 
     class Board{
     + Board()
-    + addObserver(observer: BoardObserver)
+    + addObserver(observer: ChessgameObserver)
     + _notifyObserversScore(scoreBlack: Integer, scoreWhite: Integer)
     + _notifyObserversTurnGame()
     + generatePiece(board: Square[]): Square[]
@@ -54,7 +54,7 @@ package Model{
     + noMovePossible(): Boolean
     }
 
-    interface BoardObserver{
+    interface ChessgameObserver{
         + onUpdateScore(scorePlayer1: Integer, scorePlayer2: Integer)
         + onUpdateTurnGame()
     }
@@ -226,7 +226,7 @@ class StartGameView{
     + StartGameView(facade: ChessGameFacade)
     + playGame()
 }
-class  BoardView implements BoardObserver{
+class  BoardView implements ChessgameObserver{
     - _attack: Boolean
     + BoardView(facade: ChessGameFacade)
     + generatedPieceGUI()
@@ -256,7 +256,7 @@ App ..> StartGameView : <<create>>
 ChessGameFacade  "0..1 \n -_game\n" o---> Game: > Own
 ChessGameFacade "0..1 \n -_board\n" o-->  Board: > Own
 
-Board o---> " * \n -_observers" BoardObserver : observer <
+Board o---> " * \n -_observers" ChessgameObserver : observer <
 
 Rook o-->  "0..64 \n -_knownSquare\n"  Square: > Know
 Bishop o--> "0..64 \n -_knownSquare\n"   Square: > Know

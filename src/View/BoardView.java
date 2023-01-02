@@ -12,13 +12,13 @@ import Model.Board;
 import Model.Pieces.Piece;
 import Model.Player;
 import Model.Square;
-import Model.BoardObserver;
+import Model.ChessgameObserver;
 
 import static Model.Color.WHITE;
 import static Model.Pieces.Type.PAWN;
 
 
-public class BoardView extends JFrame implements BoardObserver {
+public class BoardView extends JFrame implements ChessgameObserver {
 
 
     private Board _board;
