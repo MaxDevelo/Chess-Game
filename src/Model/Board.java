@@ -11,7 +11,7 @@ public class Board {
     private Piece _currentPiece;
     private Square _lastPieceMove;
     private List<Square> _validSquares;
-    private List<BoardObserver> _observers = new ArrayList<>();
+    private List<ChessgameObserver> _observers = new ArrayList<>();
     public Board() {
         _board = new Square[8][8];
         this._validSquares = new ArrayList<>();
@@ -21,7 +21,7 @@ public class Board {
      * Ajout de l'observer
      * @param observer
      */
-    public void addObserver(BoardObserver observer){
+    public void addObserver(ChessgameObserver observer){
         this._observers.add(observer);
     }
 
@@ -31,7 +31,7 @@ public class Board {
      * @param scoreWhite Score des pièces Blanches
      */
     public void _notifyObserversScore(int scoreBlack, int scoreWhite){
-        for(BoardObserver o : _observers){
+        for(ChessgameObserver o : _observers){
             o.onUpdateScore(scoreBlack, scoreWhite);
         }
     }
@@ -39,7 +39,7 @@ public class Board {
      * Met à jour le joueur qui doit jouer
      */
     public void _notifyObserversTurnGame(){
-        for(BoardObserver o : _observers){
+        for(ChessgameObserver o : _observers){
             o.onUpdateTurnGame();
         }
     }

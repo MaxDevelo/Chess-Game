@@ -42,7 +42,7 @@ public class ChessGameFacade {
         // On génère le plateau
         generatedBoard();
         // Création de l'observer
-        BoardObserver o = new BoardView(this);
+        ChessgameObserver o = new BoardView(this);
         _board.addObserver(o);
         _board._notifyObserversTurnGame();
     }

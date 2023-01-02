@@ -24,7 +24,7 @@ si on ne fait pas sa et que le joueur ne veut pas faire la prise en passant en a
 - On a réussi à mettre le fichier plantUML en svg (car dans la version 1, on ne savait plus comment faire...)
 - On a modifié la taille de la fenetre car elle était trop grande.
 
-**Nous avons mis en place un Observer, nommé *boardObserver* qui va permettre de mettre à jour le score des joueurs et indiquer quel joueur doit jouer. C'est-à-dire que le Label qui affiche "Ton Tour" est mis à jour pour le joueur**
+**Nous avons mis en place un Observer, nommé *ChessgameObserver* qui va permettre de mettre à jour le score des joueurs et indiquer quel joueur doit jouer. C'est-à-dire que le Label qui affiche "Ton Tour" est mis à jour pour le joueur**
 <br/>
 La vue boardView qui est le plateau de jeu implémente l'observer.
 
