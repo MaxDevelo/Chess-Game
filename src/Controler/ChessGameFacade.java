@@ -44,7 +44,7 @@ public class ChessGameFacade {
         // Création de l'observer
         ChessgameObserver o = new BoardView(this);
         _board.addObserver(o);
-        _board._notifyObserversTurnGame();
+        _board.notifyObserversTurnGame();
     }
 
 
@@ -122,7 +122,7 @@ public class ChessGameFacade {
             _game.setNullGame(true);
         }
         // On met a jour le tour du joueur
-        _board._notifyObserversTurnGame();
+        _board.notifyObserversTurnGame();
     }
 
     /**
@@ -279,7 +279,7 @@ public class ChessGameFacade {
         }
         int scoreBlack = _game.getPlayers().get(0).getColor().equals(Model.Color.BLACK) ? _game.getPlayers().get(0).getScore() : _game.getPlayers().get(1).getScore();
         int scoreWhite = _game.getPlayers().get(0).getColor().equals(Model.Color.WHITE) ? _game.getPlayers().get(0).getScore() : _game.getPlayers().get(1).getScore();
-        _board._notifyObserversScore(scoreBlack, scoreWhite);
+        _board.notifyObserversScore(scoreBlack, scoreWhite);
     }
     /**
      * Fonction qui vérifie si le Joueur peut déplacer une pièce
