@@ -33,8 +33,8 @@ package Model{
     class Board{
     + Board()
     + addObserver(observer: ChessgameObserver)
-    + _notifyObserversScore(scoreBlack: Integer, scoreWhite: Integer)
-    + _notifyObserversTurnGame()
+    + notifyObserversScore(scoreBlack: Integer, scoreWhite: Integer)
+    + notifyObserversTurnGame()
     + generatePiece(board: Square[]): Square[]
     + getValidSquares(): Square[]
     + setSquare(square: Square, row: Integer, column: Integer)

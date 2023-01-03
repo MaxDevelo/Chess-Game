@@ -30,7 +30,7 @@ public class Board {
      * @param scoreBlack Score des pièces Noires
      * @param scoreWhite Score des pièces Blanches
      */
-    public void _notifyObserversScore(int scoreBlack, int scoreWhite){
+    public void notifyObserversScore(int scoreBlack, int scoreWhite){
         for(ChessgameObserver o : _observers){
             o.onUpdateScore(scoreBlack, scoreWhite);
         }
@@ -38,7 +38,7 @@ public class Board {
     /**
      * Met à jour le joueur qui doit jouer
      */
-    public void _notifyObserversTurnGame(){
+    public void notifyObserversTurnGame(){
         for(ChessgameObserver o : _observers){
             o.onUpdateTurnGame();
         }
